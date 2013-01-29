@@ -6,7 +6,8 @@
 /**
   * A state to initialize resource
   */
-class InitialState : public dt::State {
+class InitialState : public dt::State
+{
 	Q_OBJECT
 
 public:

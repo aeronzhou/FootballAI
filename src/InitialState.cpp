@@ -6,7 +6,8 @@
 #include <Core/ResourceManager.hpp>
 
 
-void InitialState::onInitialize() {
+void InitialState::onInitialize() 
+{
 	dt::ResourceManager::get()->addResourceLocation("", "FileSystem");
 	dt::ResourceManager::get()->addResourceLocation("sinbad.zip", "Zip", true);
 
@@ -20,6 +21,7 @@ void InitialState::onDeinitialize() {
 
 }
 
-void InitialState::updateStateFrame(double simulation_frame_time) {
+void InitialState::updateStateFrame(double simulation_frame_time) 
+{
 	dt::StateManager::get()->setNewState(new BattleState());	
 }

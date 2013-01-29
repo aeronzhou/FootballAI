@@ -6,7 +6,8 @@
 /**
   * A state to show soccer pitch and all players
   */
-class BattleState : public dt::State {
+class BattleState : public dt::State 
+{
 	Q_OBJECT
 
 public:

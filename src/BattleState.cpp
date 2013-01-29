@@ -1,5 +1,6 @@
 #include "BattleState.h"
 #include "Pitch.h"
+#include "ParamLoader.h"
 
 #include <Graphics/DisplayManager.hpp>
 
@@ -13,8 +14,11 @@
 
 #include <OgreProcedural.h>
 
+#include <iostream>
 
-void BattleState::onInitialize() {
+
+void BattleState::onInitialize() 
+{
 	auto scene = addScene(new dt::Scene("scene_01"));
 	// This one is very important
 	OgreProcedural::Root::getInstance()->sceneManager = scene->getSceneManager();
@@ -30,12 +34,16 @@ void BattleState::onInitialize() {
 	light_node->addComponent(new dt::LightComponent("light"));
 
 	scene->addChildNode(new Pitch());	
-}
 
-void BattleState::onDeinitialize() {
 
 }
 
-void BattleState::updateStateFrame(double simulation_frame_time) {
+void BattleState::onDeinitialize() 
+{
+
+}
+
+void BattleState::updateStateFrame(double simulation_frame_time) 
+{
 
 }
