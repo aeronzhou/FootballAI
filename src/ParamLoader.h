@@ -1,59 +1,42 @@
-#ifndef FOOTBALL_AI_PARAM_LOADER
-#define FOOTBALL_AI_PARAM_LOADER
+#ifndef FOOTBALL_AI_PARAMS
+#define FOOTBALL_AI_PARAMS
 
-#include <Scene/Node.hpp>
+#include "ParamLoaderBase.h"
 
-#include <QtXml/QtXml>
+#define Prm (*ParamLoader::get())
 
-#include <map>
-
-
-class ParamLoader 
+/** 
+  * Class to fetch global parameters
+  */
+class ParamLoader : public ParamLoaderBase
 {
+public:
+
+	static ParamLoader* get() 
+	{
+		static ParamLoader instance;
+		return &instance;
+	}
+
+	ParamLoader(): ParamLoaderBase("Params.xml")
+	{
+		// Initialize all global params
+		if (!mIsGoodFile) 
+			return;
+
+		//Height = mParamTables["Height"].toFloat();
+		BallMaxSpeed = mParamTables["BallMaxSpeed"].toFloat();
+		BallFriction = mParamTables["BallFriction"].toFloat();
+	}
 
 public:
-	typedef std::map<QString, QString> MSS;
 
-	ParamLoader() 
-	{
-		mParamTables = MSS();	
-	}
+	// Ball
+	float BallMaxSpeed;
+	float BallFriction;
 
-	bool setParmFile(QString path) 
-	{
-		QFile file(path);
-		QDomDocument doc;
+	// Player
 
-		if (!file.open(QIODevice::ReadOnly)) 
-		{
-			dt::Logger::get().error("Couldn't open file " + path);
-		} 
-		else if (doc.setContent(&file)) 
-		{
-			// Create param table
-			QDomElement root = doc.documentElement();
-			mParamTables.clear();
-
-			for (QDomElement child = root.firstChildElement(); 
-				!child.isNull(); child = child.nextSiblingElement()) 
-			{
-				mParamTables[child.nodeName()] = child.text();
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
-	MSS getParamTable() 
-	{
-		return mParamTables;
-	}
-
-private:
-
-	MSS mParamTables;  //
+	
 };
-
 #endif

@@ -17,9 +17,7 @@ void InitialState::onInitialize()
 
 }
 
-void InitialState::onDeinitialize() {
-
-}
+void InitialState::onDeinitialize() {}
 
 void InitialState::updateStateFrame(double simulation_frame_time) 
 {

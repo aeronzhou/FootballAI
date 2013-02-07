@@ -1,14 +1,12 @@
 #ifndef FOOTBALL_AI_PITCH
 #define FOOTBALL_AI_PITCH
 
+#include "Ball.h"
+
 #include <Scene/Node.hpp>
 #include <Graphics/MeshComponent.hpp>
 
-class Ball;
-class Region;
-class Goal;
-class Team;
-class Player;
+
 
 class Pitch : public dt::Node {
 	Q_OBJECT
@@ -25,6 +23,8 @@ public:
 private:
 
 	//dt::MeshComponent mMesh; 
+
+	Ball* mBall;              //!< Pointer to the ball
 
 };
 
