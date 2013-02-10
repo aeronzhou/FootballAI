@@ -52,6 +52,11 @@ void MovingEntity::setVelocity(Ogre::Vector3 velocity)
 	mVelocity = velocity;
 }
 
+float MovingEntity::getMaxSpeed() const
+{
+	return mMaxSpeed;
+}
+
 void MovingEntity::resetPhysicsBody()
 {
 	mPhysicsBody->disable();

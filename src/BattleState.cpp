@@ -33,11 +33,7 @@ void BattleState::onInitialize()
 	light_node->setPosition(Ogre::Vector3(-2000.0f, 2000.0f, 1000.0f));
 	light_node->addComponent(new dt::LightComponent("light"));
 
-	//auto ball = new Ball();
 	scene->addChildNode(new Pitch());	
-	//scene->addChildNode(ball);
-
-	//ball->setPosition(0, 15, 0);
 }
 
 void BattleState::onDeinitialize() 

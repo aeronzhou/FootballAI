@@ -15,10 +15,11 @@ void Ball::onInitialize()
 	MovingEntity::onInitialize();
 
 	// remove handle first
+	// 等足球模型做完后这个要改啊要改啊啊啊啊啊！！！
 	removeComponent(getName() + "_mesh");
 	removeComponent(getName() + "_physics");
 
-	OgreProcedural::SphereGenerator().setRadius(.3f).setUTile(.1f).realizeMesh("Football");
+	OgreProcedural::SphereGenerator().setRadius(1.3f).setUTile(.8f).realizeMesh("Football");
 	addComponent(new dt::MeshComponent("Football", "", "BallMesh"));
 	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent("BallMesh", "BallPhysicsBody", dt::PhysicsBodyComponent::SPHERE));
 

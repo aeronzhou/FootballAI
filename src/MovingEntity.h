@@ -30,6 +30,8 @@ public:
 	Ogre::Vector3 getVelocity() const;
 	void setVelocity(Ogre::Vector3 velocity);
 
+	float getMaxSpeed() const;
+
 	void resetPhysicsBody();
 
 protected:

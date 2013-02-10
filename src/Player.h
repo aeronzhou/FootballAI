@@ -4,6 +4,7 @@
 #include "MovingEntity.h"
 
 class Team;
+class SteeringBehaviors;
 
 class Player : public MovingEntity
 {
@@ -16,7 +17,16 @@ public:
 		DEFENDER
 	};
 
-	Player();
+	Player(QString name,
+		float bounding_radius,
+		float max_speed,
+		Ogre::Vector3 heading,
+		float max_force,
+		float mass,
+		float turn_rate,
+		QString mesh_handle, 
+		QString material_handle, 
+		Team* team);
 
 
 	/** 
@@ -29,17 +39,19 @@ public:
 	  */
 	void trackBall();
 
+	SteeringBehaviors* getSteering() const;
+
+
 protected:
 
-	PlayerRole mPlayerRole; //!< The player's role in this team
+	PlayerRole mPlayerRole;          //!< The player's role in this team
 
-	Team* mTeam;            //!< The team this player belongs to
+	Team* mTeam;                     //!< The team this player belongs to
+	int mHomeRegion;                 //!< Indicate which home region this player assigned to
+	int mDefaultRegion;              //!< The default region player is standing on
+	float mDistSqToBall;             //!< Distance square from the ball
 
-	int mHomeRegion;        //!< Indicate which home region this player assigned to
-
-	int mDefaultRegion;     //!< The default region player is standing on
-
-	float mDistSqToBall;    //!< Distance square from the ball
+	SteeringBehaviors* mSteering;    //!< 
 
 };
 

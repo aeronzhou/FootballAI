@@ -2,11 +2,12 @@
 #define FOOTBALL_AI_PITCH
 
 #include "Ball.h"
+#include "Region.h"
 
 #include <Scene/Node.hpp>
 #include <Graphics/MeshComponent.hpp>
 
-
+#include <vector>
 
 class Pitch : public dt::Node {
 	Q_OBJECT
@@ -20,11 +21,21 @@ public:
 
 	void onUpdate(double time_diff);
 
+	bool getGoalKeeperHasBall() const;
+
+	void setGoalKeeperHasBall(bool flag);
+
 private:
 
-	//dt::MeshComponent mMesh; 
+	Ball* mBall;                   //!< Pointer to the ball
 
-	Ball* mBall;              //!< Pointer to the ball
+	std::vector<Region*> mRegions; //!< Regions
+
+	bool mGameOn;                  //!< Whether game is running
+
+	bool mGoalKeeperHasBall;       //!< If the goal keeper is controlling the ball
+
+	
 
 };
 
