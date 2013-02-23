@@ -55,6 +55,9 @@ protected:
 	std::shared_ptr<dt::PhysicsBodyComponent> mPhysicsBody; //!< Pointer to physics body	
 	QString mMeshHandle;                                    //!< Mesh handle
 	QString mMaterialHandle;                                //!< Material handle
+
+	const static QString MESH_COMPONENT;                    
+	const static QString PHYSICS_BODY_COMPONENT;
 };
 
 #endif

@@ -23,6 +23,8 @@ void BattleState::onInitialize()
 	// This one is very important
 	OgreProcedural::Root::getInstance()->sceneManager = scene->getSceneManager();
 
+	scene->getPhysicsWorld()->setShowDebug(true);
+
 	dt::Node::NodeSP camnode = scene->addChildNode(new dt::Node("camnode"));
 	camnode->setPosition(Ogre::Vector3(0.0f, 15.f, 10.f));
 	camnode->addComponent(new dt::CameraComponent("camera"));
@@ -33,7 +35,7 @@ void BattleState::onInitialize()
 	light_node->setPosition(Ogre::Vector3(-2000.0f, 2000.0f, 1000.0f));
 	light_node->addComponent(new dt::LightComponent("light"));
 
-	scene->addChildNode(new Pitch());	
+	auto pitch = scene->addChildNode(new Pitch());	
 }
 
 void BattleState::onDeinitialize() 

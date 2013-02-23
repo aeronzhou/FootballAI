@@ -8,6 +8,8 @@ class SteeringBehaviors;
 
 class Player : public MovingEntity
 {
+	Q_OBJECT
+
 public:
 
 	enum PlayerRole
@@ -27,6 +29,10 @@ public:
 		QString mesh_handle, 
 		QString material_handle, 
 		Team* team);
+
+	void onInitialize();
+
+	void onUpdate(double time_diff);
 
 
 	/** 

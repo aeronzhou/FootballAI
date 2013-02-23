@@ -20,6 +20,8 @@ public:
 		QFile file(path);
 		QDomDocument doc;
 
+		mIsGoodFile = false;
+
 		if (!file.open(QIODevice::ReadOnly)) 
 		{
 			dt::Logger::get().error("Couldn't open file " + path);
@@ -38,8 +40,6 @@ public:
 
 			mIsGoodFile = true;
 		}
-	
-		mIsGoodFile = false;
 	}
 
 protected:

@@ -27,6 +27,10 @@ public:
 		//Height = mParamTables["Height"].toFloat();
 		BallMaxSpeed = mParamTables["BallMaxSpeed"].toFloat();
 		BallFriction = mParamTables["BallFriction"].toFloat();
+		NumRegionsHorizontal = mParamTables["NumRegionsHorizontal"].toInt();
+		NumRegionsVertical = mParamTables["NumRegionsVertical"].toInt();
+		HalfPitchWidth = mParamTables["HalfPitchWidth"].toFloat();
+		HalfPitchHeight = mParamTables["HalfPitchHeight"].toFloat();
 	}
 
 public:
@@ -35,8 +39,13 @@ public:
 	float BallMaxSpeed;
 	float BallFriction;
 
-	// Player
+	// Playing Area
+	int NumRegionsHorizontal;
+	int NumRegionsVertical;
 
+	// Pitch
+	float HalfPitchWidth;
+	float HalfPitchHeight;
 	
 };
 #endif

@@ -2,6 +2,9 @@
 
 #include <Graphics/MeshComponent.hpp>
 
+const QString MovingEntity::MESH_COMPONENT = "MeshComponent";
+const QString MovingEntity::PHYSICS_BODY_COMPONENT = "PhysicsBodyComponent";
+
 MovingEntity::MovingEntity(QString name,
 	float bounding_radius, 
 	float max_speed, Ogre::Vector3 heading, 
@@ -21,15 +24,15 @@ MovingEntity::MovingEntity(QString name,
 
 void MovingEntity::onUpdate(double time_diff)
 {
+	this->mIsUpdatingAfterChange = (time_diff == 0);
+
 	dt::Node::onUpdate(time_diff);
 }
 
 void MovingEntity::onInitialize()
 {
-	Node::onInitialize();
-
-	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, getName() + "_mesh"));
-	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(getName() + "_mesh", getName() + "_physics"));
+	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
+	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT));
 }
 
 Ogre::Vector3 MovingEntity::getHeading() const 

@@ -9,7 +9,7 @@ class Ball : public MovingEntity
 
 public:
 
-	Ball(QString mesh_handle, QString material_handle = "");
+	Ball(QString name, QString mesh_handle, QString material_handle = "");
 
 	void onInitialize();
 

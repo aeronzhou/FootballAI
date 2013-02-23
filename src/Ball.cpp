@@ -7,27 +7,20 @@
 #include <OgreProcedural.h>
 
 
-Ball::Ball(QString mesh_handle, QString material_handle)
-	: MovingEntity("BallNode", 1.0f, 12.f, Ogre::Vector3::ZERO, 12.f, 5.0f, 10.f, mesh_handle, material_handle) {}
+Ball::Ball(QString name, QString mesh_handle, QString material_handle)
+	: MovingEntity(name, 1.0f, 12.f, Ogre::Vector3::ZERO, 12.f, 5.0f, 10.f, mesh_handle, material_handle) {}
 
 void Ball::onInitialize() 
 {
 	MovingEntity::onInitialize();
-
-	// remove handle first
-	// 等足球模型做完后这个要改啊要改啊啊啊啊啊！！！
-	removeComponent(getName() + "_mesh");
-	removeComponent(getName() + "_physics");
-
-	OgreProcedural::SphereGenerator().setRadius(1.3f).setUTile(.8f).realizeMesh("Football");
-	addComponent(new dt::MeshComponent("Football", "", "BallMesh"));
-	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent("BallMesh", "BallPhysicsBody", dt::PhysicsBodyComponent::SPHERE));
 
 	mPhysicsBody->getRigidBody()->setFriction(2.f);
 }
 
 void Ball::onUpdate(double time_diff)
 {
+	this->mIsUpdatingAfterChange = (time_diff == 0);
+
 	MovingEntity::onUpdate(time_diff);
 }
 
