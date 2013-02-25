@@ -49,7 +49,7 @@ protected:
 
 private:
 
-	bool on(SteeingType type) const { return ((mFlag & type) == type); }
+	bool on(SteeingType type) const;
 
 	Ogre::Vector3 seek(Ogre::Vector3 target);
 
@@ -63,23 +63,25 @@ private:
 
 public:
 
-	void seekOn() { mFlag |= SEEK; }
-	void arriveOn() { mFlag |= ARRIVE; }
-	void pursuitOn() { mFlag |= PERSUIT; }
-	void separationOn() { mFlag |= SEPARATION; }
-	void interposeOn() { mFlag |= INTERPOSE; }
+	// Set On 
+	void seekOn();
+	void arriveOn();
+	void pursuitOn();
+	void separationOn();
+	void interposeOn();
 
+	// Set off
 	void seekOff();
 	void arriveOff();
 	void persuitOff();
 	void seperationOff();
 	void interposeOff();
 
-	bool isSeekOn() const { return on(SEEK); }
-	bool isArriveOn() const { return on(ARRIVE); } 
-	bool isPersuitOn() const { return on(PERSUIT); }
-	bool isSeperationOn() const { return on(SEPARATION); }
-	bool isInterposeOn() const { return on(INTERPOSE); }
+	bool isSeekOn() const;
+	bool isArriveOn() const;
+	bool isPersuitOn() const;
+	bool isSeperationOn() const;
+	bool isInterposeOn() const; 
 };
 
 #endif 

@@ -37,17 +37,22 @@ public:
 
 public:
 	// Get and set
-	TeamColor getTeamColor() const { return mColor; }
+	TeamColor getTeamColor() const;
 
-	Pitch* getPitch() const { return mPitch; }
+	Pitch* getPitch() const;
 
-protected:
+	Team* getOpponent() const;
+	void setOpponent(Team* opponent);
+
+private:
+
+	//StateMachine<Team>* mStateMachine;   //!< StateMachine
 
 	Ball* mBall;
 	Pitch* mPitch;
-	TeamColor mColor;
-	Team* mOpponent;
-	std::vector<Player*> mPlayers;
+	TeamColor mColor;                 //!< Team color, RED or BLUE
+	Team* mOpponent;                  //!< The opponent team of this
+	std::vector<Player*> mPlayers;    //!< Pointers of players this team hold
 
 	Player* mControllingPlayer;         
 	Player* mSupportingPlayer;

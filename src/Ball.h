@@ -48,7 +48,7 @@ public:
 	/** 
 	  * Stop the ball, set the ball's velocity to be zero
 	  */
-	void stop() { mVelocity = Ogre::Vector3::ZERO; }
+	void stop() { /*mVelocity = Ogre::Vector3::ZERO;*/ }
 
 	Ogre::Vector3 getOldPos() { return mOldPos; }
 

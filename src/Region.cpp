@@ -1,8 +1,8 @@
 #include "Region.h"
 
 
-Region::Region(float left, float top, float right, float bottom)
-	: mLeft(left), mRight(right), mTop(top), mBottom(bottom)
+Region::Region(float left, float top, float right, float bottom, int id)
+	: mLeft(left), mRight(right), mTop(top), mBottom(bottom), mID(id)
 {
 	mWidth = mRight - mLeft;
 	mHeight = mBottom - mTop;
@@ -28,3 +28,17 @@ Ogre::Vector3 Region::getRandomPosition() const
 	//////////////////////////////////////////////////////////////////////////
 	return Ogre::Vector3(0, 0, 0);
 }
+
+float Region::getLeft() const {	return mLeft; }
+
+float Region::getTop() const { return mTop; }
+
+float Region::getRight() const { return mRight; }
+
+float Region::getBottom() const { return mBottom; }
+
+float Region::getWidth() const { return mWidth; }
+
+float Region::getHeight() const { return mHeight; }
+
+int Region::getID() const { return mID; }

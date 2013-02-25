@@ -22,11 +22,11 @@ protected:
 
 	Ogre::Vector3 mCenter;
 
-	int mId;
+	int mID;                      
 
 public:
 
-	Region(float left, float top, float right, float bottom);
+	Region(float left, float top, float right, float bottom, int id = -1);
 
 	/** 
 	  * @param position
@@ -39,6 +39,15 @@ public:
 	  * @returns A random position within this region
 	  */
 	Ogre::Vector3 getRandomPosition() const;
+
+	float getLeft() const;
+	float getTop() const;
+	float getRight() const;
+	float getBottom() const;
+	float getWidth() const;
+	float getHeight() const;
+
+	int getID() const;
 };
 
 #endif

@@ -56,3 +56,14 @@ void Team::createPlayers()
 
 	}
 }
+
+Team::TeamColor Team::getTeamColor() const { return mColor; }
+
+Pitch* Team::getPitch() const { return mPitch; }
+
+Team* Team::getOpponent() const { return mOpponent; }
+
+void Team::setOpponent(Team* opponent)
+{
+	mOpponent = opponent;
+}

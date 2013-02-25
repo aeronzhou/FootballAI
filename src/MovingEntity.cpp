@@ -12,14 +12,14 @@ MovingEntity::MovingEntity(QString name,
 	QString mesh_handle, QString material_handle)
 	: Node(name),
 	  mBoundingRadius(bounding_radius),
-	  mHeading(heading),
+	  //mHeading(heading),
 	  mMass(mass),
 	  mMaxForce(max_force),
 	  mTurnRate(turn_rate),
-	  mVelocity(Ogre::Vector3::ZERO),
 	  mMeshHandle(mesh_handle),
 	  mMaterialHandle(material_handle)
 {
+	setHeading(heading);
 }
 
 void MovingEntity::onUpdate(double time_diff)
@@ -37,22 +37,24 @@ void MovingEntity::onInitialize()
 
 Ogre::Vector3 MovingEntity::getHeading() const 
 {
-	return mHeading;
+	return getVelocity().normalisedCopy();
 }
 
 void MovingEntity::setHeading(Ogre::Vector3 heading)
 {
-	mHeading = heading;
+	float magnitude = mPhysicsBody->getRigidBody()->getLinearVelocity().length();
+
+	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(heading * magnitude));
 }
 
 Ogre::Vector3 MovingEntity::getVelocity() const
 {
-	return mVelocity;
+	return BtOgre::Convert::toOgre(mPhysicsBody->getRigidBody()->getLinearVelocity());
 }
 
 void MovingEntity::setVelocity(Ogre::Vector3 velocity) 
 {
-	mVelocity = velocity;
+	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(velocity));
 }
 
 float MovingEntity::getMaxSpeed() const
@@ -64,4 +66,9 @@ void MovingEntity::resetPhysicsBody()
 {
 	mPhysicsBody->disable();
 	mPhysicsBody->enable();
+}
+
+float MovingEntity::getMass() const
+{
+	return mMass;
 }

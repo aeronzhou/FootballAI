@@ -6,6 +6,66 @@
 SteeringBehaviors::SteeringBehaviors(Player* player, Ball* ball)
 	: mPlayer(player), mBall(ball),	mFlag(0) {}
 
+bool SteeringBehaviors::on(SteeingType type) const
+{
+	 return ((mFlag & type) == type);
+}
+
+// Set On 
+void SteeringBehaviors::seekOn()
+{
+	mFlag |= SEEK;
+}
+
+void SteeringBehaviors::arriveOn()
+{
+	mFlag |= ARRIVE;
+}
+
+void SteeringBehaviors::pursuitOn()
+{
+	mFlag |= PERSUIT;
+}
+
+void SteeringBehaviors::separationOn()
+{
+	mFlag |= SEPARATION;
+}
+
+void SteeringBehaviors::interposeOn()
+{
+	mFlag |= INTERPOSE;
+}
+
+// Bool
+
+bool SteeringBehaviors::isSeekOn() const 
+{
+	return on(SEEK);
+}
+
+bool SteeringBehaviors::isArriveOn() const 
+{
+	return on(ARRIVE);
+}
+
+bool SteeringBehaviors::isPersuitOn() const 
+{
+	return on(PERSUIT);
+}
+
+bool SteeringBehaviors::isSeperationOn() const 
+{
+	return on(SEPARATION);
+}
+
+bool SteeringBehaviors::isInterposeOn() const 
+{
+	return on(SEPARATION);
+}
+
+// Set Off
+
 void SteeringBehaviors::seekOff()
 {
 	if (on(SEEK))

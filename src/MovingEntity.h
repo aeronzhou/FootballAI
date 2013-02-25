@@ -30,9 +30,13 @@ public:
 	Ogre::Vector3 getVelocity() const;
 	void setVelocity(Ogre::Vector3 velocity);
 
+	float getMass() const;
+
 	float getMaxSpeed() const;
 
 	void resetPhysicsBody();
+
+
 
 protected:
 
@@ -46,9 +50,9 @@ protected:
 
 	float mTurnRate;           //!< The max turning rate 
 
-	Ogre::Vector3 mVelocity;   //!< The current velocity of this entity 
+	//Ogre::Vector3 mVelocity;   //!< The current velocity of this entity 
 
-	Ogre::Vector3 mHeading;    //!< A normalized vector pointing in the direction the entity is heading.
+	//Ogre::Vector3 mHeading;    //!< A normalized vector pointing in the direction the entity is heading.
 
 	Ogre::Vector3 mSide;
 
