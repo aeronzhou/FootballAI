@@ -19,12 +19,8 @@ void Team::onInitialize()
 
 	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	{
-		addChildNode(*it);
-		
-		// Set position by region
-		(*it)->setPosition(5, 4, 0);
-		(*it)->setScale(0.2);
-		(*it)->resetPhysicsBody();
+		// Initilize players' position, heading, etc.
+		//(*it)->getSteering()->separationOn();
 	}
 
 }
@@ -33,23 +29,20 @@ void Team::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
+	calculatePlayerClosestToBall();
+
+	// Update StateMachine
+	//mStateMachine->update();	
+
 	dt::Node::onUpdate(time_diff);
 }
 
 void Team::createPlayers()
 {
+	// Generate players with PlayerManager
 	if (getTeamColor() == RED)
 	{
-		mPlayers.push_back(new Player("blue_attack_01", 
-			1.0f, 
-			10.0f, 
-			Ogre::Vector3(1.f, 0.f, 0.f), 
-			20.f, 
-			50.f, 
-			0.1f, 
-			"Sinbad.mesh", 
-			"",
-			this));
+
 	}
 	else 
 	{
@@ -57,13 +50,32 @@ void Team::createPlayers()
 	}
 }
 
-Team::TeamColor Team::getTeamColor() const { return mColor; }
+Team::TeamColor Team::getTeamColor() const 
+{ 
+	return mColor; 
+}
 
-Pitch* Team::getPitch() const { return mPitch; }
+Pitch* Team::getPitch() const 
+{ 
+	return mPitch; 
+}
 
-Team* Team::getOpponent() const { return mOpponent; }
+Team* Team::getOpponent() const 
+{ 
+	return mOpponent; 
+}
 
 void Team::setOpponent(Team* opponent)
 {
 	mOpponent = opponent;
+}
+
+void Team::returnAllPlayersToHome()
+{
+	
+}
+
+void Team::calculatePlayerClosestToBall()
+{
+
 }

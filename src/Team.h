@@ -25,16 +25,6 @@ public:
 
 	void onUpdate(double time_diff);
 
-	/** 
-	  * Genrate players 
-	  */
-	void createPlayers();
-
-	/** 
-	  * Set the pointer of mPlayerClosestToBall
-	  */
-	void calculatePlayerClosestToBall();
-
 public:
 	// Get and set
 	TeamColor getTeamColor() const;
@@ -44,20 +34,38 @@ public:
 	Team* getOpponent() const;
 	void setOpponent(Team* opponent);
 
+	/** 
+	  * Send all players to their home regions
+	  */
+	void returnAllPlayersToHome();
+
+private:
+	/** 
+	  * Set the pointer of mPlayerClosestToBall
+	  */
+	void calculatePlayerClosestToBall();
+
+	/** 
+	  * Genrate players 
+	  */
+	void createPlayers();
+
 private:
 
 	//StateMachine<Team>* mStateMachine;   //!< StateMachine
 
 	Ball* mBall;
 	Pitch* mPitch;
-	TeamColor mColor;                 //!< Team color, RED or BLUE
-	Team* mOpponent;                  //!< The opponent team of this
-	std::vector<Player*> mPlayers;    //!< Pointers of players this team hold
+	TeamColor mColor;                      //!< Team color, RED or BLUE
+	Team* mOpponent;                       //!< The opponent team of this
+	std::vector<Player*> mPlayers;         //!< Pointers of players this team hold
 
-	Player* mControllingPlayer;         
+	Player* mControllingPlayer;            //!< Pointer to the player which is controlling the ball 
 	Player* mSupportingPlayer;
-	Player* mReceivingPlayer;
+	Player* mReceivingPlayer;              //!< Pointer to the player which is receiving the ball
 	Player* mPlayerClosestToBall;
+
+	float mDistSqToBallOfClosestPlayer;    //!< Square distance from the ball to the nearest player, update every frame
 
 };
 

@@ -42,4 +42,11 @@ inline bool IsLineIntersect(Ogre::Vector3 A, Ogre::Vector3 B, Ogre::Vector3 C, O
 	return false;	
 }
 
+inline Ogre::Vector3 GetHeadingThroughRotation(Ogre::Quaternion rotation)
+{
+	//rotation = Ogre::Quaternion(1.f, Ogre::Vector3(0.f, rotation.getYaw(), 0.f));
+	//return Ogre::Vector3(0.f, 0.f, 1.f) * rotation;
+	return rotation * Ogre::Vector3(0.f, 0.f, 1.f);
+}
+
 #endif

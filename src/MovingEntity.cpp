@@ -12,19 +12,30 @@ MovingEntity::MovingEntity(QString name,
 	QString mesh_handle, QString material_handle)
 	: Node(name),
 	  mBoundingRadius(bounding_radius),
-	  //mHeading(heading),
 	  mMass(mass),
+	  //mHeading(Ogre::Vector3::ZERO),
 	  mMaxForce(max_force),
 	  mTurnRate(turn_rate),
 	  mMeshHandle(mesh_handle),
 	  mMaterialHandle(material_handle)
 {
-	setHeading(heading);
 }
+
+//float now = 3.0f;
 
 void MovingEntity::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
+
+	//////////////////////////////////////////////////////////////////////////
+	// Get heading through rotations
+	//now += 0.02f;
+	//if (now > 1.f) 
+	//{
+	//	now = 0.f;
+	//	Ogre::Quaternion qt = this->getRotation();
+	//	std::cout << "rotation: y = " << qt.getYaw() << std::endl;
+	//}
 
 	dt::Node::onUpdate(time_diff);
 }
@@ -35,17 +46,17 @@ void MovingEntity::onInitialize()
 	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT));
 }
 
-Ogre::Vector3 MovingEntity::getHeading() const 
-{
-	return getVelocity().normalisedCopy();
-}
-
-void MovingEntity::setHeading(Ogre::Vector3 heading)
-{
-	float magnitude = mPhysicsBody->getRigidBody()->getLinearVelocity().length();
-
-	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(heading * magnitude));
-}
+//Ogre::Vector3 MovingEntity::getHeading() const 
+//{
+//	return mHeading;
+//}
+//
+//void MovingEntity::setHeading(Ogre::Vector3 heading)
+//{
+//	//////////////////////////////////////////////////////////////////////////
+//	// Get rotations through heading
+//	// Set rotation
+//}
 
 Ogre::Vector3 MovingEntity::getVelocity() const
 {

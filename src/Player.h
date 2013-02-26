@@ -47,8 +47,13 @@ public:
 
 	SteeringBehaviors* getSteering() const;
 
+	Ogre::Vector3 getHeading() const;
+	void setHeading(Ogre::Vector3 heading);
+
 
 protected:
+
+	Ogre::Vector3 mHeading;          //!< The direction this player moving towards
 
 	PlayerRole mPlayerRole;          //!< The player's role in this team
 

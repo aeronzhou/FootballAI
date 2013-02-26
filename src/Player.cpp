@@ -1,8 +1,10 @@
 #include "Player.h"
 #include "Team.h"
+#include "Utils.h"
 
 #include <Graphics/MeshComponent.hpp>
 #include <Physics/PhysicsBodyComponent.hpp>
+
 #include <OgreProcedural.h>
 
 Player::Player(QString name, float bounding_radius, float max_speed, Ogre::Vector3 heading, float max_force,
@@ -27,12 +29,23 @@ void Player::onInitialize()
 	mPhysicsBody->getRigidBody()->setFriction(2.f);
 }
 
-
 void Player::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
 	//Update here
+	// Set heading through rotation
+	mHeading = GetHeadingThroughRotation(getRotation());
 
 	dt::Node::onUpdate(time_diff);
+}
+
+Ogre::Vector3 Player::getHeading() const
+{
+	return mHeading;
+}
+
+void Player::setHeading(Ogre::Vector3 heading)
+{
+	//////////////////////////////////////////////////////////////////////////
 }
