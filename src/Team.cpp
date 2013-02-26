@@ -70,6 +70,11 @@ void Team::setOpponent(Team* opponent)
 	mOpponent = opponent;
 }
 
+Ball* Team::getBall() const
+{
+	return mBall;
+}
+
 void Team::returnAllPlayersToHome()
 {
 	

@@ -31,6 +31,8 @@ public:
 
 	Pitch* getPitch() const;
 
+	Ball* getBall() const;
+
 	Team* getOpponent() const;
 	void setOpponent(Team* opponent);
 

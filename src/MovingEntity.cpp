@@ -5,7 +5,7 @@
 const QString MovingEntity::MESH_COMPONENT = "MeshComponent";
 const QString MovingEntity::PHYSICS_BODY_COMPONENT = "PhysicsBodyComponent";
 
-MovingEntity::MovingEntity(QString name,
+MovingEntity::MovingEntity(const QString name,
 	float bounding_radius, 
 	float max_speed, Ogre::Vector3 heading, 
 	float max_force, float mass, float turn_rate, 

@@ -4,6 +4,7 @@
 #include "MovingEntity.h"
 
 class Team;
+class Ball;
 class SteeringBehaviors;
 
 class Player : public MovingEntity
@@ -19,7 +20,7 @@ public:
 		DEFENDER
 	};
 
-	Player(QString name,
+	Player(const QString name,
 		float bounding_radius,
 		float max_speed,
 		Ogre::Vector3 heading,
@@ -28,7 +29,8 @@ public:
 		float turn_rate,
 		QString mesh_handle, 
 		QString material_handle, 
-		Team* team);
+		Team* team, 
+		int home_region);
 
 	void onInitialize();
 
@@ -50,19 +52,26 @@ public:
 	Ogre::Vector3 getHeading() const;
 	void setHeading(Ogre::Vector3 heading);
 
+	Team* getTeam() const;
+	Ball* getBall() const;
+
+	int getHomeRegion() const;
+	void setHomeRegion(int home_region);
+
+
 
 protected:
 
-	Ogre::Vector3 mHeading;          //!< The direction this player moving towards
+	Ogre::Vector3 mHeading;                          //!< The direction this player moving towards
 
-	PlayerRole mPlayerRole;          //!< The player's role in this team
+	PlayerRole mPlayerRole;                          //!< The player's role in this team
 
-	Team* mTeam;                     //!< The team this player belongs to
-	int mHomeRegion;                 //!< Indicate which home region this player assigned to
-	int mDefaultRegion;              //!< The default region player is standing on
-	float mDistSqToBall;             //!< Distance square from the ball
+	Team* mTeam;                                     //!< The team this player belongs to
+	int mHomeRegion;                                 //!< Indicate which home region this player assigned to
+	int mDefaultRegion;                              //!< The default region player is standing on
+	float mDistSqToBall;                             //!< Distance square from the ball
 
-	SteeringBehaviors* mSteering;    //!< 
+	std::shared_ptr<SteeringBehaviors> mSteering;    //!< 
 
 };
 

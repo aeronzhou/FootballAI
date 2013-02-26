@@ -33,6 +33,8 @@ public:
 	Region* getRegionFromIndex(int index);
 	Region* getPlayingArea() const;
 
+	Ball* getBall() const;
+
 private:
 
 	/** 

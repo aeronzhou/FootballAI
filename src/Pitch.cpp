@@ -86,6 +86,11 @@ void Pitch::setGameOn(bool flag)
 	mGameOn = flag;
 }
 
+Ball* Pitch::getBall() const 
+{
+	return mBall;
+}
+
 Region* Pitch::getRegionFromIndex(int index)
 {
 	return mRegions[index];

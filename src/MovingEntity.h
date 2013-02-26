@@ -10,7 +10,7 @@ class MovingEntity : public dt::Node
 
 public:
 
-	MovingEntity(QString name,
+	MovingEntity(const QString name,
 				 float bounding_radius,
 				 float max_speed,
 				 Ogre::Vector3 heading,
