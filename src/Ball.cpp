@@ -5,10 +5,7 @@
 #include <Graphics/MeshComponent.hpp>
 #include <Physics/PhysicsBodyComponent.hpp>
 
-#include <OgreProcedural.h>
-
 #include <math.h>
-
 
 Ball::Ball(QString name, QString mesh_handle, QString material_handle)
 	: MovingEntity(name, 1.0f, 12.f, Ogre::Vector3::ZERO, 12.f, 5.0f, 10.f, mesh_handle, material_handle) {}
@@ -25,7 +22,6 @@ void Ball::onUpdate(double time_diff)
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
 	// Update every frame
-
 
 	MovingEntity::onUpdate(time_diff);
 }

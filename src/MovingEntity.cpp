@@ -27,15 +27,7 @@ void MovingEntity::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
-	//////////////////////////////////////////////////////////////////////////
-	// Get heading through rotations
-	//now += 0.02f;
-	//if (now > 1.f) 
-	//{
-	//	now = 0.f;
-	//	Ogre::Quaternion qt = this->getRotation();
-	//	std::cout << "rotation: y = " << qt.getYaw() << std::endl;
-	//}
+	// Update here
 
 	dt::Node::onUpdate(time_diff);
 }
@@ -45,18 +37,6 @@ void MovingEntity::onInitialize()
 	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
 	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT));
 }
-
-//Ogre::Vector3 MovingEntity::getHeading() const 
-//{
-//	return mHeading;
-//}
-//
-//void MovingEntity::setHeading(Ogre::Vector3 heading)
-//{
-//	//////////////////////////////////////////////////////////////////////////
-//	// Get rotations through heading
-//	// Set rotation
-//}
 
 Ogre::Vector3 MovingEntity::getVelocity() const
 {

@@ -11,6 +11,7 @@
 
 class Team;
 class Ball;
+class Goal;
 
 class Pitch : public dt::Node {
 	Q_OBJECT
@@ -50,6 +51,8 @@ private:
 	Ball* mBall;                   //!< Pointer to the ball
 	Team* mRedTeam;                //!< Team at the left side
 	Team* mBlueTeam;               //!< Team at the right side
+	Goal* mRedGoal;                //!< Goal of red team
+	Goal* mBlueGoal;               //!< Goal of blue team
 
 	std::vector<Region*> mRegions; //!< Regions
 	Region* mPlayingArea;          //!< Play ground area
