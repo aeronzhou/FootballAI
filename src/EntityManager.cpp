@@ -19,10 +19,10 @@ FieldPlayer* EntityManager::createFieldPlayer(const QString& name,
 											  FieldPlayer::PlayerRole role,
 											  int home_region)
 {
-	//FieldPlayer* player = new FieldPlayer(name,
-	//									  mFieldPlayer["BoundingRadius"].toFloat(),
-	//									  mFieldPlayer["MaxSpeed"].toFloat(),
-	//									  mFieldPlayer["MaxForce"]
-	//									  );
+	FieldPlayer* player = new FieldPlayer(name,
+										  mFieldPlayer["BoundingRadius"].toFloat(),
+										  mFieldPlayer["MaxSpeed"].toFloat(),
+										  mFieldPlayer["MaxForce"]
+										  );
 	return nullptr;
 }
