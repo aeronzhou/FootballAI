@@ -23,7 +23,8 @@ void BattleState::onInitialize()
 	// This one is very important
 	OgreProcedural::Root::getInstance()->sceneManager = scene->getSceneManager();
 
-	scene->getPhysicsWorld()->setShowDebug(true);
+	// Enable debug mode
+	//scene->getPhysicsWorld()->setShowDebug(true);
 
 	dt::Node::NodeSP camnode = scene->addChildNode(new dt::Node("camnode"));
 	camnode->setPosition(Ogre::Vector3(0.0f, 15.f, 10.f));

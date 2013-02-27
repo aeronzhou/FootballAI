@@ -14,7 +14,6 @@ class ParamLoaderBase
 public:
 	typedef std::map<QString, QString> MSS;
 
-	//ParamLoaderBase(const QString& path)
 	bool readFile(const QString& path, MSS& param_table)
 	{
 		param_table.clear();

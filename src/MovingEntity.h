@@ -41,8 +41,9 @@ public:
 	  * Place and stop an entity at a particular position
 	  * @position Position this entity should be at
 	  * @heading Heading direction of this entity
+	  * @scale Scale of this entity
 	  */
-	void placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading);
+	void placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading, float scale = 1.0f);
 
 	virtual bool HandleMessage(const Telegram& msg){return false;}
 

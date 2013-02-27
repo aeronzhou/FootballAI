@@ -2,6 +2,9 @@
 #include "Ball.h"
 #include "Pitch.h"
 #include "Player.h"
+#include "FieldPlayer.h"
+#include "GoalKeeper.h"
+#include "PlayerManager.h"
 #include "Goal.h"
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
@@ -43,7 +46,11 @@ void Team::createPlayers()
 	// Generate players with PlayerManager
 	if (getTeamColor() == RED)
 	{
+		FieldPlayer* player_01 = (FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_01", this, FieldPlayer::ATTACKER, 5)).get();
+		player_01->placeAtPosition(Ogre::Vector3(5, 1, -2), Ogre::Vector3(0.f, 0.f, 1.f), 0.2f);
 
+		FieldPlayer* player_02 = (FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_02", this, FieldPlayer::ATTACKER, 10)).get();
+		player_02->placeAtPosition(Ogre::Vector3(5, 1, 2), Ogre::Vector3(0.f, 0.f, 1.f), 0.2f);
 	}
 	else 
 	{

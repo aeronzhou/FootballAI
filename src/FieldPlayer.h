@@ -35,7 +35,6 @@ public:
 
 protected:
 	
-	PlayerRole mRole;                               //!< Attacker, defender or goal-keeper
 	std::shared_ptr<CoolingTimeComponent> mTimer;   //!< Cooling time component
 
 	//StateMachine<FieldPlayer> mStateMachine;       //!< State Machine

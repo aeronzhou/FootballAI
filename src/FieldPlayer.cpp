@@ -4,8 +4,7 @@
 FieldPlayer::FieldPlayer(const QString name, float bounding_radius, float max_speed, 
 	float max_force, float mass, float turn_rate, QString mesh_handle, QString material_handle,  Team* team, 
 	int home_region, PlayerRole role)
-	: Player(name, bounding_radius, max_speed, max_force, mass, turn_rate, mesh_handle, material_handle, team, home_region),
-      mRole(role) {}
+	: Player(name, bounding_radius, max_speed, max_force, mass, turn_rate, mesh_handle, material_handle, team, home_region, role) {}
 
 void FieldPlayer::onInitialize()
 {

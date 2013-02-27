@@ -29,7 +29,8 @@ public:
 		QString mesh_handle, 
 		QString material_handle, 
 		Team* team, 
-		int home_region);
+		int home_region,
+		PlayerRole role);
 
 	void onInitialize();
 

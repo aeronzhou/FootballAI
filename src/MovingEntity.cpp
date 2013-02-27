@@ -60,9 +60,13 @@ float MovingEntity::getMass() const
 	return mMass;
 }
 
-void MovingEntity::placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading)
+void MovingEntity::placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading, float scale)
 {
+	setPosition(position);
+	setScale(scale);
+	setHeading(heading);
 
+	resetPhysicsBody();
 }
 
 Ogre::Vector3 MovingEntity::getHeading() const 
