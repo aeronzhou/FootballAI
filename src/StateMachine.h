@@ -2,17 +2,18 @@
 #define FOOTBALL_AI_STATEMACHINE
 
 
-#include <cassert>
-#include <string>
 #include "State.h"
 #include "Telegram.h"
+#include <cassert>
+#include <string>
+
 
 
 template <class entity_type>
 class StateMachine
 {
 
-private:    
+private:
 
 	entity_type*          mpOwner;				//!< a pointer to the agent that owns this instance
 
@@ -40,29 +41,24 @@ public:
 	void setGlobalState(State<entity_type>* s) {mpGlobalState = s;}
 	void setPreviousState(State<entity_type>* s){mpPreviousState = s;}
 
+
 	/** 
 	  * call this to update the FSM
 	  */
 	void  update()const
 	{
-		//if a global state exists, call its execute method, else do nothing
 		if(mpGlobalState)   mpGlobalState->Execute(mpOwner);
-
-		//same for the current state
 		if (mpCurrentState) mpCurrentState->Execute(mpOwner);
 	}
 
+
 	bool  handleMessage(const Telegram& msg)const
 	{
-		//first see if the current state is valid and that it can handle
-		//the message
 		if (mpCurrentState && mpCurrentState->OnMessage(mpOwner, msg))
 		{
 			return true;
 		}
 
-		//if not, and if a global state has been implemented, send 
-		//the message to the global state
 		if (mpGlobalState && mpGlobalState->OnMessage(mpOwner, msg))
 		{
 			return true;
@@ -77,19 +73,12 @@ public:
 	void  changeState(State<entity_type>* pNewState)
 	{
 		assert(pNewState && "<StateMachine::ChangeState>:trying to assign null state to current");
-
-		//keep a record of the previous state
 		m_pPreviousState = m_pCurrentState;
-
-		//call the exit method of the existing state
 		m_pCurrentState->Exit(m_pOwner);
-
-		//change state to the new state
 		m_pCurrentState = pNewState;
-
-		//call the entry method of the new state
 		m_pCurrentState->Enter(m_pOwner);
 	}
+
 
 	/** 
 	  * change state back to the previous state
@@ -98,6 +87,7 @@ public:
 	{
 		ChangeState(m_pPreviousState);
 	}
+
 
 	/** 
 	  * returns true if the current state's type is equal to the type of the
@@ -109,9 +99,11 @@ public:
 		return false;
 	}
 
+
 	State<entity_type>*  currentState()  const{return m_pCurrentState;}
 	State<entity_type>*  globalState()   const{return m_pGlobalState;}
 	State<entity_type>*  previousState() const{return m_pPreviousState;}
+
 
 	/** 
 	  * only ever used during debugging to grab the name of the current state
@@ -119,13 +111,10 @@ public:
 	std::string getNameOfCurrentState()const
 	{
 		std::string s(typeid(*m_pCurrentState).name());
-
-		//remove the 'class ' part from the front of the string
 		if (s.size() > 5)
 		{
 			s.erase(0, 6);
 		}
-
 		return s;
 	}
 };

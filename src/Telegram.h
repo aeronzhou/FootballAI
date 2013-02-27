@@ -13,11 +13,9 @@ struct Telegram
 	
 	int          mMsg;			//!< the message itself. These are all enumerated in the file
 	
-	double       mDispatchTime;	//!< messages can be dispatched immediately or delayed for a specified amount
-								//!< of time. If a delay is necessary this field is stamped with the time 
-								//!< the message should be dispatched.
+	double       mDispatchTime;	//!< dispatched immediately or delayed for a specified amount
 	
-	void*        mExtraInfo;		//!< any additional information that may accompany the message
+	void*        mExtraInfo;	//!< any additional information that may accompany the message
 	
 
 	Telegram():mDispatchTime(-1),
