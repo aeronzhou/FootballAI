@@ -1,5 +1,5 @@
-#ifndef FOOTBALL_AI_TELEGRAM_H
-#define FOOTBALL_AI_TELEGRAM_H
+#ifndef FOOTBALL_AI_TELEGRAM
+#define FOOTBALL_AI_TELEGRAM
 
 #include <iostream>
 #include <math.h>
