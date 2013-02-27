@@ -48,15 +48,11 @@ public:
 
 	SteeringBehaviors* getSteering() const;
 
-	Ogre::Vector3 getHeading() const;
-	void setHeading(Ogre::Vector3 heading);
-
 	Team* getTeam() const;
 	Ball* getBall() const;
 
 	int getHomeRegion() const;
 	void setHomeRegion(int home_region);
-
 
 
 protected:

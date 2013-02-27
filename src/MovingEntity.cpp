@@ -16,11 +16,8 @@ MovingEntity::MovingEntity(const QString name,
 	  mMaxForce(max_force),
 	  mTurnRate(turn_rate),
 	  mMeshHandle(mesh_handle),
-	  mMaterialHandle(material_handle)
-{
-}
-
-//float now = 3.0f;
+	  mMaterialHandle(material_handle),
+	  mHeading(0.f, 0.f, 1.f) {}
 
 void MovingEntity::onUpdate(double time_diff)
 {
@@ -66,4 +63,15 @@ float MovingEntity::getMass() const
 void MovingEntity::placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading)
 {
 
+}
+
+Ogre::Vector3 MovingEntity::getHeading() const 
+{
+	return mHeading;
+}
+
+void MovingEntity::setHeading(Ogre::Vector3 heading)
+{
+	mHeading = heading;
+	// Set rotation by heading
 }

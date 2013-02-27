@@ -12,10 +12,7 @@
 Player::Player(const QString name, float bounding_radius, float max_speed, float max_force,
 	float mass, float turn_rate, QString mesh_handle, QString material_handle, Team* team, int home_region)
 	: MovingEntity(name, bounding_radius, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
-	  mTeam(team), mHomeRegion(home_region) 
-{
-	mHeading = Ogre::Vector3(0.f, 0.f, 1.f);
-}
+	mTeam(team), mHomeRegion(home_region) {}
 
 bool Player::isThreatened() const
 {
@@ -44,16 +41,6 @@ void Player::onUpdate(double time_diff)
 	mHeading = GetHeadingThroughRotation(getRotation());
 
 	dt::Node::onUpdate(time_diff);
-}
-
-Ogre::Vector3 Player::getHeading() const
-{
-	return mHeading;
-}
-
-void Player::setHeading(Ogre::Vector3 heading)
-{
-	//////////////////////////////////////////////////////////////////////////
 }
 
 Team* Player::getTeam() const
