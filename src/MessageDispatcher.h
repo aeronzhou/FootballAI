@@ -2,16 +2,13 @@
 #define FOOTBALL_AI_MESSAGE_DISPATCHER
 #pragma warning (disable:4786)
 
+#include "Telegram.h"
 #include <set>
 #include <string>
-#include "Telegram.h"
 
 
 class MovingEntity;
 
-/** 
-  * to make life easier...
-  */
 #define Dispatcher MessageDispatcher::Instance()
 
 const double SEND_MSG_IMMEDIATELY = 0.0;
@@ -23,17 +20,10 @@ class MessageDispatcher
 {
 private:  
   
-	/** 
-      * a std::set is used as the container for the delayed messages
-	  * because of the benefit of automatic sorting and avoidance
-	  * of duplicates. Messages are sorted by their dispatch time.
-      */
-    std::set<Telegram> mPriorityQ;
+	std::set<Telegram> mPriorityQ;  //!< used as the container for the delayed messages
 
 	/** 
-      * this method is utilized by DispatchMsg or DispatchDelayedMessages.
-	  * This method calls the message handling member function of the receiving
-	  * entity, pReceiver, with the newly created telegram
+      * utilized by DispatchMsg or DispatchDelayedMessages.
       */
     void Discharge(MovingEntity* pReceiver, const Telegram& msg);	
 
@@ -47,10 +37,13 @@ private:
 
 public:
 
+	/** 
+      *@return a singleton
+	 */
 	static MessageDispatcher* Instance();
 
 	/** 
-      * send a message to another agent. Receiving agent is referenced by ID.
+      *@param ExtraInfo in case need extral information
 	  */
 	void DispatchMsg(double      delay,
                      int         sender,
@@ -59,8 +52,7 @@ public:
                      void*       ExtraInfo);
 
 	/** 
-      * send out any delayed messages. This method is called each time through
-	  * the main game loop.
+      * send out any delayed messages.
 	  */
 	void DispatchDelayedMessages();
 };
