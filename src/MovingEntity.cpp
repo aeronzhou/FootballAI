@@ -7,13 +7,12 @@ const QString MovingEntity::PHYSICS_BODY_COMPONENT = "PhysicsBodyComponent";
 
 MovingEntity::MovingEntity(const QString name,
 	float bounding_radius, 
-	float max_speed, Ogre::Vector3 heading, 
+	float max_speed, 
 	float max_force, float mass, float turn_rate, 
 	QString mesh_handle, QString material_handle)
 	: Node(name),
 	  mBoundingRadius(bounding_radius),
 	  mMass(mass),
-	  //mHeading(Ogre::Vector3::ZERO),
 	  mMaxForce(max_force),
 	  mTurnRate(turn_rate),
 	  mMeshHandle(mesh_handle),
@@ -27,15 +26,7 @@ void MovingEntity::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
-	//////////////////////////////////////////////////////////////////////////
-	// Get heading through rotations
-	//now += 0.02f;
-	//if (now > 1.f) 
-	//{
-	//	now = 0.f;
-	//	Ogre::Quaternion qt = this->getRotation();
-	//	std::cout << "rotation: y = " << qt.getYaw() << std::endl;
-	//}
+	// Update here
 
 	dt::Node::onUpdate(time_diff);
 }
@@ -45,18 +36,6 @@ void MovingEntity::onInitialize()
 	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
 	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT));
 }
-
-//Ogre::Vector3 MovingEntity::getHeading() const 
-//{
-//	return mHeading;
-//}
-//
-//void MovingEntity::setHeading(Ogre::Vector3 heading)
-//{
-//	//////////////////////////////////////////////////////////////////////////
-//	// Get rotations through heading
-//	// Set rotation
-//}
 
 Ogre::Vector3 MovingEntity::getVelocity() const
 {
@@ -82,4 +61,9 @@ void MovingEntity::resetPhysicsBody()
 float MovingEntity::getMass() const
 {
 	return mMass;
+}
+
+void MovingEntity::placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading)
+{
+
 }

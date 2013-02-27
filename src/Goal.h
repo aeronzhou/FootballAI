@@ -14,12 +14,17 @@ public:
 
 	/** 
 	  * Constructor 
+	  * @name Node name
 	  * @left Left post of this goal
 	  * @right Right post of this goal
 	  * @facing Direction this goal is facing
 	  * @ball Pointer to the ball
 	  */
-	Goal(Ogre::Vector3 left, Ogre::Vector3 right, Ogre::Vector3 facing, Ball* ball);
+	Goal(const QString& name, Ogre::Vector3 left, Ogre::Vector3 right, Ogre::Vector3 facing, Ball* ball);
+
+	void onInitialize();
+
+	void onUpdate(double time_diff);
 
 	// Get ans set
 	Ogre::Vector3 getLeftPost() const;
@@ -34,18 +39,18 @@ public:
 	  */
 	bool isScored();
 
+	void resetPhysicsBody();
+
 private:
 
 	Ogre::Vector3 mLeftPost;              
 	Ogre::Vector3 mRightPost;
 	Ogre::Vector3 mFacing;
-	Ogre::Vector3 mCenter;                  //!< Center of this goal
+	Ogre::Vector3 mCenter;                                   //!< Center of this goal
 
-	int mScores;                            //!< Number of points has been scored
+	int mScores;                                             //!< Number of points has been scored
 
 	Ball* mBall;
-
-
 };
 
 #endif

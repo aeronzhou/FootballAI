@@ -2,8 +2,30 @@
 #include "Ball.h"
 #include "Utils.h"
 
-Goal::Goal(Ogre::Vector3 left, Ogre::Vector3 right, Ogre::Vector3 facing, Ball* ball)
-	: mLeftPost(left), mRightPost(right), mFacing(facing), mBall(ball), mScores(0) {}
+#include <Graphics/MeshComponent.hpp>
+#include <Physics/PhysicsBodyComponent.hpp>
+
+#include <OgreProcedural.h>
+
+Goal::Goal(const QString& name, Ogre::Vector3 left, Ogre::Vector3 right, Ogre::Vector3 facing, Ball* ball)
+	: dt::Node(name), mLeftPost(left), mRightPost(right), mFacing(facing), mBall(ball), mScores(0) {}
+
+void Goal::onInitialize()
+{
+	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(0.5, 2, 5)).realizeMesh("Goal");
+
+	addComponent(new dt::MeshComponent("Goal", "", "MeshComponent"));
+	addComponent(new dt::PhysicsBodyComponent("MeshComponent", "PhysicsBodyComponent", dt::PhysicsBodyComponent::CONVEX, 0.f));
+}
+
+void Goal::onUpdate(double time_diff)
+{
+	mIsUpdatingAfterChange = (time_diff == 0);
+
+	// Update here
+
+	dt::Node::onUpdate(time_diff);
+}
 
 // Get function
 Ogre::Vector3 Goal::getLeftPost() const
@@ -42,3 +64,9 @@ bool Goal::isScored()
 	return false;
 }
 
+void Goal::resetPhysicsBody()
+{
+	auto physics_body = findComponent<dt::PhysicsBodyComponent>("PhysicsBodyComponent");
+	physics_body->disable();
+	physics_body->enable();
+}

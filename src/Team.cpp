@@ -2,9 +2,10 @@
 #include "Ball.h"
 #include "Pitch.h"
 #include "Player.h"
+#include "Goal.h"
 
-Team::Team(Ball* ball, Pitch* pitch, TeamColor color)
-	: mBall(ball), mPitch(pitch), mColor(color),
+Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
+	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
 	  mOpponent(nullptr), mControllingPlayer(nullptr), mSupportingPlayer(nullptr), 
 	  mReceivingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()) {}
 
@@ -73,6 +74,11 @@ void Team::setOpponent(Team* opponent)
 Ball* Team::getBall() const
 {
 	return mBall;
+}
+
+Goal* Team::getGoal() const 
+{
+	return mGoal;
 }
 
 void Team::returnAllPlayersToHome()

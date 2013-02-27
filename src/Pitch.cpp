@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Team.h"
 #include "Region.h"
+#include "Goal.h"
 #include "ParamLoader.h"
 
 #include <Physics/PhysicsBodyComponent.hpp>
@@ -22,6 +23,15 @@ void Pitch::onUpdate(double time_diff)
 	Node::onUpdate(time_diff);
 }
 
+//////////////////////////////////////////////////////////////////////////
+void ResetBody(dt::Node* node)
+{
+	auto physics_body = node->findComponent<dt::PhysicsBodyComponent>("PhysicsBodyComponent");
+	physics_body->disable();
+	physics_body->enable();
+}
+//////////////////////////////////////////////////////////////////////////
+
 void Pitch::onInitialize() 
 {
 	// Initialize global param loader
@@ -35,14 +45,29 @@ void Pitch::onInitialize()
 		dt::PhysicsBodyComponent::CONVEX, 0.0f));
 
 	// Realize a ball
-	OgreProcedural::SphereGenerator().setRadius(0.3f).setUTile(.8f).realizeMesh("Football");
+	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
 	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "")).get();
 	mBall->setPosition(0, 10, 0);
 	mBall->resetPhysicsBody();
 
+	// Create goals
+	mRedGoal = (Goal*)addChildNode(new Goal("RedGoal", 
+											Ogre::Vector3(-Prm.HalfPitchWidth, 0, -Prm.HalfGoalWidth), 
+											Ogre::Vector3(-Prm.HalfPitchWidth, 0, Prm.HalfGoalWidth), 
+											Ogre::Vector3(1.f, 0.f, 0.f), mBall)).get();
+	mRedGoal->setPosition(-Prm.HalfPitchWidth + 2.5, 0.5, 0);
+	mRedGoal->resetPhysicsBody();
+
+	mBlueGoal = (Goal*)addChildNode(new Goal("BlueGoal",
+											 Ogre::Vector3(Prm.HalfPitchWidth, 0, Prm.HalfGoalWidth), 
+											 Ogre::Vector3(Prm.HalfPitchWidth, 0, -Prm.HalfGoalWidth), 
+											 Ogre::Vector3(-1.f, 0.f, 0.f), mBall)).get();
+	mBlueGoal->setPosition(Prm.HalfPitchWidth - 2.5, 0.5, 0);
+	mBlueGoal->resetPhysicsBody();
+									
 	// Create Team: Red team at the left side
-	mRedTeam = (Team*)addChildNode(new Team(mBall, this, Team::RED)).get();
-	mBlueTeam = (Team*)addChildNode(new Team(mBall, this, Team::BLUE)).get();
+	mRedTeam = (Team*)addChildNode(new Team(mBall, this, Team::RED, mRedGoal)).get();
+	mBlueTeam = (Team*)addChildNode(new Team(mBall, this, Team::BLUE, mBlueGoal)).get();
 	mRedTeam->setOpponent(mBlueTeam);
 	mBlueTeam->setOpponent(mRedTeam);
 
@@ -50,10 +75,6 @@ void Pitch::onInitialize()
 	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight);	
 	mRegions.resize(Prm.NumRegionsHorizontal * Prm.NumRegionsVertical);
 	createRegions(Prm.HalfPitchWidth * 2 / Prm.NumRegionsHorizontal, Prm.HalfPitchHeight * 2 / Prm.NumRegionsVertical);
-
-	// Create goals
-
-
 }
 
 void Pitch::onDeinitialize() 

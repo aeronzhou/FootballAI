@@ -9,10 +9,13 @@
 
 #include <OgreProcedural.h>
 
-Player::Player(const QString name, float bounding_radius, float max_speed, Ogre::Vector3 heading, float max_force,
+Player::Player(const QString name, float bounding_radius, float max_speed, float max_force,
 	float mass, float turn_rate, QString mesh_handle, QString material_handle, Team* team, int home_region)
-	: MovingEntity(name, bounding_radius, max_speed, heading, max_force, mass, turn_rate, mesh_handle, material_handle),
-	  mTeam(team), mHomeRegion(home_region) {}
+	: MovingEntity(name, bounding_radius, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
+	  mTeam(team), mHomeRegion(home_region) 
+{
+	mHeading = Ogre::Vector3(0.f, 0.f, 1.f);
+}
 
 bool Player::isThreatened() const
 {

@@ -8,6 +8,7 @@
 class Ball;
 class Pitch;
 class Player;
+class Goal;
 
 class Team : public dt::Node
 {
@@ -19,7 +20,7 @@ public:
 		BLUE
 	};
 
-	Team(Ball* ball, Pitch* pitch, TeamColor color);
+	Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal);
 
 	void onInitialize();
 
@@ -32,6 +33,8 @@ public:
 	Pitch* getPitch() const;
 
 	Ball* getBall() const;
+
+	Goal* getGoal() const;
 
 	Team* getOpponent() const;
 	void setOpponent(Team* opponent);
@@ -58,6 +61,7 @@ private:
 
 	Ball* mBall;
 	Pitch* mPitch;
+	Goal* mGoal;
 	TeamColor mColor;                      //!< Team color, RED or BLUE
 	Team* mOpponent;                       //!< The opponent team of this
 	std::vector<Player*> mPlayers;         //!< Pointers of players this team hold

@@ -18,26 +18,33 @@ public:
 		return &instance;
 	}
 
-	ParamLoader(): ParamLoaderBase("Params.xml")
+	ParamLoader()
 	{
 		// Initialize all global params
-		if (!mIsGoodFile) 
+		if (!readFile("Params.xml", mParamTables)) 
 			return;
 
 		//Height = mParamTables["Height"].toFloat();
 		BallMaxSpeed = mParamTables["BallMaxSpeed"].toFloat();
 		BallFriction = mParamTables["BallFriction"].toFloat();
+		BallRadius = mParamTables["BallRadius"].toFloat();
 		NumRegionsHorizontal = mParamTables["NumRegionsHorizontal"].toInt();
 		NumRegionsVertical = mParamTables["NumRegionsVertical"].toInt();
 		HalfPitchWidth = mParamTables["HalfPitchWidth"].toFloat();
 		HalfPitchHeight = mParamTables["HalfPitchHeight"].toFloat();
+		HalfGoalWidth = mParamTables["HalfGoalWidth"].toFloat();
 	}
+
+private:
+
+	MSS mParamTables;
 
 public:
 
 	// Ball
 	float BallMaxSpeed;
 	float BallFriction;
+	float BallRadius;
 
 	// Playing Area
 	int NumRegionsHorizontal;
@@ -46,6 +53,9 @@ public:
 	// Pitch
 	float HalfPitchWidth;
 	float HalfPitchHeight;
+
+	// Goal
+	float HalfGoalWidth;
 	
 };
 #endif
