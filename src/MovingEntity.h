@@ -4,6 +4,8 @@
 #include <Scene/Node.hpp>
 #include <Physics/PhysicsBodyComponent.hpp>
 
+struct Telegram;
+
 class MovingEntity : public dt::Node 
 {
 	Q_OBJECT
@@ -41,6 +43,8 @@ public:
 	  * @heading Heading direction of this entity
 	  */
 	void placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading);
+
+	virtual bool HandleMessage(const Telegram& msg){return false;}
 
 protected:
 
