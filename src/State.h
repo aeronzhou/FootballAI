@@ -1,5 +1,5 @@
-#ifndef STATE_H
-#define STATE_H
+#ifndef FOOTBALL_AI_STATE_H
+#define FOOTBALL_AI_STATE_H
 
 struct Telegram;
 

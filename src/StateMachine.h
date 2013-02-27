@@ -1,5 +1,5 @@
-#ifndef STATEMACHINE_H
-#define STATEMACHINE_H
+#ifndef FOOTBALL_AI_STATEMACHINE_H
+#define FOOTBALL_AI_STATEMACHINE_H
 
 
 #include <cassert>

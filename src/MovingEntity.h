@@ -4,6 +4,8 @@
 #include <Scene/Node.hpp>
 #include <Physics/PhysicsBodyComponent.hpp>
 
+struct Telegram;
+
 class MovingEntity : public dt::Node 
 {
 	Q_OBJECT
@@ -35,6 +37,8 @@ public:
 	float getMaxSpeed() const;
 
 	void resetPhysicsBody();
+
+	virtual bool HandleMessage(const Telegram& msg){return false;}
 
 
 

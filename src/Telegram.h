@@ -1,5 +1,5 @@
-#ifndef TELEGRAM_H
-#define TELEGRAM_H
+#ifndef FOOTBALL_AI_TELEGRAM_H
+#define FOOTBALL_AI_TELEGRAM_H
 
 #include <iostream>
 #include <math.h>
@@ -7,23 +7,23 @@
 
 struct Telegram
 {
-	int          Sender;		//!< the entity that sent this telegram
+	int          mSender;		//!< the entity that sent this telegram
 
-	int          Receiver;		//!< the entity that is to receive this telegram
+	int          mReceiver;		//!< the entity that is to receive this telegram
 	
-	int          Msg;			//!< the message itself. These are all enumerated in the file
+	int          mMsg;			//!< the message itself. These are all enumerated in the file
 	
-	double       DispatchTime;	//!< messages can be dispatched immediately or delayed for a specified amount
+	double       mDispatchTime;	//!< messages can be dispatched immediately or delayed for a specified amount
 								//!< of time. If a delay is necessary this field is stamped with the time 
 								//!< the message should be dispatched.
 	
-	void*        ExtraInfo;		//!< any additional information that may accompany the message
+	void*        mExtraInfo;		//!< any additional information that may accompany the message
 	
 
-	Telegram():DispatchTime(-1),
-		Sender(-1),
-		Receiver(-1),
-		Msg(-1)
+	Telegram():mDispatchTime(-1),
+		mSender(-1),
+		mReceiver(-1),
+		mMsg(-1)
 	{}
 
 
@@ -31,11 +31,11 @@ struct Telegram
 		int    sender,
 		int    receiver,
 		int    msg,
-		void*  info = NULL): DispatchTime(time),
-		Sender(sender),
-		Receiver(receiver),
-		Msg(msg),
-		ExtraInfo(info)
+		void*  info = NULL): mDispatchTime(time),
+		mSender(sender),
+		mReceiver(receiver),
+		mMsg(msg),
+		mExtraInfo(info)
 	{}
 
 };
@@ -52,10 +52,10 @@ const double SMALLESTDELAY = 0.25;
 
 inline bool operator==(const Telegram& t1, const Telegram& t2)
 {
-	return ( fabs(t1.DispatchTime-t2.DispatchTime) < SMALLESTDELAY) &&
-		(t1.Sender == t2.Sender)        &&
-		(t1.Receiver == t2.Receiver)    &&
-		(t1.Msg == t2.Msg);
+	return ( fabs(t1.mDispatchTime-t2.mDispatchTime) < SMALLESTDELAY) &&
+		(t1.mSender == t2.mSender)        &&
+		(t1.mReceiver == t2.mReceiver)    &&
+		(t1.mMsg == t2.mMsg);
 }
 
 inline bool operator<(const Telegram& t1, const Telegram& t2)
@@ -67,14 +67,14 @@ inline bool operator<(const Telegram& t1, const Telegram& t2)
 
 	else
 	{
-		return  (t1.DispatchTime < t2.DispatchTime);
+		return  (t1.mDispatchTime < t2.mDispatchTime);
 	}
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Telegram& t)
 {
-	os << "time: " << t.DispatchTime << "  Sender: " << t.Sender
-		<< "   Receiver: " << t.Receiver << "   Msg: " << t.Msg;
+	os << "time: " << t.mDispatchTime << "  Sender: " << t.mSender
+		<< "   Receiver: " << t.mReceiver << "   Msg: " << t.mMsg;
 
 	return os;
 }
