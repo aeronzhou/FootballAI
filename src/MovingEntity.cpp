@@ -7,13 +7,12 @@ const QString MovingEntity::PHYSICS_BODY_COMPONENT = "PhysicsBodyComponent";
 
 MovingEntity::MovingEntity(const QString name,
 	float bounding_radius, 
-	float max_speed, Ogre::Vector3 heading, 
+	float max_speed, 
 	float max_force, float mass, float turn_rate, 
 	QString mesh_handle, QString material_handle)
 	: Node(name),
 	  mBoundingRadius(bounding_radius),
 	  mMass(mass),
-	  //mHeading(Ogre::Vector3::ZERO),
 	  mMaxForce(max_force),
 	  mTurnRate(turn_rate),
 	  mMeshHandle(mesh_handle),
@@ -62,4 +61,9 @@ void MovingEntity::resetPhysicsBody()
 float MovingEntity::getMass() const
 {
 	return mMass;
+}
+
+void MovingEntity::placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading)
+{
+
 }

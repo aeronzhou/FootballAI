@@ -18,10 +18,10 @@ public:
 		return &instance;
 	}
 
-	ParamLoader(): ParamLoaderBase("Params.xml")
+	ParamLoader()
 	{
 		// Initialize all global params
-		if (!mIsGoodFile) 
+		if (!readFile("Params.xml", mParamTables)) 
 			return;
 
 		//Height = mParamTables["Height"].toFloat();
@@ -34,6 +34,10 @@ public:
 		HalfPitchHeight = mParamTables["HalfPitchHeight"].toFloat();
 		HalfGoalWidth = mParamTables["HalfGoalWidth"].toFloat();
 	}
+
+private:
+
+	MSS mParamTables;
 
 public:
 

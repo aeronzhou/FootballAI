@@ -13,7 +13,6 @@ public:
 	MovingEntity(const QString name,
 				 float bounding_radius,
 				 float max_speed,
-				 Ogre::Vector3 heading,
 				 float max_force,
 				 float mass,
 				 float turn_rate,
@@ -36,21 +35,22 @@ public:
 
 	void resetPhysicsBody();
 
-
+	/** 
+	  * Place and stop an entity at a particular position
+	  * @position Position this entity should be at
+	  * @heading Heading direction of this entity
+	  */
+	void placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading);
 
 protected:
 
 	float mBoundingRadius; 
-
 	float mMass;
-
 	float mMaxSpeed;
+	float mMaxForce;                                        //!< The max force this entity can produce
+	float mTurnRate;                                        //!< The max turning rate 
 
-	float mMaxForce;           //!< The max force this entity can produce
-
-	float mTurnRate;           //!< The max turning rate 
-
-	//Ogre::Vector3 mVelocity;   //!< The current velocity of this entity 
+	Ogre::Vector3 mHeading;                                 //!< Direction this entity heading
 
 	Ogre::Vector3 mSide;
 

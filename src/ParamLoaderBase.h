@@ -14,13 +14,12 @@ class ParamLoaderBase
 public:
 	typedef std::map<QString, QString> MSS;
 
-	ParamLoaderBase(const QString& path)
+	//ParamLoaderBase(const QString& path)
+	bool readFile(const QString& path, MSS& param_table)
 	{
-		mParamTables = MSS();
+		param_table.clear();
 		QFile file(path);
 		QDomDocument doc;
-
-		mIsGoodFile = false;
 
 		if (!file.open(QIODevice::ReadOnly)) 
 		{
@@ -30,21 +29,20 @@ public:
 		{
 			// Create param table
 			QDomElement root = doc.documentElement();
-			mParamTables.clear();
+			param_table.clear();
 
 			for (QDomElement child = root.firstChildElement(); 
 				!child.isNull(); child = child.nextSiblingElement()) 
 			{
-				mParamTables[child.nodeName()] = child.text();
+				param_table[child.nodeName()] = child.text();
 			}
 
-			mIsGoodFile = true;
+			return true;
 		}
+
+		return false;
 	}
 
-protected:
-	bool mIsGoodFile; 
-	MSS mParamTables;  //!< Table to store params
 };
 
 #endif

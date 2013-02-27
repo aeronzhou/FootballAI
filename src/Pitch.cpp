@@ -75,8 +75,6 @@ void Pitch::onInitialize()
 	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight);	
 	mRegions.resize(Prm.NumRegionsHorizontal * Prm.NumRegionsVertical);
 	createRegions(Prm.HalfPitchWidth * 2 / Prm.NumRegionsHorizontal, Prm.HalfPitchHeight * 2 / Prm.NumRegionsVertical);
-
-
 }
 
 void Pitch::onDeinitialize() 
