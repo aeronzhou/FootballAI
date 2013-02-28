@@ -4,7 +4,6 @@
 
 #include "Telegram.h"
 #include <set>
-#include <string>
 
 
 class MovingEntity;
@@ -45,11 +44,11 @@ public:
 	/** 
       *@param ExtraInfo in case need extral information
 	  */
-	void DispatchMsg(double      delay,
-                     int         sender,
-                     int         receiver,
-                     int         msg,
-                     void*       ExtraInfo);
+	void DispatchMsg(double			delay,
+                     MovingEntity*  sender,
+                     MovingEntity*  receiver,
+                     QString		msg,
+                     void*			ExtraInfo);
 
 	/** 
       * send out any delayed messages.
