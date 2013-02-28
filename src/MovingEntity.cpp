@@ -1,9 +1,7 @@
 #include "MovingEntity.h"
+#include "Constant.h"
 
 #include <Graphics/MeshComponent.hpp>
-
-const QString MovingEntity::MESH_COMPONENT = "MeshComponent";
-const QString MovingEntity::PHYSICS_BODY_COMPONENT = "PhysicsBodyComponent";
 
 MovingEntity::MovingEntity(const QString name,
 	float bounding_radius, 

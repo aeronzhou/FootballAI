@@ -1,11 +1,9 @@
 #include "BattleState.h"
 #include "Pitch.h"
 #include "ParamLoader.h"
+#include "Constant.h"
 
 #include <Graphics/DisplayManager.hpp>
-
-
-//#include <Graphics/MeshComponent.hpp>
 
 #include <Graphics/LightComponent.hpp>
 
@@ -26,13 +24,14 @@ void BattleState::onInitialize()
 	// Enable debug mode
 	//scene->getPhysicsWorld()->setShowDebug(true);
 
-	dt::Node::NodeSP camnode = scene->addChildNode(new dt::Node("camnode"));
-	camnode->setPosition(Ogre::Vector3(0.0f, 15.f, 10.f));
-	camnode->addComponent(new dt::CameraComponent("camera"));
-	camnode->findComponent<dt::CameraComponent>("camera")->lookAt(0, 0, 0);
+	dt::Node::NodeSP camnode = scene->addChildNode(new dt::Node("CameraNode"));
+	camnode->setPosition(Ogre::Vector3(Prm.CameraPosX, Prm.CameraPosY, Prm.CameraPosZ));
+	camnode->addComponent(new dt::CameraComponent(CAMERA_COMPONENT));
+	camnode->findComponent<dt::CameraComponent>(CAMERA_COMPONENT)->lookAt(Prm.CameraLookAtX, 
+		Prm.CameraLookAtY, Prm.CameraLookAtZ);
 
 	// Initialize light
-	auto light_node = scene->addChildNode(new dt::Node("lightnode"));
+	auto light_node = scene->addChildNode(new dt::Node("LightNode"));
 	light_node->setPosition(Ogre::Vector3(-2000.0f, 2000.0f, 1000.0f));
 	light_node->addComponent(new dt::LightComponent("light"));
 

@@ -23,25 +23,22 @@ void Pitch::onUpdate(double time_diff)
 	Node::onUpdate(time_diff);
 }
 
-//////////////////////////////////////////////////////////////////////////
-void ResetBody(dt::Node* node)
-{
-	auto physics_body = node->findComponent<dt::PhysicsBodyComponent>("PhysicsBodyComponent");
-	physics_body->disable();
-	physics_body->enable();
-}
-//////////////////////////////////////////////////////////////////////////
-
 void Pitch::onInitialize() 
 {
 	// Initialize global param loader
 	ParamLoader* p = ParamLoader::get();
 
 	// Realize a plane 
-	OgreProcedural::PlaneGenerator().setSizeX(Prm.HalfPitchHeight * 2).setSizeY(Prm.HalfPitchWidth * 2).setUTile(1.0).setVTile(1.0).realizeMesh("Plane");
-	auto plane_node = this->addChildNode(new dt::Node("planenode"));
-	plane_node->addComponent(new dt::MeshComponent("Plane", "PrimitivesTest/Pebbles", "plane-mesh"));
-	plane_node->addComponent(new dt::PhysicsBodyComponent("plane-mesh", "plane-body",
+	//OgreProcedural::PlaneGenerator().setSizeX(90.f).setSizeY(160.f).setUTile(10.0).setVTile(10.0).realizeMesh("BackGround");
+	//auto back_ground_node = this->addChildNode(new dt::Node("BackGoundNode"));
+	//back_ground_node->addComponent(new dt::MeshComponent("BackGround", "PrimitivesTest/Ground", "BackGroundMesh"));
+	//back_ground_node->addComponent(new dt::PhysicsBodyComponent("BackGroundMesh", "BackGroundBody",
+	//	dt::PhysicsBodyComponent::CONVEX, 0.0f));
+
+	OgreProcedural::PlaneGenerator().setSizeX(Prm.HalfPitchHeight * 2).setSizeY(Prm.HalfPitchWidth * 2).setUTile(1.0).setVTile(1.0).realizeMesh("PlayGround");
+	auto play_ground_node = this->addChildNode(new dt::Node("PlayGround"));
+	play_ground_node->addComponent(new dt::MeshComponent("PlayGround", "PrimitivesTest/Pebbles", "PlayGroundMesh"));
+	play_ground_node->addComponent(new dt::PhysicsBodyComponent("PlayGroundMesh", "PlayGroundBody",
 		dt::PhysicsBodyComponent::CONVEX, 0.0f));
 
 	// Realize a ball
@@ -55,14 +52,14 @@ void Pitch::onInitialize()
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, -Prm.HalfGoalWidth), 
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, Prm.HalfGoalWidth), 
 											Ogre::Vector3(1.f, 0.f, 0.f), mBall)).get();
-	mRedGoal->setPosition(-Prm.HalfPitchWidth + 2.5, 0.5, 0);
+	mRedGoal->setPosition(-Prm.HalfPitchWidth, 0.5, 0);
 	mRedGoal->resetPhysicsBody();
 
 	mBlueGoal = (Goal*)addChildNode(new Goal("BlueGoal",
 											 Ogre::Vector3(Prm.HalfPitchWidth, 0, Prm.HalfGoalWidth), 
 											 Ogre::Vector3(Prm.HalfPitchWidth, 0, -Prm.HalfGoalWidth), 
 											 Ogre::Vector3(-1.f, 0.f, 0.f), mBall)).get();
-	mBlueGoal->setPosition(Prm.HalfPitchWidth - 2.5, 0.5, 0);
+	mBlueGoal->setPosition(Prm.HalfPitchWidth, 0.5, 0);
 	mBlueGoal->resetPhysicsBody();
 									
 	// Create Team: Red team at the left side

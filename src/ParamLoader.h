@@ -21,18 +21,30 @@ public:
 	ParamLoader()
 	{
 		// Initialize all global params
-		if (!readFile("Params.xml", mParamTables)) 
+		if (!readFile("./../data/xml/Params.xml", mParamTables)) 
 			return;
 
-		//Height = mParamTables["Height"].toFloat();
 		BallMaxSpeed = mParamTables["BallMaxSpeed"].toFloat();
 		BallFriction = mParamTables["BallFriction"].toFloat();
 		BallRadius = mParamTables["BallRadius"].toFloat();
+		BallMass = mParamTables["BallMass"].toFloat(); 
+
 		NumRegionsHorizontal = mParamTables["NumRegionsHorizontal"].toInt();
 		NumRegionsVertical = mParamTables["NumRegionsVertical"].toInt();
+
 		HalfPitchWidth = mParamTables["HalfPitchWidth"].toFloat();
-		HalfPitchHeight = mParamTables["HalfPitchHeight"].toFloat();
+		HalfPitchHeight = mParamTables["HalfPitchHeight"].toFloat(); 
+
 		HalfGoalWidth = mParamTables["HalfGoalWidth"].toFloat();
+		HalfGoalHeight = mParamTables["HalfGoalHeight"].toFloat();
+		GoalCylinderRadius = mParamTables["GoalCylinderRadius"].toFloat();
+
+		CameraPosX = mParamTables["CameraPosX"].toFloat();
+		CameraPosY = mParamTables["CameraPosY"].toFloat();
+		CameraPosZ = mParamTables["CameraPosZ"].toFloat();
+		CameraLookAtX = mParamTables["CameraLookAtX"].toFloat();
+		CameraLookAtY = mParamTables["CameraLookAtY"].toFloat();
+		CameraLookAtZ = mParamTables["CameraLookAtZ"].toFloat();
 	}
 
 private:
@@ -45,6 +57,7 @@ public:
 	float BallMaxSpeed;
 	float BallFriction;
 	float BallRadius;
+	float BallMass;
 
 	// Playing Area
 	int NumRegionsHorizontal;
@@ -56,6 +69,16 @@ public:
 
 	// Goal
 	float HalfGoalWidth;
+	float HalfGoalHeight;
+	float GoalCylinderRadius;
+
+	// Camera
+	float CameraPosX;
+	float CameraPosY;
+	float CameraPosZ;
+	float CameraLookAtX;
+	float CameraLookAtY;
+	float CameraLookAtZ;
 	
 };
 #endif

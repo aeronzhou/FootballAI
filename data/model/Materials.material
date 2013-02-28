@@ -1,0 +1,180 @@
+material PrimitivesTest/RedBrick
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.4 0.4 0.4
+			diffuse 1.0 1.0 1.0
+			texture_unit
+			{
+				texture 01bricks1.png
+			}
+		}
+	}
+}
+
+material PrimitivesTest/Pebbles
+{
+	technique
+	{
+		pass
+		{
+			ambient  0.5 0.5 0.5
+			diffuse  1.0 1.0 1.0		
+			specular 0.2 0.2 0.2 1.0 30.0
+
+			texture_unit
+			{
+				texture pebbles.jpg
+			}
+		}
+	}
+}
+
+material PrimitivesTest/Ground
+{
+	technique
+	{
+		pass
+		{
+			ambient  0.5 0.5 0.5
+			diffuse  1.0 1.0 1.0		
+			specular 0.2 0.2 0.2 1.0 30.0
+
+			texture_unit
+			{
+				texture Ground.jpg
+			}
+		}
+	}
+}
+
+
+material TextOverlayBackground
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            lighting off
+            depth_write off
+            texture_unit
+            {
+                colour_op_ex source1 src_manual src_current 1 1 1
+                alpha_op_ex source1 src_manual src_current 0.4
+            }
+        }
+    }
+}
+
+material SimplePongField
+{
+    technique
+    {
+        pass
+        {
+			ambient  0.5 0.5 0.5
+			diffuse  0.1 0.1 0.1
+        }
+    }
+}
+
+material SimplePongBall
+{
+    technique
+    {
+        pass
+        {
+			ambient  0.5 0.5 0.5
+			diffuse  1.0 1.0 1.0		
+        }
+    }
+}
+
+material SimplePongPaddle
+{
+    technique
+    {
+        pass
+        {
+			ambient  0.5 0.5 0.5
+			diffuse  1.0 1.0 1.0
+            specular 1.0 1.0 1.0 0.5 100.0
+        }
+    }
+}
+
+material AdvancedPongField
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            
+ 
+            texture_unit
+            {
+                colour_op_ex source1 src_manual src_current 0.1 0.9 0.1
+                alpha_op_ex source1 src_manual src_current 0.5
+            }
+        }
+    }
+}
+
+material AdvancedPongBall
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            
+ 
+            texture_unit
+            {
+                colour_op_ex source1 src_manual src_current 0.9 0.1 0.9
+                alpha_op_ex source1 src_manual src_current 0.5
+            }
+        }
+    }
+}
+
+material AdvancedPongPaddle1
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            
+ 
+            texture_unit
+            {
+                colour_op_ex source1 src_manual src_current 0.9 0.1 0.1
+                alpha_op_ex source1 src_manual src_current 0.5
+            }
+        }
+    }
+}
+
+material AdvancedPongPaddle2
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            emissive 1 1 1 1
+            
+ 
+            texture_unit
+            {
+                colour_op_ex source1 src_manual src_current 0.1 0.1 0.9
+                alpha_op_ex source1 src_manual src_current 0.5
+            }
+        }
+    }
+}

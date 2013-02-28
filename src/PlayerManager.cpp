@@ -11,10 +11,10 @@ PlayerManager PlayerManager::get()
 
 PlayerManager::PlayerManager()
 {
-	if (!readFile("FieldPlayer.xml", mFieldPlayer))
+	if (!readFile("./../data/xml/FieldPlayer.xml", mFieldPlayer))
 		dt::Logger::get().error("Read FieldPlayer.xml failed!!!");
 
-	if (!readFile("GoalKeeper.xml", mGoalKeeper))
+	if (!readFile("./../data/xml/GoalKeeper.xml", mGoalKeeper))
 		dt::Logger::get().error("Read GoalKeeper.xml failed!!!");
 }
 

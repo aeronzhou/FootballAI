@@ -8,7 +8,7 @@
 #include <math.h>
 
 Ball::Ball(QString name, QString mesh_handle, QString material_handle)
-	: MovingEntity(name, 1.0f, 12.f, 12.f, 5.0f, 10.f, mesh_handle, material_handle) {}
+	: MovingEntity(name, 1.0f, 12.f, 12.f, Prm.BallMass, 10.f, mesh_handle, material_handle) {}
 
 void Ball::onInitialize() 
 {
