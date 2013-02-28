@@ -55,6 +55,13 @@ public:
 	int getHomeRegion() const;
 	void setHomeRegion(int home_region);
 
+	/** 
+	  * Return a position with self's region
+	  * @param random If true, return a random position
+	  * @returns A position
+	  */
+	Ogre::Vector3 getPositionWithRegion(bool random = false);
+
 
 protected:
 

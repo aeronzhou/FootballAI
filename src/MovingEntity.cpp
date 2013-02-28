@@ -29,7 +29,7 @@ void MovingEntity::onUpdate(double time_diff)
 void MovingEntity::onInitialize()
 {
 	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
-	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT));
+	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, dt::PhysicsBodyComponent::BOX));
 }
 
 Ogre::Vector3 MovingEntity::getVelocity() const

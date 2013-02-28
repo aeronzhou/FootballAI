@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Team.h"
 #include "Ball.h"
+#include "Region.h"
 #include "SteeringBehaviors.h"
 #include "Utils.h"
 
@@ -61,4 +62,24 @@ int Player::getHomeRegion() const
 void Player::setHomeRegion(int home_region)
 {
 	mHomeRegion = home_region;
+}
+
+Ogre::Vector3 Player::getPositionWithRegion(bool random /* = false */)
+{
+	Pitch* pitch = getTeam()->getPitch();
+
+	Region* region = pitch->getRegionFromIndex(getHomeRegion());
+
+	if (random)
+	{
+		// Return a random position
+		return Ogre::Vector3::ZERO;
+	}
+	else 
+	{
+		float x = (region->getLeft() + region->getRight()) / 2;
+		float z = (region->getTop() + region->getBottom()) / 2;
+
+		return Ogre::Vector3(x, 2.5f, z);
+	}
 }

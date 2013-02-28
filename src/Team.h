@@ -1,6 +1,8 @@
 #ifndef FOOTBALL_AI_TEAM
 #define FOOTBALL_AI_TEAM
 
+#include "Pitch.h"
+
 #include <Scene/Node.hpp>
 
 #include <vector>

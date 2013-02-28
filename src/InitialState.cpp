@@ -9,7 +9,8 @@
 void InitialState::onInitialize() 
 {
 	dt::ResourceManager::get()->addResourceLocation("model", "FileSystem");
-	dt::ResourceManager::get()->addResourceLocation("model/sinbad.zip", "Zip", true);
+	dt::ResourceManager::get()->addResourceLocation("model/Sinbad.zip", "Zip", true);
+	dt::ResourceManager::get()->addResourceLocation("model/fox.zip", "Zip", true);
 
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 

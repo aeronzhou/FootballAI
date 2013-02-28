@@ -41,6 +41,11 @@ void Pitch::onInitialize()
 	play_ground_node->addComponent(new dt::PhysicsBodyComponent("PlayGroundMesh", "PlayGroundBody",
 		dt::PhysicsBodyComponent::CONVEX, 0.0f));
 
+	// Create regions
+	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight);	
+	mRegions.resize(Prm.NumRegionsHorizontal * Prm.NumRegionsVertical);
+	createRegions(Prm.HalfPitchWidth * 2 / Prm.NumRegionsHorizontal, Prm.HalfPitchHeight * 2 / Prm.NumRegionsVertical);
+
 	// Realize a ball
 	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
 	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "")).get();
@@ -68,10 +73,6 @@ void Pitch::onInitialize()
 	mRedTeam->setOpponent(mBlueTeam);
 	mBlueTeam->setOpponent(mRedTeam);
 
-	// Create regions
-	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight);	
-	mRegions.resize(Prm.NumRegionsHorizontal * Prm.NumRegionsVertical);
-	createRegions(Prm.HalfPitchWidth * 2 / Prm.NumRegionsHorizontal, Prm.HalfPitchHeight * 2 / Prm.NumRegionsVertical);
 }
 
 void Pitch::onDeinitialize() 
