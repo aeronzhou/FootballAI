@@ -25,15 +25,12 @@ void MessageDispatcher::Discharge(MovingEntity* pReceiver, const Telegram& teleg
 	}
 }
 
-void MessageDispatcher::DispatchMsg(double       delay,
-                                    int          sender,
-                                    int          receiver,
-                                    int          msg,
-                                    void*        AdditionalInfo = NULL)
+void MessageDispatcher::DispatchMsg(double			delay,
+                                    MovingEntity*   pSender,
+                                    MovingEntity*   pReceiver,
+                                    QString			msg,
+                                    void*			AdditionalInfo = NULL)
 {
-
-	MovingEntity* pReceiver = 0/*= EntityMgr->GetEntityFromID(receiver)*/;
-
 	if (pReceiver == NULL)
 	{
 		#ifdef SHOW_MESSAGING_INFO
@@ -43,7 +40,7 @@ void MessageDispatcher::DispatchMsg(double       delay,
 		return;
 	}
   
-	Telegram telegram(0, sender, receiver, msg, AdditionalInfo);
+	Telegram telegram(0, pSender, pReceiver, msg, AdditionalInfo);
   
 	if (delay <= 0.0)                                                        
 	{

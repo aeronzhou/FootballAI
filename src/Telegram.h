@@ -3,32 +3,32 @@
 
 #include <iostream>
 #include <math.h>
-
+#include <qstring.h>
+#include "MovingEntity.h"
 
 struct Telegram
 {
-	int          mSender;		//!< the entity that sent this telegram
+	MovingEntity*	mSender;		//!< the entity that sent this telegram
 
-	int          mReceiver;		//!< the entity that is to receive this telegram
+	MovingEntity*   mReceiver;		//!< the entity that is to receive this telegram
 	
-	int          mMsg;			//!< the message itself. These are all enumerated in the file
+	QString			mMsg;			//!< the message itself. These are all enumerated in the file
 	
-	double       mDispatchTime;	//!< dispatched immediately or delayed for a specified amount
+	double			mDispatchTime;  //!< dispatched immediately or delayed for a specified amount
 	
-	void*        mExtraInfo;	//!< any additional information that may accompany the message
+	void*			mExtraInfo;		//!< any additional information that may accompany the message
 	
 
 	Telegram():mDispatchTime(-1),
-		mSender(-1),
-		mReceiver(-1),
-		mMsg(-1)
+			   mSender(NULL),
+	 	       mReceiver(NULL)
 	{}
 
 
 	Telegram(double time,
-		int    sender,
-		int    receiver,
-		int    msg,
+		MovingEntity* sender,
+		MovingEntity* receiver,
+		QString    msg,
 		void*  info = NULL): mDispatchTime(time),
 		mSender(sender),
 		mReceiver(receiver),
@@ -71,8 +71,9 @@ inline bool operator<(const Telegram& t1, const Telegram& t2)
 
 inline std::ostream& operator<<(std::ostream& os, const Telegram& t)
 {
-	os << "time: " << t.mDispatchTime << "  Sender: " << t.mSender
-		<< "   Receiver: " << t.mReceiver << "   Msg: " << t.mMsg;
+	os<< "time: " << t.mDispatchTime << "  Sender: " << t.mSender->getFullName().toStdString()
+		<< "   Receiver: " << t.mReceiver->getFullName().toStdString() 
+		<< "   Msg: " << t.mMsg.toStdString();
 
 	return os;
 }
