@@ -32,6 +32,43 @@ material PrimitivesTest/Pebbles
 	}
 }
 
+
+material PlayerFlagRed
+{
+	technique
+	{
+		pass
+		{
+			ambient  0.5 0.5 0.5
+			diffuse  1.0 1.0 1.0		
+			specular 0.2 0.2 0.2 1.0 30.0
+
+			texture_unit
+			{
+				texture PlayerFlagRed.jpg 
+			}
+		}
+	}
+}
+
+material PlayerFlagBlue
+{
+	technique
+	{
+		pass
+		{
+			ambient  0.5 0.5 0.5
+			diffuse  1.0 1.0 1.0		
+			specular 0.2 0.2 0.2 1.0 30.0
+
+			texture_unit
+			{
+				texture PlayerFlagBlue.jpg
+			}
+		}
+	}
+}
+
 material PrimitivesTest/Ground
 {
 	technique

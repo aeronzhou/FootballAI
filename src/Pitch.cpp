@@ -66,6 +66,9 @@ void Pitch::onInitialize()
 											 Ogre::Vector3(-1.f, 0.f, 0.f), mBall)).get();
 	mBlueGoal->setPosition(Prm.HalfPitchWidth, 0.5, 0);
 	mBlueGoal->resetPhysicsBody();
+
+	// CreatPlayerFlag
+	OgreProcedural::SphereGenerator().setRadius(0.8f).realizeMesh("PlayerFlag");
 									
 	// Create Team: Red team at the left side
 	mRedTeam = (Team*)addChildNode(new Team(mBall, this, Team::RED, mRedGoal)).get();

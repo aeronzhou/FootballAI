@@ -1,4 +1,5 @@
 #include "MovingEntity.h"
+#include "Utils.h"
 #include "Constant.h"
 
 #include <Graphics/MeshComponent.hpp>
@@ -22,6 +23,7 @@ void MovingEntity::onUpdate(double time_diff)
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
 	// Update here
+	mHeading = GetHeadingThroughRotation(getRotation());
 
 	dt::Node::onUpdate(time_diff);
 }
@@ -74,6 +76,5 @@ Ogre::Vector3 MovingEntity::getHeading() const
 
 void MovingEntity::setHeading(Ogre::Vector3 heading)
 {
-	mHeading = heading;
-	// Set rotation by heading
+	setRotation(GetRotationThroughHeading(mHeading = heading));
 }

@@ -1,6 +1,8 @@
 #ifndef FOOTBALL_AI_UTILS
 #define FOOTBALL_AI_UTILS
 
+#include "Constant.h"
+
 #include <Scene/Node.hpp>
 
 // Global functions
@@ -44,9 +46,12 @@ inline bool IsLineIntersect(Ogre::Vector3 A, Ogre::Vector3 B, Ogre::Vector3 C, O
 
 inline Ogre::Vector3 GetHeadingThroughRotation(Ogre::Quaternion rotation)
 {
-	//rotation = Ogre::Quaternion(1.f, Ogre::Vector3(0.f, rotation.getYaw(), 0.f));
-	//return Ogre::Vector3(0.f, 0.f, 1.f) * rotation;
-	return rotation * Ogre::Vector3(0.f, 0.f, 1.f);
+	return rotation * STANDARD_HEADING;
+}
+
+inline Ogre::Quaternion GetRotationThroughHeading(Ogre::Vector3 heading)
+{
+	return STANDARD_HEADING.getRotationTo(heading);
 }
 
 #endif

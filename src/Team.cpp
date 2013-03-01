@@ -6,6 +6,7 @@
 #include "GoalKeeper.h"
 #include "PlayerManager.h"
 #include "Goal.h"
+#include "Constant.h"
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
@@ -46,12 +47,6 @@ void Team::createPlayers()
 	// Generate players with PlayerManager
 	if (getTeamColor() == RED)
 	{
-		//FieldPlayer* player_01 = (FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_01", this, FieldPlayer::ATTACKER, 5)).get();
-		//player_01->placeAtPosition(Ogre::Vector3(5, 1.5, -2), Ogre::Vector3(0.f, 0.f, 1.f), 0.2f);
-
-		//FieldPlayer* player_02 = (FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_02", this, FieldPlayer::ATTACKER, 10)).get();
-		//player_02->placeAtPosition(Ogre::Vector3(5, 1.5, 2), Ogre::Vector3(0.f, 0.f, 1.f), 0.2f);
-
 		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_01", 
 			this, FieldPlayer::ATTACKER, 2)).get());
 
@@ -69,7 +64,7 @@ void Team::createPlayers()
 
 		for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 		{
-			(*it)->placeAtPosition((*it)->getPositionWithRegion(), Ogre::Vector3(1.f, 0.f, 0.f), 0.01f);
+			(*it)->placeAtPosition((*it)->getPositionWithRegion(), RED_TEAM_HEADING, 0.15f);
 		}
 	}
 	else 
@@ -91,7 +86,7 @@ void Team::createPlayers()
 
 		for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 		{
-			(*it)->placeAtPosition((*it)->getPositionWithRegion(), Ogre::Vector3(1.f, 0.f, 0.f), 0.25f);
+			(*it)->placeAtPosition((*it)->getPositionWithRegion(), BLUE_TEAM_HEADING, 0.15f);
 		}
 
 	}

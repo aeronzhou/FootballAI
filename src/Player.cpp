@@ -25,11 +25,26 @@ void Player::trackBall()
 	
 }
 
+// Add a flag to distinguish RED and BLUE
+dt::Node* CreatePlayerFlag(dt::Node* parent, const QString& material)
+{
+	dt::Node* player_flag = parent->addChildNode(new dt::Node("Flag")).get();
+	player_flag->addComponent(new dt::MeshComponent("PlayerFlag", material, parent->getName() + "MESH_COMPONENT"));
+	player_flag->setPosition(0.f, 1.f, 0.f);
+
+	return player_flag;
+}
+
 void Player::onInitialize()
 {
 	MovingEntity::onInitialize();
 
 	mSteering = std::shared_ptr<SteeringBehaviors>(new SteeringBehaviors(this, getBall()));
+
+	if (getTeam()->getTeamColor() == Team::RED)
+		CreatePlayerFlag(this, "PlayerFlagRed");
+	else 
+		CreatePlayerFlag(this, "PlayerFlagBlue");
 
 	mPhysicsBody->getRigidBody()->setFriction(2.f);
 }
