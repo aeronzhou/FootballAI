@@ -13,9 +13,14 @@
 	<HalfGoalHeight>1.0</HalfGoalHeight>
 
 	<CameraPosX>0.0</CameraPosX>
-	<CameraPosY>16.0</CameraPosY>
+	<CameraPosY>14.0</CameraPosY>
 	<CameraPosZ>15</CameraPosZ>
 	<CameraLookAtX>0</CameraLookAtX>
 	<CameraLookAtY>0</CameraLookAtY>
 	<CameraLookAtZ>0</CameraLookAtZ>
+
+	<VelocityToForceCoefficient>1.0</VelocityToForceCoefficient>
+	<DecelerationTweaker>0.3</DecelerationTweaker>
+	<VisibleRange>10.0</VisibleRange>
+	<SeperationCoefficient>1.0</SeperationCoefficient>
 </Params>

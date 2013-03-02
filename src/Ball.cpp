@@ -51,7 +51,7 @@ double Ball::timeToCoverDistance(Ogre::Vector3 from, Ogre::Vector3 to, float for
 	return sqrt(s * 2.f / a);
 }
 
-Ogre::Vector3 Ball::futurePosition(double time) const
+Ogre::Vector3 Ball::getFuturePosition(double time) const
 {
 	//////////////////////////////////////////////////////////////////////////
 	return getPosition();

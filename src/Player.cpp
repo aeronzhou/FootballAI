@@ -39,7 +39,7 @@ void Player::onInitialize()
 {
 	MovingEntity::onInitialize();
 
-	mSteering = std::shared_ptr<SteeringBehaviors>(new SteeringBehaviors(this, getBall()));
+	mSteering = new SteeringBehaviors(this, getBall());
 
 	if (getTeam()->getTeamColor() == Team::RED)
 		CreatePlayerFlag(this, "PlayerFlagRed");
@@ -47,6 +47,11 @@ void Player::onInitialize()
 		CreatePlayerFlag(this, "PlayerFlagBlue");
 
 	mPhysicsBody->getRigidBody()->setFriction(2.f);
+}
+
+void Player::onDeinitialize() 
+{
+	delete mSteering;
 }
 
 void Player::onUpdate(double time_diff)
@@ -97,4 +102,9 @@ Ogre::Vector3 Player::getPositionWithRegion(bool random /* = false */)
 
 		return Ogre::Vector3(x, 2.5f, z);
 	}
+}
+
+SteeringBehaviors* Player::getSteering() const 
+{
+	return mSteering;
 }

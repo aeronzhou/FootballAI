@@ -25,6 +25,8 @@ public:
 
 	void onInitialize();
 
+	void onDeinitialize();
+
 	Ogre::Vector3 getHeading() const;
 	void setHeading(Ogre::Vector3 heading);
 
@@ -34,6 +36,7 @@ public:
 	float getMass() const;
 
 	float getMaxSpeed() const;
+	float getMaxForce() const;
 
 	void resetPhysicsBody();
 

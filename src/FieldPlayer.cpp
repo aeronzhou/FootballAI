@@ -18,6 +18,11 @@ void FieldPlayer::onInitialize()
 	mTimer = addComponent(new CoolingTimeComponent(0.5));
 }
 
+void FieldPlayer::onDeinitialize()
+{
+	Player::onDeinitialize();
+}
+
 void FieldPlayer::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);

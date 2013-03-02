@@ -45,6 +45,10 @@ public:
 		CameraLookAtX = mParamTables["CameraLookAtX"].toFloat();
 		CameraLookAtY = mParamTables["CameraLookAtY"].toFloat();
 		CameraLookAtZ = mParamTables["CameraLookAtZ"].toFloat();
+
+		VelocityToForceCoefficient = mParamTables["VelocityToForceCoefficient"].toFloat();
+		DecelerationTweaker = mParamTables["DecelerationTweaker"].toFloat();
+		VisibleRangeSqr = mParamTables["VisibleRange"].toFloat() * mParamTables["VisibleRange"].toFloat();
 	}
 
 private:
@@ -79,6 +83,13 @@ public:
 	float CameraLookAtX;
 	float CameraLookAtY;
 	float CameraLookAtZ;
+
+	// Steering
+	float VelocityToForceCoefficient;
+	float DecelerationTweaker;
+	float VisibleRangeSqr;
+	float SeperationCoefficient;
 	
 };
+
 #endif

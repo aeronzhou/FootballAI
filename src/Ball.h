@@ -43,7 +43,7 @@ public:
 	  * @param time 
 	  * @returns Future position
 	  */
-	Ogre::Vector3 futurePosition(double time) const;
+	Ogre::Vector3 getFuturePosition(double time) const;
 
 	/** 
 	  * Stop the ball, set the ball's velocity to be zero

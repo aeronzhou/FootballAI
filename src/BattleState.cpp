@@ -32,7 +32,7 @@ void BattleState::onInitialize()
 
 	// Initialize light
 	auto light_node = scene->addChildNode(new dt::Node("LightNode"));
-	light_node->setPosition(Ogre::Vector3(-2000.0f, 2000.0f, 1000.0f));
+	light_node->setPosition(Ogre::Vector3(-20.0f, 200.0f, 10.0f));
 	light_node->addComponent(new dt::LightComponent("light"));
 
 	auto pitch = scene->addChildNode(new Pitch());	

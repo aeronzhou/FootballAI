@@ -2,12 +2,13 @@
 #define FOOTBALL_AI_PLAYER
 
 #include "MovingEntity.h"
+#include "IList.h"
 
 class Team;
 class Ball;
 class SteeringBehaviors;
 
-class Player : public MovingEntity
+class Player : public MovingEntity, public IList<Player*>
 {
 	Q_OBJECT
 
@@ -33,6 +34,8 @@ public:
 		PlayerRole role);
 
 	void onInitialize();
+
+	void onDeinitialize();
 
 	void onUpdate(double time_diff);
 
@@ -72,7 +75,8 @@ protected:
 	int mDefaultRegion;                              //!< The default region player is standing on
 	float mDistSqToBall;                             //!< Distance square from the ball
 
-	std::shared_ptr<SteeringBehaviors> mSteering;    //!< 
+	SteeringBehaviors* mSteering;                    //!< Steering force
+	bool mTag;                                       //!< Flag to indicate this player is chosen
 
 };
 

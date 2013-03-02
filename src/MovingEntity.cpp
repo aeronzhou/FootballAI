@@ -34,6 +34,8 @@ void MovingEntity::onInitialize()
 	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, dt::PhysicsBodyComponent::BOX));
 }
 
+void MovingEntity::onDeinitialize() {}
+
 Ogre::Vector3 MovingEntity::getVelocity() const
 {
 	return BtOgre::Convert::toOgre(mPhysicsBody->getRigidBody()->getLinearVelocity());
@@ -47,6 +49,11 @@ void MovingEntity::setVelocity(Ogre::Vector3 velocity)
 float MovingEntity::getMaxSpeed() const
 {
 	return mMaxSpeed;
+}
+
+float MovingEntity::getMaxForce() const
+{
+	return mMaxForce;
 }
 
 void MovingEntity::resetPhysicsBody()

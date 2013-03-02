@@ -13,6 +13,12 @@ void GoalKeeper::onInitialize()
 
 }
 
+void GoalKeeper::onDeinitialize()
+{
+	Player::onDeinitialize();
+}
+
+
 void GoalKeeper::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);

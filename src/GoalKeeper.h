@@ -20,6 +20,8 @@ public:
 
 	void onInitialize();
 
+	void onDeinitialize();
+
 	void onUpdate(double time_diff);
 
 	//StateMachine<GoalKeeper>* getFSM() const;

@@ -7,6 +7,8 @@
 #include <math.h>
 
 const float PI = acos(-1.f);
+const float MAX_VALUE = 1e99;
+const float EPS = 1e-9;
 
 const QString PHYSICS_BODY_COMPONENT = "PhysicsBodyComponent";
 const QString MESH_COMPONENT = "MeshComponent";

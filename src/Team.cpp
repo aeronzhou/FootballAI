@@ -27,7 +27,6 @@ void Team::onInitialize()
 		// Initilize players' position, heading, etc.
 		//(*it)->getSteering()->separationOn();
 	}
-
 }
 
 void Team::onUpdate(double time_diff)
@@ -65,6 +64,8 @@ void Team::createPlayers()
 		for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 		{
 			(*it)->placeAtPosition((*it)->getPositionWithRegion(), RED_TEAM_HEADING, 0.15f);
+			// Push it to the player list
+			(*it)->push_back(*it);
 		}
 	}
 	else 
@@ -87,6 +88,7 @@ void Team::createPlayers()
 		for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 		{
 			(*it)->placeAtPosition((*it)->getPositionWithRegion(), BLUE_TEAM_HEADING, 0.15f);
+			(*it)->push_back(*it);
 		}
 
 	}
@@ -129,5 +131,16 @@ void Team::returnAllPlayersToHome()
 
 void Team::calculatePlayerClosestToBall()
 {
+	float min_dist_square = MAX_VALUE;
 
+	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
+	{
+		float dist_sqr = getBall()->getPosition().squaredDistance((*it)->getPosition());
+
+		if (dist_sqr < min_dist_square)
+		{
+			min_dist_square = dist_sqr;
+			mPlayerClosestToBall = (*it);
+		}
+	}
 }

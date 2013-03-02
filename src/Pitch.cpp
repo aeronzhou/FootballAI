@@ -29,12 +29,6 @@ void Pitch::onInitialize()
 	ParamLoader* p = ParamLoader::get();
 
 	// Realize a plane 
-	//OgreProcedural::PlaneGenerator().setSizeX(90.f).setSizeY(160.f).setUTile(10.0).setVTile(10.0).realizeMesh("BackGround");
-	//auto back_ground_node = this->addChildNode(new dt::Node("BackGoundNode"));
-	//back_ground_node->addComponent(new dt::MeshComponent("BackGround", "PrimitivesTest/Ground", "BackGroundMesh"));
-	//back_ground_node->addComponent(new dt::PhysicsBodyComponent("BackGroundMesh", "BackGroundBody",
-	//	dt::PhysicsBodyComponent::CONVEX, 0.0f));
-
 	OgreProcedural::PlaneGenerator().setSizeX(Prm.HalfPitchHeight * 2).setSizeY(Prm.HalfPitchWidth * 2).setUTile(1.0).setVTile(1.0).realizeMesh("PlayGround");
 	auto play_ground_node = this->addChildNode(new dt::Node("PlayGround"));
 	play_ground_node->addComponent(new dt::MeshComponent("PlayGround", "PrimitivesTest/Pebbles", "PlayGroundMesh"));
@@ -52,7 +46,7 @@ void Pitch::onInitialize()
 	mBall->setPosition(0, 10, 0);
 	mBall->resetPhysicsBody();
 
-	// Create goals
+	//// Create goals
 	mRedGoal = (Goal*)addChildNode(new Goal("RedGoal", 
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, -Prm.HalfGoalWidth), 
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, Prm.HalfGoalWidth), 
@@ -75,7 +69,6 @@ void Pitch::onInitialize()
 	mBlueTeam = (Team*)addChildNode(new Team(mBall, this, Team::BLUE, mBlueGoal)).get();
 	mRedTeam->setOpponent(mBlueTeam);
 	mBlueTeam->setOpponent(mRedTeam);
-
 }
 
 void Pitch::onDeinitialize() 
