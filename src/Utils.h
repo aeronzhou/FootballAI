@@ -54,4 +54,12 @@ inline Ogre::Quaternion GetRotationThroughHeading(Ogre::Vector3 heading)
 	return STANDARD_HEADING.getRotationTo(heading);
 }
 
+inline void Vector3Truncate(Ogre::Vector3& vec, float magnitude)
+{
+	if (vec.squaredLength() < magnitude * magnitude)
+	{
+		vec = vec.normalisedCopy() * magnitude;
+	}
+}
+
 #endif

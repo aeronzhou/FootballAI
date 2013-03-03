@@ -38,6 +38,8 @@ public:
 	bool isTag() const;
 	void setTag(bool tag);
 
+	Ogre::Vector3 getSteeringForce() const;
+
 	// Set On 
 	void seekOn();
 	void arriveOn();

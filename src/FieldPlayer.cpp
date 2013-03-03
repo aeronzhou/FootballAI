@@ -1,6 +1,8 @@
 #include "FieldPlayer.h"
 #include "SteeringBehaviors.h"
 
+#include <OgreManualObject.h>
+
 FieldPlayer::FieldPlayer(const QString name, float bounding_radius, float max_speed, 
 	float max_force, float mass, float turn_rate, QString mesh_handle, QString material_handle,  Team* team, 
 	int home_region, PlayerRole role)
@@ -23,11 +25,20 @@ void FieldPlayer::onDeinitialize()
 	Player::onDeinitialize();
 }
 
+//float sum = 1.f;
+
 void FieldPlayer::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
 	//Update here
+	getSteering()->calculate();
+
+	//mPhysicsBody->setCentralForce(BtOgre::Convert::toBullet(getSteering()->getSteeringForce()));
+
+	Ogre::Vector3 velocity = getVelocity();
+
+	//ManualObject* obj;
 
 	Player::onUpdate(time_diff);
 }

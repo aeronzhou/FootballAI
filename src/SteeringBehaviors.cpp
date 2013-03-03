@@ -275,3 +275,8 @@ bool SteeringBehaviors::accumulateForce(Ogre::Vector3& prev_force, Ogre::Vector3
 
 	return true;
 }
+
+Ogre::Vector3 SteeringBehaviors::getSteeringForce() const 
+{
+	return mSteeringForce;
+}

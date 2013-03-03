@@ -31,7 +31,8 @@ void MovingEntity::onUpdate(double time_diff)
 void MovingEntity::onInitialize()
 {
 	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
-	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, dt::PhysicsBodyComponent::BOX));
+	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
+		dt::PhysicsBodyComponent::BOX, mMass));
 }
 
 void MovingEntity::onDeinitialize() {}
@@ -44,6 +45,7 @@ Ogre::Vector3 MovingEntity::getVelocity() const
 void MovingEntity::setVelocity(Ogre::Vector3 velocity) 
 {
 	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(velocity));
+	//mHeading = velocity.normalisedCopy();
 }
 
 float MovingEntity::getMaxSpeed() const

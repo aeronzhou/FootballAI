@@ -2,7 +2,7 @@
 	<BoundingRadius>0.2</BoundingRadius>
 	<MaxSpeed>12.0</MaxSpeed>
 	<MaxForce>20</MaxForce>
-	<Mass>60</Mass>
+	<Mass>70</Mass>
 	<TurnRate>0.2</TurnRate>
 	<RedMeshHandle>SinbadRed.mesh</RedMeshHandle>
 	<BlueMeshHandle>SinbadRed.mesh</BlueMeshHandle>
