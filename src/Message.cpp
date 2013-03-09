@@ -6,29 +6,17 @@ const double MIN_TIME_DELAY_DIFF = 0.15;
 
 Message::Message(): deliver_time(-1), sender(NULL), receiver(NULL) {}
 
-Message::Message(double time, MovingEntity* sender, MovingEntity* receiver, const QString& text, void* data)
-	: deliver_time(time), sender(sender), receiver(receiver), text(text), data(data) {}
+Message::Message(double deliver_time, MovingEntity* sender, MovingEntity* receiver, MessageType msg_type, void* data)
+	: deliver_time(deliver_time), sender(sender), receiver(receiver), msg_type(msg_type), data(data) {}
 
-
-bool operator== (const Message& p1, const Message& p2)
+bool Message::operator < (const Message& t) const 
 {
-	return ((fabs(p1.deliver_time - p2.deliver_time) < MIN_TIME_DELAY_DIFF) &&
-			p1.sender == p2.sender &&
-			p2.receiver == p2.receiver);
-}
-
-bool operator< (const Message& p1, const Message& p2)
-{
-	if (p1 == p2)
+	if (fabs(deliver_time - t.deliver_time) < MIN_TIME_DELAY_DIFF &&
+		sender == t.sender &&
+		receiver == t.receiver)
 	{
 		return false;
 	}
 
-	return p1.deliver_time < p2.deliver_time;
+	return deliver_time < t.deliver_time;
 }
-
-//std::ostream& operator<<(std::ostream& os, const Message& msg)
-//{
-//	os << "From " << msg.sender << " to " << msg.receiver << ", text: " << msg.text;
-//	return os;
-//}

@@ -23,4 +23,7 @@
 	<DecelerationTweaker>0.3</DecelerationTweaker>
 	<VisibleRange>10.0</VisibleRange>
 	<SeperationCoefficient>1.0</SeperationCoefficient>
+
+	<TotalGameTime>5</TotalGameTime>
+	<LastCriticalMinutes>5</LastCriticalMinutes>
 </Params>
