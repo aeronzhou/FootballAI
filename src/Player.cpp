@@ -15,16 +15,6 @@ Player::Player(const QString name, float bounding_radius, float max_speed, float
 	: MovingEntity(name, bounding_radius, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
 	mTeam(team), mHomeRegion(home_region), mPlayerRole(role) {}
 
-bool Player::isThreatened() const
-{
-	return false;
-}
-
-void Player::trackBall() 
-{
-	
-}
-
 // Add a flag to distinguish RED and BLUE
 dt::Node* CreatePlayerFlag(dt::Node* parent, const QString& material)
 {

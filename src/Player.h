@@ -40,16 +40,6 @@ public:
 	void onUpdate(double time_diff);
 
 
-	/** 
-	  * @returns If the current player is unsafe to keep the ball
-	  */
-	bool isThreatened() const;
-
-	/** 
-	  * Trace the ball
-	  */
-	void trackBall();
-
 	SteeringBehaviors* getSteering() const;
 
 	Team* getTeam() const;

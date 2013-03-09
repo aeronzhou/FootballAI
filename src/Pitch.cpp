@@ -10,8 +10,7 @@
 #include <OgreProcedural.h>
 
 Pitch::Pitch(const QString name /* = "Pitch" */)
-	: dt::Node(name),
-	  mGoalKeeperHasBall(false) {}
+	: dt::Node(name) {}
 
 void Pitch::onUpdate(double time_diff) 
 {
@@ -36,7 +35,7 @@ void Pitch::onInitialize()
 		dt::PhysicsBodyComponent::CONVEX, 0.0f));
 
 	// Create regions
-	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight);	
+	mPlayGround = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight);	
 	mRegions.resize(Prm.NumRegionsHorizontal * Prm.NumRegionsVertical);
 	createRegions(Prm.HalfPitchWidth * 2 / Prm.NumRegionsHorizontal, Prm.HalfPitchHeight * 2 / Prm.NumRegionsVertical);
 
@@ -74,31 +73,11 @@ void Pitch::onInitialize()
 void Pitch::onDeinitialize() 
 {
 	// Avoid naked pointers
-	delete mPlayingArea;
+	delete mPlayGround;
 
 	for (auto it = mRegions.begin(); it != mRegions.end(); ++it)
 		delete(*it);
 
-}
-
-bool Pitch::getGoalKeeperHasBall() const 
-{
-	return mGoalKeeperHasBall;
-}
-
-void Pitch::setGoalKeeperHasBall(bool flag)
-{
-	mGoalKeeperHasBall = flag;
-}
-
-bool Pitch::getGameOn() const
-{
-	return mGameOn;
-}
-
-void Pitch::setGameOn(bool flag)
-{
-	mGameOn = flag;
 }
 
 Ball* Pitch::getBall() const 
@@ -113,7 +92,7 @@ Region* Pitch::getRegionFromIndex(int index)
 
 Region* Pitch::getPlayingArea() const
 {
-	return mPlayingArea;
+	return mPlayGround;
 }
 
 void Pitch::createRegions(float width, float height)
@@ -125,8 +104,8 @@ void Pitch::createRegions(float width, float height)
 	{
 		for (int j = 0; j < Prm.NumRegionsHorizontal; ++j)
 		{
-			mRegions[idx] = new Region(mPlayingArea->getLeft() + j * width, mPlayingArea->getTop() + i * height,
-				                       mPlayingArea->getLeft() + j * width + width, mPlayingArea->getTop() + i * height + height, idx);
+			mRegions[idx] = new Region(mPlayGround->getLeft() + j * width, mPlayGround->getTop() + i * height,
+				                       mPlayGround->getLeft() + j * width + width, mPlayGround->getTop() + i * height + height, idx);
 			++idx;
 		}
 	}

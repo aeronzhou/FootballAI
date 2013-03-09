@@ -31,26 +31,15 @@ public:
 public:
 	// Get and set
 	TeamColor getTeamColor() const;
-
 	Pitch* getPitch() const;
-
 	Ball* getBall() const;
-
 	Goal* getGoal() const;
 
 	Team* getOpponent() const;
 	void setOpponent(Team* opponent);
 
-	/** 
-	  * Send all players to their home regions
-	  */
-	void returnAllPlayersToHome();
 
 private:
-	/** 
-	  * Set the pointer of mPlayerClosestToBall
-	  */
-	void calculatePlayerClosestToBall();
 
 	/** 
 	  * Genrate players 
@@ -69,11 +58,6 @@ private:
 	std::vector<Player*> mPlayers;         //!< Pointers of players this team hold
 
 	Player* mControllingPlayer;            //!< Pointer to the player which is controlling the ball 
-	Player* mSupportingPlayer;
-	Player* mReceivingPlayer;              //!< Pointer to the player which is receiving the ball
-	Player* mPlayerClosestToBall;
-
-	float mDistSqToBallOfClosestPlayer;    //!< Square distance from the ball to the nearest player, update every frame
 
 };
 

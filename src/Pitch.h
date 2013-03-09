@@ -25,12 +25,6 @@ public:
 
 	void onUpdate(double time_diff);
 
-	bool getGoalKeeperHasBall() const;
-	void setGoalKeeperHasBall(bool flag);
-
-	bool getGameOn() const;
-	void setGameOn(bool flag);
-
 	Region* getRegionFromIndex(int index);
 	Region* getPlayingArea() const;
 
@@ -55,13 +49,7 @@ private:
 	Goal* mBlueGoal;               //!< Goal of blue team
 
 	std::vector<Region*> mRegions; //!< Regions
-	Region* mPlayingArea;          //!< Play ground area
-
-	bool mGameOn;                  //!< Whether game is running
-
-	bool mGoalKeeperHasBall;       //!< If the goal keeper is controlling the ball
-
-	
+	Region* mPlayGround;           //!< Play ground area
 
 };
 

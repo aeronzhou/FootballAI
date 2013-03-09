@@ -10,8 +10,7 @@
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
-	  mOpponent(nullptr), mControllingPlayer(nullptr), mSupportingPlayer(nullptr), 
-	  mReceivingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()) {}
+	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayers(std::vector<Player*>()) {}
 
 
 void Team::onInitialize() 
@@ -32,8 +31,6 @@ void Team::onInitialize()
 void Team::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
-
-	calculatePlayerClosestToBall();
 
 	// Update StateMachine
 	//mStateMachine->update();	
@@ -122,25 +119,4 @@ Ball* Team::getBall() const
 Goal* Team::getGoal() const 
 {
 	return mGoal;
-}
-
-void Team::returnAllPlayersToHome()
-{
-	
-}
-
-void Team::calculatePlayerClosestToBall()
-{
-	float min_dist_square = MAX_VALUE;
-
-	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
-	{
-		float dist_sqr = getBall()->getPosition().squaredDistance((*it)->getPosition());
-
-		if (dist_sqr < min_dist_square)
-		{
-			min_dist_square = dist_sqr;
-			mPlayerClosestToBall = (*it);
-		}
-	}
 }
