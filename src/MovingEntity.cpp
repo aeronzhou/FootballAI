@@ -87,3 +87,8 @@ void MovingEntity::setHeading(Ogre::Vector3 heading)
 {
 	setRotation(GetRotationThroughHeading(mHeading = heading));
 }
+
+bool MovingEntity::handleMessage(const Message& msg) const
+{
+	return false;
+}

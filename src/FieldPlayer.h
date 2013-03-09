@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "CoolingTimeComponent.h"
+#include "StateMachine.h"
 
 class FieldPlayer : public Player
 {
@@ -29,17 +30,17 @@ public:
 	/** 
 	  * @return True if this player is ready to kick the ball
 	  */
-	bool isReadyForNextKick();
+	bool isReadyToKick() const;
 
-	void handleMessage(/* const Telegarm& msg */);
+	bool handleMessage(const Message& msg) const;
 
-	//StateMachine<FieldPlayer>* getFSM() const;
+	StateMachine<FieldPlayer>* getStateMachine() const;
 
 protected:
 	
-	std::shared_ptr<CoolingTimeComponent> mTimer;   //!< Cooling time component
+	std::shared_ptr<CoolingTimeComponent> mShootCoolTime;   //!< Cooling time component
 
-	//StateMachine<FieldPlayer> mStateMachine;       //!< State Machine
+	StateMachine<FieldPlayer>* mStateMachine;               //!< State Machine
 
 };
 

@@ -28,7 +28,7 @@ void MessageDeliverer::deliverMessageNow(const Message& msg)
 {
 	MovingEntity* receiver = msg.receiver;
 
-	receiver->HandleMessage(msg);
+	receiver->handleMessage(msg);
 }
 
 void MessageDeliverer::latelyDeliverMessage()
