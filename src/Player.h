@@ -4,6 +4,8 @@
 #include "MovingEntity.h"
 #include "IList.h"
 
+#include <Graphics/TextComponent.hpp>
+
 class Team;
 class Ball;
 class SteeringAider;
@@ -55,6 +57,8 @@ public:
 	  */
 	Ogre::Vector3 getPositionWithRegion(bool random = false);
 
+	void setDebugText(QString debugText);
+
 
 protected:
 
@@ -67,6 +71,9 @@ protected:
 
 	SteeringAider* mSteering;                    //!< Steering force
 	bool mTag;                                       //!< Flag to indicate this player is chosen
+
+private:
+	dt::TextComponent* mDebugText;
 
 };
 
