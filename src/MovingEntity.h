@@ -48,7 +48,7 @@ public:
 	  */
 	void placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading, float scale = 1.0f);
 
-	virtual bool HandleMessage(const Message& msg){return false;}
+	virtual bool handleMessage(const Message& msg) const;
 
 protected:
 

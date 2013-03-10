@@ -4,8 +4,8 @@
 	<BallFriction>3.0</BallFriction>
 	<BallRadius>0.15</BallRadius>
 
-	<NumRegionsHorizontal>6</NumRegionsHorizontal>
-	<NumRegionsVertical>3</NumRegionsVertical>
+	<NumRegionsHorizontal>9</NumRegionsHorizontal>
+	<NumRegionsVertical>5</NumRegionsVertical>
 
 	<HalfPitchWidth>10.5</HalfPitchWidth>
 	<HalfPitchHeight>6.8</HalfPitchHeight>
@@ -23,4 +23,7 @@
 	<DecelerationTweaker>0.3</DecelerationTweaker>
 	<VisibleRange>10.0</VisibleRange>
 	<SeperationCoefficient>1.0</SeperationCoefficient>
+
+	<TotalGameTime>5</TotalGameTime>
+	<LastCriticalMinutes>5</LastCriticalMinutes>
 </Params>

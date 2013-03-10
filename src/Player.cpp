@@ -2,7 +2,7 @@
 #include "Team.h"
 #include "Ball.h"
 #include "Region.h"
-#include "SteeringBehaviors.h"
+#include "SteeringAider.h"
 #include "Utils.h"
 
 #include <Graphics/MeshComponent.hpp>
@@ -38,7 +38,7 @@ void Player::onInitialize()
 {
 	MovingEntity::onInitialize();
 
-	mSteering = new SteeringBehaviors(this, getBall());
+	mSteering = new SteeringAider(this, getBall());
 
 	if (getTeam()->getTeamColor() == Team::RED)
 		this->mDebugText = CreatePlayerFlag(this, "PlayerFlagRed");
@@ -103,7 +103,7 @@ Ogre::Vector3 Player::getPositionWithRegion(bool random /* = false */)
 	}
 }
 
-SteeringBehaviors* Player::getSteering() const 
+SteeringAider* Player::getSteering() const 
 {
 	return mSteering;
 }

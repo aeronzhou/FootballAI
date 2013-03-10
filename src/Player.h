@@ -8,7 +8,7 @@
 
 class Team;
 class Ball;
-class SteeringBehaviors;
+class SteeringAider;
 
 class Player : public MovingEntity, public IList<Player*>
 {
@@ -42,7 +42,7 @@ public:
 	void onUpdate(double time_diff);
 
 
-	SteeringBehaviors* getSteering() const;
+	SteeringAider* getSteering() const;
 
 	Team* getTeam() const;
 	Ball* getBall() const;
@@ -69,7 +69,7 @@ protected:
 	int mDefaultRegion;                              //!< The default region player is standing on
 	float mDistSqToBall;                             //!< Distance square from the ball
 
-	SteeringBehaviors* mSteering;                    //!< Steering force
+	SteeringAider* mSteering;                    //!< Steering force
 	bool mTag;                                       //!< Flag to indicate this player is chosen
 
 private:

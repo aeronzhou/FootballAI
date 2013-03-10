@@ -1,0 +1,65 @@
+<PlayerPosition>
+	<WaitingForKickOff>
+		<Red>
+			<p0>22</p0>
+			<p1>12</p1>
+			<p2>30</p2>
+			<p3>2</p3>
+			<p4>19</p4>
+			<p5>38</p5>
+			<p6>18</p6>
+		</Red>
+		<Blue>
+			<p0>14</p0>
+			<p1>32</p1>
+			<p2>15</p2>
+			<p3>6</p3>
+			<p4>25</p4>
+			<p5>43</p5>
+			<p6>26</p6>
+		</Blue>
+	</WaitingForKickOff>
+	
+	<PositionalAttacking>
+		<Red>
+			<p0>22</p0>
+			<p1>12</p1>
+			<p2>30</p2>
+			<p3>2</p3>
+			<p4>19</p4>
+			<p5>38</p5>
+			<p6>18</p6>
+		</Red>
+		<Blue>
+			<p0>14</p0>
+			<p1>32</p1>
+			<p2>15</p2>
+			<p3>6</p3>
+			<p4>25</p4>
+			<p5>43</p5>
+			<p6>26</p6>
+		</Blue>
+	</PositionalAttacking>
+
+	<PositionalDefending>
+		<Red>
+			<p0>22</p0>
+			<p1>12</p1>
+			<p2>30</p2>
+			<p3>2</p3>
+			<p4>19</p4>
+			<p5>38</p5>
+			<p6>18</p6>
+		</Red>
+		<Blue>
+			<p0>14</p0>
+			<p1>32</p1>
+			<p2>15</p2>
+			<p3>6</p3>
+			<p4>25</p4>
+			<p5>43</p5>
+			<p6>26</p6>
+		</Blue>
+	</PositionalDefending>
+</PlayerPosition>
+

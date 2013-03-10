@@ -49,6 +49,9 @@ public:
 		VelocityToForceCoefficient = mParamTables["VelocityToForceCoefficient"].toFloat();
 		DecelerationTweaker = mParamTables["DecelerationTweaker"].toFloat();
 		VisibleRangeSqr = mParamTables["VisibleRange"].toFloat() * mParamTables["VisibleRange"].toFloat();
+
+		TotalGameTime = mParamTables["TotalGameTime"].toDouble();
+		LastCriticalMinutes = mParamTables["LastCriticalMinutes"].toDouble();
 	}
 
 private:
@@ -89,6 +92,10 @@ public:
 	float DecelerationTweaker;
 	float VisibleRangeSqr;
 	float SeperationCoefficient;
+
+	// Timer
+	double TotalGameTime;
+	double LastCriticalMinutes;
 	
 };
 

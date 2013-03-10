@@ -1,5 +1,5 @@
 #include "FieldPlayer.h"
-#include "SteeringBehaviors.h"
+#include "SteeringAider.h"
 
 #include <OgreManualObject.h>
 
@@ -17,7 +17,7 @@ void FieldPlayer::onInitialize()
 
 	mSteering->separationOn();
 
-	mTimer = addComponent(new CoolingTimeComponent(0.5));
+	mShootCoolTime = addComponent(new CoolingTimeComponent(0.5));
 }
 
 void FieldPlayer::onDeinitialize()
@@ -43,17 +43,17 @@ void FieldPlayer::onUpdate(double time_diff)
 	Player::onUpdate(time_diff);
 }
 
-void FieldPlayer::handleMessage(/* const Telegarm& msg */)
+StateMachine<FieldPlayer>* FieldPlayer::getStateMachine() const 
 {
-
+	return mStateMachine;
 }
 
-//StateMachine<FieldPlayer>* FieldPlayer::getFSM() const 
-//{
-//	return mStateMachine;
-//}
-
-bool FieldPlayer::isReadyForNextKick() 
+bool FieldPlayer::isReadyToKick() const
 {
-	return mTimer->ready();
+	return mShootCoolTime->ready();
+}
+
+bool FieldPlayer::handleMessage(const Message& msg) const 
+{
+	return mStateMachine->handleMessage(msg);	
 }

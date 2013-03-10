@@ -10,7 +10,7 @@
 #include <Core/ResourceManager.hpp>
 
 
-#include <OgreProcedural.h>
+#include <OgreProcedural.h> 
 
 #include <iostream>
 
@@ -22,7 +22,7 @@ void BattleState::onInitialize()
 	OgreProcedural::Root::getInstance()->sceneManager = scene->getSceneManager();
 
 	// Enable debug mode
-	scene->getPhysicsWorld()->setShowDebug(true);
+	//scene->getPhysicsWorld()->setShowDebug(true);
 
 	dt::Node::NodeSP camnode = scene->addChildNode(new dt::Node("CameraNode"));
 	camnode->setPosition(Ogre::Vector3(Prm.CameraPosX, Prm.CameraPosY, Prm.CameraPosZ));
