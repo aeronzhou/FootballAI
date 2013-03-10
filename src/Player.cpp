@@ -41,9 +41,9 @@ void Player::onInitialize()
 	mSteering = new SteeringBehaviors(this, getBall());
 
 	if (getTeam()->getTeamColor() == Team::RED)
-		this->pDebugText = CreatePlayerFlag(this, "PlayerFlagRed");
+		this->mDebugText = CreatePlayerFlag(this, "PlayerFlagRed");
 	else 
-		this->pDebugText = CreatePlayerFlag(this, "PlayerFlagBlue");
+		this->mDebugText = CreatePlayerFlag(this, "PlayerFlagBlue");
 
 	mPhysicsBody->getRigidBody()->setFriction(2.f);
 }
@@ -111,5 +111,5 @@ SteeringBehaviors* Player::getSteering() const
 
 void Player::setDebugText(QString debugText)
 {
-	this->pDebugText->setText(debugText);
+	this->mDebugText->setText(debugText);
 }

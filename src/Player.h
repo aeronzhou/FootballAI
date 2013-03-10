@@ -73,7 +73,7 @@ protected:
 	bool mTag;                                       //!< Flag to indicate this player is chosen
 
 private:
-	dt::TextComponent* pDebugText;
+	dt::TextComponent* mDebugText;
 
 };
 
