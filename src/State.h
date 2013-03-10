@@ -1,6 +1,8 @@
 #ifndef FOOTBALL_AI_STATE
 #define FOOTBALL_AI_STATE
 
+#include <vector>
+
 struct Message;
 
 template <class EntityType>
@@ -29,6 +31,14 @@ public:
 	  * this executes if the agent receives a message from the message dispatcher
 	  */
 	virtual bool onMessage(EntityType*, const Message&) = 0;
+
+	/** 
+	  * @returns A original position of the current state
+	  */
+	virtual std::vector<int> getOriginPosition() = 0;
+
+protected:
+	std::vector<int> mOriginPosition;   //!< Vector to store origin region the players should be assiged to
 };
 
 #endif

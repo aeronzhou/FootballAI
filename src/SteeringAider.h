@@ -1,5 +1,5 @@
-#ifndef FOOTBALL_AI_STEERING_BEHAVIORS
-#define FOOTBALL_AI_STEERING_BEHAVIORS
+#ifndef FOOTBALL_AI_STEERING_AIDER
+#define FOOTBALL_AI_STEERING_AIDER
 
 #include <Scene/Node.hpp>
 
@@ -9,7 +9,7 @@ class Player;
 /** 
   * Aid of moving entity
   */
-class SteeringBehaviors 
+class SteeringAider 
 {
 public:
 	
@@ -30,7 +30,7 @@ public:
 		FAST = 1
 	};
 
-	SteeringBehaviors(Player* player, Ball* ball);
+	SteeringAider(Player* player, Ball* ball);
 
 	Ogre::Vector3 getTarget() const;
 	void setTarget(Ogre::Vector3 target);

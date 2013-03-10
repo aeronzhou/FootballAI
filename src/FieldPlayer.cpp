@@ -1,5 +1,5 @@
 #include "FieldPlayer.h"
-#include "SteeringBehaviors.h"
+#include "SteeringAider.h"
 
 #include <OgreManualObject.h>
 

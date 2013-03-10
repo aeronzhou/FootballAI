@@ -2,6 +2,7 @@
 #define FOOTBALL_AI_TEAM
 
 #include "Pitch.h"
+#include "StateMachine.h"
 
 #include <Scene/Node.hpp>
 
@@ -26,7 +27,10 @@ public:
 
 	void onInitialize();
 
+	void onDeinitialize();
+
 	void onUpdate(double time_diff);
+
 
 public:
 	// Get and set
@@ -38,7 +42,6 @@ public:
 	Team* getOpponent() const;
 	void setOpponent(Team* opponent);
 
-
 private:
 
 	/** 
@@ -48,7 +51,7 @@ private:
 
 private:
 
-	//StateMachine<Team>* mStateMachine;   //!< StateMachine
+	StateMachine<Team>* mStateMachine;   //!< StateMachine
 
 	Ball* mBall;
 	Pitch* mPitch;
