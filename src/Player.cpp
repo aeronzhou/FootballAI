@@ -26,7 +26,7 @@ dt::TextComponent* CreatePlayerFlag(dt::Node* parent, const QString& material)
 	name_diff ++;
 	dt::Node* player_text = parent->addChildNode(new dt::Node("player_text")).get();
 	player_text->setPosition(0.f, 1.f, 0.f);
-	dt::TextComponent* pDebugText = (player_text->addComponent(new dt::TextComponent("Hello", "debugText"+name_diff))).get();
+	dt::TextComponent* pDebugText = (player_text->addComponent(new dt::TextComponent("", "debugText"+name_diff))).get();
 	pDebugText->setColor(Ogre::ColourValue::White);
 	pDebugText->setFont("DejaVuSans");
 	pDebugText->setFontSize(24);
