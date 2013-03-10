@@ -8,6 +8,7 @@
 #include "PlayerPositionManager.h"
 #include "Goal.h"
 #include "TeamState.h"
+#include "ParamLoader.h"
 #include "Constant.h"
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
@@ -58,7 +59,7 @@ void Team::createPlayers()
 			// Attacker这个再来处理
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
 				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
-			mPlayers.back()->placeAtPosition(mPlayers.back()->getPositionWithRegion(), RED_TEAM_HEADING, 0.15f);
+			mPlayers.back()->placeAtPosition(mPlayers.back()->getPositionWithRegion(), RED_TEAM_HEADING, Prm.PlayerScale);
 		}
 	}
 	else 
@@ -68,7 +69,7 @@ void Team::createPlayers()
 			// Attacker这个再来处理
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
 				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
-			mPlayers.back()->placeAtPosition(mPlayers.back()->getPositionWithRegion(), BLUE_TEAM_HEADING, 0.15f);
+			mPlayers.back()->placeAtPosition(mPlayers.back()->getPositionWithRegion(), BLUE_TEAM_HEADING, Prm.PlayerScale);
 		}
 	}
 }

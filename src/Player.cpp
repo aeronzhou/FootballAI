@@ -3,6 +3,7 @@
 #include "Ball.h"
 #include "Region.h"
 #include "SteeringAider.h"
+#include "ParamLoader.h"
 #include "Utils.h"
 
 #include <Graphics/MeshComponent.hpp>
@@ -16,17 +17,21 @@ Player::Player(const QString name, float bounding_radius, float max_speed, float
 	mTeam(team), mHomeRegion(home_region), mPlayerRole(role) {}
 
 // Add a flag to distinguish RED and BLUE
-dt::TextComponent* CreatePlayerFlag(dt::Node* parent, const QString& material)
+dt::Node* CreatePlayerFlag(dt::Node* parent, const QString& material)
 {
 	dt::Node* player_flag = parent->addChildNode(new dt::Node("Flag")).get();
 	player_flag->addComponent(new dt::MeshComponent("PlayerFlag", material, parent->getName() + "MESH_COMPONENT"));
 	player_flag->setPosition(0.f, 1.f, 0.f);
 
-	static int name_diff = 0;
-	name_diff ++;
+	return player_flag;
+}
+
+dt::TextComponent* AddTextComponent(dt::Node* parent)
+{
 	dt::Node* player_text = parent->addChildNode(new dt::Node("player_text")).get();
 	player_text->setPosition(0.f, 1.f, 0.f);
-	dt::TextComponent* pDebugText = (player_text->addComponent(new dt::TextComponent("", "debugText"+name_diff))).get();
+	dt::TextComponent* pDebugText = (player_text->addComponent(new dt::TextComponent("Hello", 
+		parent->getName() + "TextComponent"))).get();
 	pDebugText->setColor(Ogre::ColourValue::White);
 	pDebugText->setFont("DejaVuSans");
 	pDebugText->setFontSize(24);
@@ -41,9 +46,13 @@ void Player::onInitialize()
 	mSteering = new SteeringAider(this, getBall());
 
 	if (getTeam()->getTeamColor() == Team::RED)
-		this->mDebugText = CreatePlayerFlag(this, "PlayerFlagRed");
+		CreatePlayerFlag(this, "PlayerFlagRed");
 	else 
-		this->mDebugText = CreatePlayerFlag(this, "PlayerFlagBlue");
+		CreatePlayerFlag(this, "PlayerFlagBlue");
+
+	mDebugText = AddTextComponent(this);
+	if (!Prm.ShowDebugText)
+		mDebugText->disable();
 
 	mPhysicsBody->getRigidBody()->setFriction(2.f);
 }

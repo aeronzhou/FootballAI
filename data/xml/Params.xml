@@ -26,4 +26,10 @@
 
 	<TotalGameTime>5</TotalGameTime>
 	<LastCriticalMinutes>5</LastCriticalMinutes>
+
+	<PlayerScale>0.15</PlayerScale>
+
+	<PhysicsShowDebug>1</PhysicsShowDebug>
+	<ShowDebugText>0</ShowDebugText>
+
 </Params>

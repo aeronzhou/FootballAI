@@ -52,6 +52,11 @@ public:
 
 		TotalGameTime = mParamTables["TotalGameTime"].toDouble();
 		LastCriticalMinutes = mParamTables["LastCriticalMinutes"].toDouble();
+
+		PlayerScale = mParamTables["PlayerScale"].toFloat();
+
+		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
+		ShowDebugText = mParamTables["ShowDebugText"].toInt();
 	}
 
 private:
@@ -66,7 +71,7 @@ public:
 	float BallRadius;
 	float BallMass;
 
-	// Playing Area
+	// Regions
 	int NumRegionsHorizontal;
 	int NumRegionsVertical;
 
@@ -96,6 +101,13 @@ public:
 	// Timer
 	double TotalGameTime;
 	double LastCriticalMinutes;
+
+	// Players
+	float PlayerScale;
+
+	// Others
+	int PhysicsShowDebug;
+	int ShowDebugText;                       
 	
 };
 
