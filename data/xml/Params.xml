@@ -1,20 +1,20 @@
 <Params>
 	<BallMaxSpeed>2.0</BallMaxSpeed>
-	<BallMass>0.002</BallMass>
+	<BallMass>0.3</BallMass>
 	<BallFriction>3.0</BallFriction>
-	<BallRadius>0.15</BallRadius>
+	<BallRadius>0.10</BallRadius>
 
 	<NumRegionsHorizontal>9</NumRegionsHorizontal>
 	<NumRegionsVertical>5</NumRegionsVertical>
 
-	<HalfPitchWidth>10.5</HalfPitchWidth>
-	<HalfPitchHeight>6.8</HalfPitchHeight>
+	<HalfPitchWidth>21.0</HalfPitchWidth>
+	<HalfPitchHeight>13.6</HalfPitchHeight>
 	<HalfGoalWidth>2.0</HalfGoalWidth>
 	<HalfGoalHeight>1.0</HalfGoalHeight>
 
 	<CameraPosX>0.0</CameraPosX>
-	<CameraPosY>14.0</CameraPosY>
-	<CameraPosZ>15</CameraPosZ>
+	<CameraPosY>28.0</CameraPosY>
+	<CameraPosZ>30</CameraPosZ>
 	<CameraLookAtX>0</CameraLookAtX>
 	<CameraLookAtY>0</CameraLookAtY>
 	<CameraLookAtZ>0</CameraLookAtZ>
@@ -22,14 +22,16 @@
 	<VelocityToForceCoefficient>1.0</VelocityToForceCoefficient>
 	<DecelerationTweaker>0.3</DecelerationTweaker>
 	<VisibleRange>10.0</VisibleRange>
-	<SeperationCoefficient>1.0</SeperationCoefficient>
+	<SeperationCoefficient>0.05</SeperationCoefficient>
+	<DistAtTarget>0.5</DistAtTarget>
 
 	<TotalGameTime>5</TotalGameTime>
 	<LastCriticalMinutes>5</LastCriticalMinutes>
 
-	<PlayerScale>0.15</PlayerScale>
+	<PlayerScale>0.10</PlayerScale>
+	<PlayerInitPositionY>0.2</PlayerInitPositionY>
 
-	<PhysicsShowDebug>1</PhysicsShowDebug>
+	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>0</ShowDebugText>
 
 </Params>

@@ -5,24 +5,13 @@
 
 class Region 
 {
+public:
+
 	enum RegionType 
 	{
 		HALF_SIZE,
 		NORMAL
-	};
-
-protected:
-
-	float mLeft;
-	float mTop;
-	float mRight;
-	float mBottom;
-	float mWidth;
-	float mHeight;
-
-	Ogre::Vector3 mCenter;
-
-	int mID;                      
+	};                  
 
 public:
 
@@ -47,7 +36,23 @@ public:
 	float getWidth() const;
 	float getHeight() const;
 
+	Ogre::Vector3 getCenter() const;
+
 	int getID() const;
+
+
+protected:
+
+	float mLeft;
+	float mTop;
+	float mRight;
+	float mBottom;
+	float mWidth;
+	float mHeight;
+
+	Ogre::Vector3 mCenter;
+
+	int mID;  
 };
 
 #endif

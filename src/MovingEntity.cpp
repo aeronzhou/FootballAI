@@ -11,12 +11,14 @@ MovingEntity::MovingEntity(const QString name,
 	QString mesh_handle, QString material_handle)
 	: Node(name),
 	  mBoundingRadius(bounding_radius),
-	  mMass(mass),
+	  mMaxSpeed(max_speed),
 	  mMaxForce(max_force),
+	  mMass(mass),
 	  mTurnRate(turn_rate),
 	  mMeshHandle(mesh_handle),
 	  mMaterialHandle(material_handle),
-	  mHeading(0.f, 0.f, 1.f) {}
+	  mHeading(0.f, 0.f, 1.f),
+	  mVelocity(Ogre::Vector3::ZERO) {}
 
 void MovingEntity::onUpdate(double time_diff)
 {
@@ -40,12 +42,14 @@ void MovingEntity::onDeinitialize() {}
 Ogre::Vector3 MovingEntity::getVelocity() const
 {
 	return BtOgre::Convert::toOgre(mPhysicsBody->getRigidBody()->getLinearVelocity());
+	//return mVelocity;
 }
 
 void MovingEntity::setVelocity(Ogre::Vector3 velocity) 
 {
 	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(velocity));
-	//mHeading = velocity.normalisedCopy();
+	mHeading = velocity.normalisedCopy();
+	//mVelocity = velocity;
 }
 
 float MovingEntity::getMaxSpeed() const

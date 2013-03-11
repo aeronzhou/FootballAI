@@ -3,6 +3,8 @@
 
 #include "State.h"
 
+#include <vector>
+
 class Team;
 
 class WaitingForKickOff : public State<Team>
@@ -17,8 +19,6 @@ public:
 	void exit(Team* team);
 
 	bool onMessage(Team*, const Message& msg);
-
-	std::vector<int> getOriginPosition();
 };
 
 class PositionalAttacking : public State<Team>
@@ -33,8 +33,6 @@ public:
 	void exit(Team* team);
 
 	bool onMessage(Team*, const Message& msg);
-
-	std::vector<int> getOriginPosition();
 };
 
 class PositionalDefending : public State<Team>
@@ -49,10 +47,6 @@ public:
 	void exit(Team* team);
 
 	bool onMessage(Team*, const Message& msg);
-
-	std::vector<int> getOriginPosition();
 };
-
-
 
 #endif

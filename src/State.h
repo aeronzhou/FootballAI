@@ -31,14 +31,6 @@ public:
 	  * this executes if the agent receives a message from the message dispatcher
 	  */
 	virtual bool onMessage(EntityType*, const Message&) = 0;
-
-	/** 
-	  * @returns A original position of the current state
-	  */
-	virtual std::vector<int> getOriginPosition() = 0;
-
-protected:
-	std::vector<int> mOriginPosition;   //!< Vector to store origin region the players should be assiged to
 };
 
 #endif

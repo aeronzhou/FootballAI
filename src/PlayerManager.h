@@ -4,6 +4,7 @@
 #include "ParamLoaderBase.h"
 #include "FieldPlayer.h"
 #include "GoalKeeper.h"
+#include "Player.h"
 
 class Team;
 
@@ -45,11 +46,19 @@ public:
 								 Team* team,
 								 int home_region);
 
-protected:
+	/** 
+	  * Return all members on the playground
+	  * @returns All members on the playground
+	  */
+	static std::vector<Player*>& getAllMembers(); 
+
+private:
 
 	MSS mFieldPlayer;
 	MSS mGoalKeeper;
 	MSS mFootball;
+
+	static std::vector<Player*> mAllMembers;
 };
 
 #endif

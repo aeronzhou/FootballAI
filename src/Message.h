@@ -9,7 +9,8 @@
 
 enum MessageType
 {
-	MSG_PASS
+	MSG_PASS,
+	MSG_BACK_TO_ORIGIN,
 };
 
 struct Message

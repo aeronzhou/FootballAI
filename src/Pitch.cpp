@@ -4,10 +4,11 @@
 #include "Region.h"
 #include "Goal.h"
 #include "ParamLoader.h"
-
+#include "FieldPlayer.h"//////////////////////////////////////////////////////////////////////////
 #include <Physics/PhysicsBodyComponent.hpp>
 
 #include <OgreProcedural.h>
+
 
 Pitch::Pitch(const QString name /* = "Pitch" */)
 	: dt::Node(name) {}
@@ -42,10 +43,10 @@ void Pitch::onInitialize()
 	// Realize a ball
 	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
 	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "")).get();
-	mBall->setPosition(0, 10, 0);
+	mBall->setPosition(0, 3, -2);
 	mBall->resetPhysicsBody();
 
-	//// Create goals
+	// Create goals
 	mRedGoal = (Goal*)addChildNode(new Goal("RedGoal", 
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, -Prm.HalfGoalWidth), 
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, Prm.HalfGoalWidth), 
@@ -97,7 +98,6 @@ Region* Pitch::getPlayingArea() const
 
 void Pitch::createRegions(float width, float height)
 {
-	int total = mRegions.size();
 	int idx = 0;
 
 	for (int i = 0; i < Prm.NumRegionsVertical; ++i)
