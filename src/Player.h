@@ -3,14 +3,17 @@
 
 #include "MovingEntity.h"
 #include "IList.h"
+#include "MotionAider.h"
+#include "Region.h"
 
 #include <Graphics/TextComponent.hpp>
 
 class Team;
 class Ball;
-class SteeringAider;
+class MotionAider;
+class Pitch;
 
-class Player : public MovingEntity, public IList<Player*>
+class Player : public MovingEntity
 {
 	Q_OBJECT
 
@@ -18,9 +21,10 @@ public:
 
 	enum PlayerRole
 	{
-		GOAL_KEEPER,
-		ATTACKER,
-		DEFENDER
+		GOAL_KEEPER,  
+		FORWARD,
+		MIDFIELD,
+		BACK
 	};
 
 	Player(const QString name,
@@ -32,7 +36,7 @@ public:
 		QString mesh_handle, 
 		QString material_handle, 
 		Team* team, 
-		int home_region,
+		int assigned_region,
 		PlayerRole role);
 
 	void onInitialize();
@@ -42,13 +46,16 @@ public:
 	void onUpdate(double time_diff);
 
 
-	SteeringAider* getSteering() const;
+	MotionAider* getMotionAider() const;
 
 	Team* getTeam() const;
 	Ball* getBall() const;
+	Pitch* getPitch() const;
 
-	int getHomeRegion() const;
-	void setHomeRegion(int home_region);
+	Region* getAssignedRegion() const;
+	void setAssignedRegion(int assigned_region);
+
+	void setDebugText(QString debug_text);
 
 	/** 
 	  * Return a position with self's region
@@ -57,7 +64,15 @@ public:
 	  */
 	Ogre::Vector3 getPositionWithRegion(bool random = false);
 
-	void setDebugText(QString debugText);
+	/** 
+	  * Return true if this player is within target or near it
+	  * @returns true if this player is within target or near it
+	  */
+	bool atTarget() const;
+
+	void setTarget(Ogre::Vector3 target);
+
+	bool withinAssignedRegion() const;
 
 
 protected:
@@ -65,15 +80,14 @@ protected:
 	PlayerRole mPlayerRole;                          //!< The player's role in this team
 
 	Team* mTeam;                                     //!< The team this player belongs to
-	int mHomeRegion;                                 //!< Indicate which home region this player assigned to
-	int mDefaultRegion;                              //!< The default region player is standing on
+	int mAssignedRegion;                             //!< Indicate which home region this player assigned to
 	float mDistSqToBall;                             //!< Distance square from the ball
+	float mDistSqAtTarget;                           //!< Distance square to be at target
 
-	SteeringAider* mSteering;                    //!< Steering force
+	MotionAider* mMotionAider;                       //!< Motion aider
 	bool mTag;                                       //!< Flag to indicate this player is chosen
 
-private:
-	dt::TextComponent* mDebugText;
+	dt::TextComponent* mDebugText;                   //!< Text to show players' current state
 
 };
 

@@ -42,6 +42,26 @@ public:
 	Team* getOpponent() const;
 	void setOpponent(Team* opponent);
 
+	StateMachine<Team>* getStateMachine() const;
+
+	/** 
+	  * Call when the game start or scored, all players back to origin region
+	  */
+	void playersBackForKickOff();
+
+	/** 
+	  * Return true if all players are in assigned regions
+	  * @returns True if all players are in assigned regions
+	  */
+	bool allPlayersInAssignedRegions() const;
+
+	/** 
+	  * Set players' current assigned regions
+	  */
+	void setAssignedRegion(const std::vector<int>& vec_pos);
+
+	void sendPlayersToAssignedRegion();
+
 private:
 
 	/** 

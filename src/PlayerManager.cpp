@@ -3,6 +3,8 @@
 #include "GoalKeeper.h"
 #include "Team.h"
 
+std::vector<Player*> PlayerManager::mAllMembers;
+
 PlayerManager PlayerManager::get()
 {
 	static PlayerManager instance;
@@ -16,12 +18,14 @@ PlayerManager::PlayerManager()
 
 	if (!readFile("./../data/xml/GoalKeeper.xml", mGoalKeeper))
 		dt::Logger::get().error("Read GoalKeeper.xml failed!!!");
+
+	mAllMembers.clear();
 }
 
 FieldPlayer* PlayerManager::createFieldPlayer(const QString& name, 
 											  Team* team, 
 											  FieldPlayer::PlayerRole role,
-											  int home_region)
+											  int assigned_region)
 {
 	QString mesh_handle = mFieldPlayer["RedMeshHandle"];
 
@@ -39,16 +43,18 @@ FieldPlayer* PlayerManager::createFieldPlayer(const QString& name,
 										  mesh_handle,
 										  mFieldPlayer["MaterialHandle"],
 										  team,
-										  home_region,
+										  assigned_region,
 										  role
 										  );
+
+	mAllMembers.push_back((Player*)player);
 
 	return player;
 }
 
 GoalKeeper* PlayerManager::createGoalKeeper(const QString& name, 
 											Team* team, 
-											int home_region)
+											int assigned_region)
 {
 	
 	QString mesh_handle = mFieldPlayer["RedMeshHandle"];
@@ -67,9 +73,15 @@ GoalKeeper* PlayerManager::createGoalKeeper(const QString& name,
 										mesh_handle, 
 										mFieldPlayer["MaterialHandle"], 
 										team, 
-										home_region
+										assigned_region
 										);
+	mAllMembers.push_back(player);
 
 	return player;
+}
+
+std::vector<Player*>& PlayerManager::getAllMembers() 
+{
+	return mAllMembers;
 }
 

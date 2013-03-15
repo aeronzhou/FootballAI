@@ -59,6 +59,7 @@ protected:
 	float mTurnRate;                                        //!< The max turning rate 
 
 	Ogre::Vector3 mHeading;                                 //!< Direction this entity heading
+	Ogre::Vector3 mVelocity;                                //!< Velocity of this entity
 
 	Ogre::Vector3 mSide;
 

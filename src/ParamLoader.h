@@ -49,9 +49,17 @@ public:
 		VelocityToForceCoefficient = mParamTables["VelocityToForceCoefficient"].toFloat();
 		DecelerationTweaker = mParamTables["DecelerationTweaker"].toFloat();
 		VisibleRangeSqr = mParamTables["VisibleRange"].toFloat() * mParamTables["VisibleRange"].toFloat();
+		SeperationCoefficient = mParamTables["SeperationCoefficient"].toFloat();
+		DistAtTarget = mParamTables["DistAtTarget"].toFloat();
 
 		TotalGameTime = mParamTables["TotalGameTime"].toDouble();
 		LastCriticalMinutes = mParamTables["LastCriticalMinutes"].toDouble();
+
+		PlayerScale = mParamTables["PlayerScale"].toFloat();
+		PlayerInitPositionY = mParamTables["PlayerInitPositionY"].toFloat();
+
+		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
+		ShowDebugText = mParamTables["ShowDebugText"].toInt();
 	}
 
 private:
@@ -66,7 +74,7 @@ public:
 	float BallRadius;
 	float BallMass;
 
-	// Playing Area
+	// Regions
 	int NumRegionsHorizontal;
 	int NumRegionsVertical;
 
@@ -87,15 +95,24 @@ public:
 	float CameraLookAtY;
 	float CameraLookAtZ;
 
-	// Steering
+	// Motion Aider 
 	float VelocityToForceCoefficient;
 	float DecelerationTweaker;
 	float VisibleRangeSqr;
 	float SeperationCoefficient;
+	float DistAtTarget;
 
 	// Timer
 	double TotalGameTime;
 	double LastCriticalMinutes;
+
+	// Players
+	float PlayerScale;
+	float PlayerInitPositionY;
+
+	// Others
+	int PhysicsShowDebug;
+	int ShowDebugText;                       
 	
 };
 

@@ -18,4 +18,7 @@ const Ogre::Vector3 STANDARD_HEADING = Ogre::Vector3(0.f, 0.f, 1.f);
 const Ogre::Vector3 RED_TEAM_HEADING = Ogre::Vector3(1.f, 0.f, 0.f);
 const Ogre::Vector3 BLUE_TEAM_HEADING = Ogre::Vector3(-1.f, 0.f, 0.f);
 
+const double DELIVER_IMMEDIATELY = 0.0;
+const float TIME_DIFF = 0.02f;
+
 #endif

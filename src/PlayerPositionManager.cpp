@@ -31,7 +31,7 @@ PlayerPositionManager& PlayerPositionManager::get()
 	return instance;
 }
 
-std::vector<int> PlayerPositionManager::getOriginPosition(const QString& state_type)
+std::vector<int> PlayerPositionManager::getAssignedPosition(const QString& state_type)
 {
 	return mPositionMap[state_type];
 }

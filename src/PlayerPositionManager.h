@@ -12,7 +12,7 @@ public:
 
 	static PlayerPositionManager& get();
 
-	std::vector<int> getOriginPosition(const QString& state_name);	
+	std::vector<int> getAssignedPosition(const QString& state_name);	
 
 	PlayerPositionManager();
 

@@ -9,28 +9,24 @@ WaitingForKickOff* WaitingForKickOff::get()
 	return &instance;
 }
 
-std::vector<int> WaitingForKickOff::getOriginPosition()
-{
-	if (mOriginPosition.empty())
-	{
-		mOriginPosition = PlayerPositionManager::get().getOriginPosition("WaitingForKickOff");
-	}
-	return mOriginPosition;
-}
-
 void WaitingForKickOff::enter(Team* team)
 {
-
+	// Set team's assigned region
+	team->setAssignedRegion(PlayerPositionManager::get().getAssignedPosition("WaitingForKickOff"));
+	team->playersBackForKickOff();
 }
 
 void WaitingForKickOff::execute(Team* team)
 {
-
+	if (team->allPlayersInAssignedRegions())
+	{
+		team->getStateMachine()->changeState(PositionalAttacking::get());
+	}
 }
 
 void WaitingForKickOff::exit(Team* team)
 {
-
+	
 }
 
 bool WaitingForKickOff::onMessage(Team*, const Message& msg)
@@ -45,23 +41,18 @@ PositionalAttacking* PositionalAttacking::get()
 	return &instance;
 }
 
-std::vector<int> PositionalAttacking::getOriginPosition()
-{
-	if (mOriginPosition.empty())
-	{
-		mOriginPosition = PlayerPositionManager::get().getOriginPosition("PositionalAttacking");
-	}
-	return mOriginPosition;
-}
-
 void PositionalAttacking::enter(Team* team)
 {
-
+	// Set team's assigned region
+	team->setAssignedRegion(PlayerPositionManager::get().getAssignedPosition("PositionalAttacking"));
 }
 
 void PositionalAttacking::execute(Team* team)
 {
-
+	if (!team->allPlayersInAssignedRegions())
+	{
+		team->sendPlayersToAssignedRegion();
+	}
 }
 
 void PositionalAttacking::exit(Team* team)
@@ -99,13 +90,4 @@ void PositionalDefending::exit(Team* team)
 bool PositionalDefending::onMessage(Team*, const Message& msg)
 {
 	return false;
-}
-
-std::vector<int> PositionalDefending::getOriginPosition()
-{
-	if (mOriginPosition.empty())
-	{
-		mOriginPosition = PlayerPositionManager::get().getOriginPosition("PositionalDefending");
-	}
-	return mOriginPosition;
 }

@@ -8,6 +8,8 @@
 #include "PlayerPositionManager.h"
 #include "Goal.h"
 #include "TeamState.h"
+#include "ParamLoader.h"
+#include "MessageDeliverer.h"
 #include "Constant.h"
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
@@ -19,7 +21,7 @@ void Team::onInitialize()
 {
 	// Setup state machine
 	mStateMachine = new StateMachine<Team>(this);
-	mStateMachine->setCurrentState(PositionalAttacking::get());	
+	mStateMachine->setCurrentState(WaitingForKickOff::get());	
 
 	// Initialize players
 	createPlayers();
@@ -27,7 +29,7 @@ void Team::onInitialize()
 	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	{
 		// Initilize players' position, heading, etc.
-		//(*it)->getSteering()->separationOn();
+		(*it)->getMotionAider()->separationOn();
 	}
 }
 
@@ -41,34 +43,58 @@ void Team::onUpdate(double time_diff)
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
 	// Update StateMachine
-	//mStateMachine->update();	
+	mStateMachine->onUpdate();	
 
 	dt::Node::onUpdate(time_diff);
 }
 
 void Team::createPlayers()
 {
-	std::vector<int> vec_pos = PlayerPositionManager::get().getOriginPosition("WaitingForKickOff");
+	std::vector<int> vec_pos = PlayerPositionManager::get().getAssignedPosition("WaitingForKickOff");
 
 	// Generate players with PlayerManager
 	if (getTeamColor() == RED)
 	{
+		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(0), 
+			this, FieldPlayer::FORWARD, vec_pos[0])).get());
+		for (int i = 1; i < 3; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		}
+		for (int i = 3; i < 6; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+				this, FieldPlayer::BACK, vec_pos[i])).get());
+		}
+		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(6), 
+			this, FieldPlayer::BACK, vec_pos[6])).get());
+
 		for (int i = 0; i < 7; ++i)
 		{
-			// Attacker这个再来处理
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
-			mPlayers.back()->placeAtPosition(mPlayers.back()->getPositionWithRegion(), RED_TEAM_HEADING, 0.15f);
+			mPlayers[i]->placeAtPosition(mPlayers[i]->getPositionWithRegion(), RED_TEAM_HEADING, Prm.PlayerScale);
 		}
 	}
 	else 
 	{
-		for (int i = 7; i < 14; ++i)
+		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
+			this, FieldPlayer::FORWARD, vec_pos[7])).get());
+		for (int i = 8; i < 10; ++i)
 		{
-			// Attacker这个再来处理
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
-			mPlayers.back()->placeAtPosition(mPlayers.back()->getPositionWithRegion(), BLUE_TEAM_HEADING, 0.15f);
+				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		}
+		for (int i = 10; i < 13; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		}
+		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
+			this, FieldPlayer::MIDFIELD, vec_pos[13])).get());
+
+		for (int i = 0; i < 7; ++i)
+		{
+			mPlayers[i]->placeAtPosition(mPlayers[i]->getPositionWithRegion(), BLUE_TEAM_HEADING, Prm.PlayerScale);
 		}
 	}
 }
@@ -103,3 +129,59 @@ Goal* Team::getGoal() const
 	return mGoal;
 }
 
+void Team::playersBackForKickOff()
+{
+	for (int i = 0; i < 7; ++i)
+	{
+		//mPlayers[i]->getStateMachine()->changeState(BackToOrigin::get());
+		MessageDeliverer::get().deliverMessage(DELIVER_IMMEDIATELY,
+			NULL, 
+			mPlayers[i],
+			MSG_BACK_TO_ORIGIN,
+			NULL);
+	}
+}
+
+bool Team::allPlayersInAssignedRegions() const 
+{
+	for (auto player = mPlayers.begin(); player != mPlayers.end(); ++player)
+	{
+		if (!(*player)->withinAssignedRegion())
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void Team::setAssignedRegion(const std::vector<int>& vec_pos)
+{
+	if (getTeamColor() == RED)
+	{
+		for (int i = 0; i < 7; ++i)
+		{
+			mPlayers[i]->setAssignedRegion(vec_pos[i]);
+		}
+	}
+	else 
+	{
+		for (int i = 7; i < 14; ++i)
+		{
+			mPlayers[i - 7]->setAssignedRegion(vec_pos[i]);
+		}
+	}
+}
+
+StateMachine<Team>* Team::getStateMachine() const 
+{
+	return mStateMachine;
+}
+
+void Team::sendPlayersToAssignedRegion()
+{
+	for (std::vector<Player*>::iterator it = mPlayers.begin(); it != mPlayers.end(); ++it)
+	{
+		(*it)->getMotionAider()->arriveOn();
+		(*it)->setTarget((*it)->getAssignedRegion()->getCenter());
+	}
+}

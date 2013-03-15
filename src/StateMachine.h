@@ -49,13 +49,13 @@ public:
 	/** 
 	  * call this to update the FSM
 	  */
-	void update()const
+	void onUpdate() const
 	{
 		if (mGlobalState)   
-			mGlobalState->Execute(mAgent);
+			mGlobalState->execute(mAgent);
 
 		if (mCurrentState) 
-			mCurrentState->Execute(mAgent);
+			mCurrentState->execute(mAgent);
 	}
 
 
@@ -111,14 +111,14 @@ public:
 	/** 
 	  * only ever used during debugging to grab the name of the current state
 	  */
-	std::string getNameOfCurrentState() const
+	QString getNameOfCurrentState() const
 	{
 		std::string s(typeid(*mCurrentState).name());
 		if (s.size() > 5)
 		{
 			s.erase(0, 6);
 		}
-		return s;
+		return dt::Utils::toString(s);
 	}
 };
 

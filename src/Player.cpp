@@ -1,8 +1,10 @@
 #include "Player.h"
+#include "Pitch.h"
 #include "Team.h"
 #include "Ball.h"
 #include "Region.h"
-#include "SteeringAider.h"
+#include "MotionAider.h"
+#include "ParamLoader.h"
 #include "Utils.h"
 
 #include <Graphics/MeshComponent.hpp>
@@ -11,25 +13,29 @@
 #include <OgreProcedural.h>
 
 Player::Player(const QString name, float bounding_radius, float max_speed, float max_force,
-	float mass, float turn_rate, QString mesh_handle, QString material_handle, Team* team, int home_region, PlayerRole role)
+	float mass, float turn_rate, QString mesh_handle, QString material_handle, Team* team, int assigned_region, PlayerRole role)
 	: MovingEntity(name, bounding_radius, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
-	mTeam(team), mHomeRegion(home_region), mPlayerRole(role) {}
+	mTeam(team), mAssignedRegion(assigned_region), mPlayerRole(role), mDistSqAtTarget(Prm.DistAtTarget * Prm.DistAtTarget) {}
 
 // Add a flag to distinguish RED and BLUE
-dt::TextComponent* CreatePlayerFlag(dt::Node* parent, const QString& material)
+dt::Node* CreatePlayerFlag(dt::Node* parent, const QString& material)
 {
 	dt::Node* player_flag = parent->addChildNode(new dt::Node("Flag")).get();
 	player_flag->addComponent(new dt::MeshComponent("PlayerFlag", material, parent->getName() + "MESH_COMPONENT"));
-	player_flag->setPosition(0.f, 1.f, 0.f);
+	player_flag->setPosition(0.f, 0.5f, 0.f);
 
-	static int name_diff = 0;
-	name_diff ++;
+	return player_flag;
+}
+
+dt::TextComponent* AddTextComponent(dt::Node* parent)
+{
 	dt::Node* player_text = parent->addChildNode(new dt::Node("player_text")).get();
 	player_text->setPosition(0.f, 1.f, 0.f);
-	dt::TextComponent* pDebugText = (player_text->addComponent(new dt::TextComponent("", "debugText"+name_diff))).get();
+	dt::TextComponent* pDebugText = (player_text->addComponent(new dt::TextComponent("Hello", 
+		parent->getName() + "TextComponent"))).get();
 	pDebugText->setColor(Ogre::ColourValue::White);
 	pDebugText->setFont("DejaVuSans");
-	pDebugText->setFontSize(24);
+	pDebugText->setFontSize(14);
 
 	return pDebugText;
 }
@@ -38,19 +44,23 @@ void Player::onInitialize()
 {
 	MovingEntity::onInitialize();
 
-	mSteering = new SteeringAider(this, getBall());
+	mMotionAider = new MotionAider(this, getBall());
 
 	if (getTeam()->getTeamColor() == Team::RED)
-		this->mDebugText = CreatePlayerFlag(this, "PlayerFlagRed");
+		CreatePlayerFlag(this, "PlayerFlagRed");
 	else 
-		this->mDebugText = CreatePlayerFlag(this, "PlayerFlagBlue");
+		CreatePlayerFlag(this, "PlayerFlagBlue");
 
-	mPhysicsBody->getRigidBody()->setFriction(2.f);
+	mDebugText = AddTextComponent(this);
+	if (!Prm.ShowDebugText)
+		mDebugText->disable();
+
+	mPhysicsBody->getRigidBody()->setFriction(0.f);
 }
 
 void Player::onDeinitialize() 
 {
-	delete mSteering;
+	delete mMotionAider;
 }
 
 void Player::onUpdate(double time_diff)
@@ -60,6 +70,7 @@ void Player::onUpdate(double time_diff)
 	// Set heading through rotation
 	mHeading = GetHeadingThroughRotation(getRotation());
 
+	//setHeading(Ogre::Vector3(1.f, 0.f, 0.f));
 	dt::Node::onUpdate(time_diff);
 }
 
@@ -73,21 +84,24 @@ Ball* Player::getBall() const
 	return mTeam->getBall();
 }
 
-int Player::getHomeRegion() const 
+Region* Player::getAssignedRegion() const 
 {
-	return mHomeRegion;
+	return getPitch()->getRegionFromIndex(mAssignedRegion);
 }
 
-void Player::setHomeRegion(int home_region)
+Pitch* Player::getPitch() const 
 {
-	mHomeRegion = home_region;
+	return mTeam->getPitch();
+}
+
+void Player::setAssignedRegion(int assigned_region)
+{
+	mAssignedRegion = assigned_region;
 }
 
 Ogre::Vector3 Player::getPositionWithRegion(bool random /* = false */)
 {
-	Pitch* pitch = getTeam()->getPitch();
-
-	Region* region = pitch->getRegionFromIndex(getHomeRegion());
+	Region* region = getAssignedRegion();
 
 	if (random)
 	{
@@ -98,18 +112,38 @@ Ogre::Vector3 Player::getPositionWithRegion(bool random /* = false */)
 	{
 		float x = (region->getLeft() + region->getRight()) / 2;
 		float z = (region->getTop() + region->getBottom()) / 2;
-
-		return Ogre::Vector3(x, 2.5f, z);
+		
+		return Ogre::Vector3(x, Prm.PlayerInitPositionY, z);
 	}
 }
 
-SteeringAider* Player::getSteering() const 
+MotionAider* Player::getMotionAider() const 
 {
-	return mSteering;
+	return mMotionAider;
 }
 
 
-void Player::setDebugText(QString debugText)
+void Player::setDebugText(QString debug_text)
 {
-	this->mDebugText->setText(debugText);
+	this->mDebugText->setText(debug_text);
+}
+
+void Player::setTarget(Ogre::Vector3 target)
+{
+	mMotionAider->setTarget(target);
+}
+
+bool Player::atTarget() const
+{
+	return (getPosition()).normalisedCopy().squaredDistance(getMotionAider()->getTarget()) < mDistSqAtTarget;
+}
+
+bool Player::withinAssignedRegion() const 
+{
+	if (mPlayerRole == GOAL_KEEPER)
+	{
+		return getAssignedRegion()->inside(getPosition(), Region::NORMAL);
+	}
+
+	return getAssignedRegion()->inside(getPosition(), Region::HALF_SIZE);
 }

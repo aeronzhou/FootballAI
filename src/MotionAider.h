@@ -7,13 +7,13 @@ class Ball;
 class Player;
 
 /** 
-  * Aid of moving entity
+  * Motion aider of moving entity
   */
-class SteeringAider 
+class MotionAider 
 {
 public:
 	
-	enum SteeingType
+	enum MotionType
 	{
 		NONE =       0x0000,
 		SEEK =       0x0001,
@@ -30,7 +30,7 @@ public:
 		FAST = 1
 	};
 
-	SteeringAider(Player* player, Ball* ball);
+	MotionAider(Player* player, Ball* ball);
 
 	Ogre::Vector3 getTarget() const;
 	void setTarget(Ogre::Vector3 target);
@@ -38,7 +38,7 @@ public:
 	bool isTag() const;
 	void setTag(bool tag);
 
-	Ogre::Vector3 getSteeringForce() const;
+	Ogre::Vector3 getDrivingForce() const;
 
 	// Set On 
 	void seekOn();
@@ -68,7 +68,7 @@ public:
 protected:
 
 	Ogre::Vector3 mTarget;           
-	Ogre::Vector3 mSteeringForce;     
+	Ogre::Vector3 mDrivingForce;     
 	float mInterposeDist;             //!< Distance the player try to interpose opponents
 
 	Player* mPlayer;                  //!< The player this steering component attach to
@@ -80,7 +80,7 @@ protected:
 
 private:
 
-	bool on(SteeingType type) const;
+	bool on(MotionType type) const;
 
 	Ogre::Vector3 seek(Ogre::Vector3 target);
 
@@ -114,7 +114,7 @@ private:
 	/** 
 	  * Tagged neighbours who are in visible range
 	  */
-	void findNeighbours();
+	void tagNeighbouringPlayers();
 
 };
 
