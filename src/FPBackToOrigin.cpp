@@ -1,31 +1,8 @@
 #include "FieldPlayerState.h"
+#include "FPWaiting.h"
 #include "FieldPlayer.h"
 #include "MessageDeliverer.h"
 #include "Constant.h"
-
-FieldPlayerGlobalState* FieldPlayerGlobalState::get()
-{
-	static FieldPlayerGlobalState instance;
-	return &instance;
-}
-
-bool FieldPlayerGlobalState::onMessage(FieldPlayer* receiver, const Message& msg)
-{
-	switch (msg.msg_type)
-	{
-	case MSG_BACK_TO_ORIGIN:
-		{
-			receiver->getStateMachine()->changeState(BackToOrigin::get());
-			return true;
-		}
-
-	case MSG_PASS:
-		{
-			
-		}
-	}
-	return false;
-}
 
 BackToOrigin* BackToOrigin::get()
 {
@@ -55,33 +32,6 @@ void BackToOrigin::exit(FieldPlayer* player)
 }
 
 bool BackToOrigin::onMessage(FieldPlayer*, const Message&)
-{
-	return false;
-}
-
-// Waiting
-Waiting* Waiting::get()
-{
-	static Waiting instance;
-	return &instance;
-}
-
-void Waiting::enter(FieldPlayer*)
-{
-	dt::Logger::get().debug("Enter to Back To Origin...");
-}
-
-void Waiting::execute(FieldPlayer*)
-{
-
-}
-
-void Waiting::exit(FieldPlayer*)
-{
-
-}
-
-bool Waiting::onMessage(FieldPlayer*, const Message&)
 {
 	return false;
 }
