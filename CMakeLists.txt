@@ -73,6 +73,7 @@ aux_source_directory(src main_CPP)
 file(GLOB_RECURSE main_HPP src/*.hpp)
 file(GLOB_RECURSE main_H src/*.h)
 qt4_wrap_cpp(main_HEADERS_MOC ${main_HPP} ${main_H})
+source_group(Sources FILES ${main_CPP})
 
 MESSAGE(STATUS "This is MOC${main_HEADERS_MOC}")
 ADD_EXECUTABLE(FootballAI ${main_CPP} ${main_HEADERS_MOC})
