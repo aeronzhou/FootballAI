@@ -51,11 +51,6 @@ void Player::onInitialize()
 
 	mMotionAider = new MotionAider(this, getBall());
 
-	//if (getTeam()->getTeamColor() == Team::RED)
-	//	CreatePlayerFlag(this, "PlayerFlagRed");
-	//else 
-	//	CreatePlayerFlag(this, "PlayerFlagBlue");
-
 	mDebugText = AddTextComponent(this);
 
 	if (!Prm.ShowDebugText)

@@ -21,6 +21,7 @@ void FieldPlayer::onInitialize()
 	mStateMachine = new StateMachine<FieldPlayer>(this);
 	mStateMachine->setCurrentState(Waiting::get());
 	mStateMachine->setGlobalState(FieldPlayerGlobalState::get());
+	//setDebugText(mStateMachine->getNameOfCurrentState());
 
 	mMotionAider->separationOn();
 
@@ -77,6 +78,10 @@ void FieldPlayer::onUpdate(double time_diff)
 		
 		if (velocity_magnitude < 0)
 			velocity_magnitude = 0;
+	} 
+	else 
+	{
+		velocity_magnitude *= 0.8;
 	}
 
 	if (velocity_magnitude > mMaxSpeed)
@@ -85,8 +90,10 @@ void FieldPlayer::onUpdate(double time_diff)
 	setVelocity(rotation * Ogre::Vector3(0, 0, velocity_magnitude));
 
 	setDebugText(mStateMachine->getNameOfCurrentState());
+	//DEBUG_MODE_BEGIN
+	//setDebugText(dt::Utils::toString(current_velocity));
+	//DEBUG_MODE_END
 
-	//Player::onUpdate(time_diff);
 	dt::Node::onUpdate(time_diff);
 }
 

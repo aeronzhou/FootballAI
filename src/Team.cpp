@@ -14,7 +14,7 @@
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
-	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayers(std::vector<Player*>()) {}
+	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()) {}
 
 
 void Team::onInitialize() 
@@ -44,6 +44,8 @@ void Team::onUpdate(double time_diff)
 
 	// Update StateMachine
 	mStateMachine->onUpdate();	
+
+	findPlayerClosestToBall();
 
 	dt::Node::onUpdate(time_diff);
 }
@@ -77,8 +79,8 @@ void Team::createPlayers()
 	}
 	else 
 	{
-		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
-			this, FieldPlayer::FORWARD, vec_pos[7])).get());
+		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
+		//	this, FieldPlayer::FORWARD, vec_pos[7])).get());
 		//for (int i = 8; i < 10; ++i)
 		//{
 		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
@@ -183,4 +185,23 @@ void Team::sendPlayersToAssignedRegion()
 		(*it)->getMotionAider()->arriveOn();
 		(*it)->setTarget((*it)->getAssignedRegion()->getCenter());
 	}
+}
+
+void Team::findPlayerClosestToBall()
+{
+	float min_value = MAX_VALUE;
+	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
+	{
+		float dist = (*it)->getPosition().distance(mBall->getPosition());
+		if ((*it)->getPosition().squaredDistance(mBall->getPosition()) < min_value)
+		{
+			min_value = dist;
+			mPlayerClosestToBall = (*it);
+		}
+	}
+}
+
+Player* Team::getPlayerClosestToBall() const 
+{
+	return mPlayerClosestToBall;
 }

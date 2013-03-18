@@ -2,8 +2,9 @@
 #define FOOTBALL_AI_FIELD_PLAYER_GLOBAL_STATE
 
 #include "State.h"
+#include "FieldPlayer.h"
 
-class FieldPlayer; 
+//class FieldPlayer; 
 
 // FieldPlayerGlobalState
 class FieldPlayerGlobalState: public State<FieldPlayer>

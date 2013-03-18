@@ -159,7 +159,7 @@ Ogre::Vector3 MotionAider::separation()
 	}
 
 	// Add some noise to avoid players gather together
-	return ((force + Ogre::Vector3(-0.1, 0, 0.1) ) * Prm.SeperationCoefficient);
+	return ((force /*+ Ogre::Vector3(-0.1, 0, 0.1)*/ ) * Prm.SeperationCoefficient);
 }
 
 Ogre::Vector3 MotionAider::interpose(const Ball* ball, Ogre::Vector3 target, float dis_from_target)

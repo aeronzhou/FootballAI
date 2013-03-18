@@ -9,7 +9,7 @@ class Team;
 class PositionalDefending : public State<Team>
 {
 public:
-	static PositionalDefending& get();
+	static PositionalDefending* get();
 
 	void enter(Team* team);
 

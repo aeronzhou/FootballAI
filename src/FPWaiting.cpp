@@ -1,5 +1,6 @@
 #include "FieldPlayerState.h"
 #include "FieldPlayer.h"
+#include "Team.h"
 #include "MessageDeliverer.h"
 #include "Constant.h"
 
@@ -12,12 +13,18 @@ Waiting* Waiting::get()
 
 void Waiting::enter(FieldPlayer*)
 {
-	dt::Logger::get().debug("Enter to Back To Origin...");
 }
 
-void Waiting::execute(FieldPlayer*)
+void Waiting::execute(FieldPlayer* player)
 {
+	// If game is not started, don't respond
+	//////////////////////////////////////////////////////////////////////////
 
+	// Ball coming or closest to the ball, chase it
+	if (player == (FieldPlayer*)player->getTeam()->getPlayerClosestToBall())
+	{
+		player->getStateMachine()->changeState(ChasingBall::get());
+	}
 }
 
 void Waiting::exit(FieldPlayer*)
