@@ -7,5 +7,9 @@
 #include "FPPassing.h"
 #include "FPDribbling.h"
 #include "FPShooting.h"
+#include "FPChasingBall.h"
+#include "FPCloseSafeGuard.h"
+#include "FPIntercepting.h"
+#include "FPReceiving.h"
 
 #endif

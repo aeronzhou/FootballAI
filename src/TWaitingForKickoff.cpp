@@ -20,7 +20,7 @@ void WaitingForKickOff::execute(Team* team)
 {
 	if (team->allPlayersInAssignedRegions())
 	{
-		team->getStateMachine()->changeState(PositionalAttacking::get());
+		team->getStateMachine()->changeState(PositionalDefending::get());
 	}
 }
 

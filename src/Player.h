@@ -2,7 +2,6 @@
 #define FOOTBALL_AI_PLAYER
 
 #include "MovingEntity.h"
-#include "IList.h"
 #include "MotionAider.h"
 #include "Region.h"
 
@@ -44,7 +43,6 @@ public:
 	void onDeinitialize();
 
 	void onUpdate(double time_diff);
-
 
 	MotionAider* getMotionAider() const;
 

@@ -14,8 +14,6 @@ Goal::Goal(const QString& name, Ogre::Vector3 left, Ogre::Vector3 right, Ogre::V
 
 void Goal::onInitialize()
 {
-	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(0.5, 2, 5)).realizeMesh("Goal");
-
 	addComponent(new dt::MeshComponent("Goal", "", MESH_COMPONENT));
 	addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, dt::PhysicsBodyComponent::CONVEX, 0.f));
 }

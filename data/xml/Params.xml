@@ -1,8 +1,8 @@
 <Params>
 	<BallMaxSpeed>2.0</BallMaxSpeed>
-	<BallMass>0.3</BallMass>
+	<BallMass>1.0</BallMass>
 	<BallFriction>3.0</BallFriction>
-	<BallRadius>0.10</BallRadius>
+	<BallRadius>0.20</BallRadius>
 
 	<NumRegionsHorizontal>9</NumRegionsHorizontal>
 	<NumRegionsVertical>5</NumRegionsVertical>
@@ -21,17 +21,17 @@
 
 	<VelocityToForceCoefficient>1.0</VelocityToForceCoefficient>
 	<DecelerationTweaker>0.3</DecelerationTweaker>
-	<VisibleRange>10.0</VisibleRange>
-	<SeperationCoefficient>0.05</SeperationCoefficient>
+	<VisibleRange>4</VisibleRange>
+	<SeperationCoefficient>1</SeperationCoefficient>
 	<DistAtTarget>0.5</DistAtTarget>
 
 	<TotalGameTime>5</TotalGameTime>
 	<LastCriticalMinutes>5</LastCriticalMinutes>
 
-	<PlayerScale>0.10</PlayerScale>
-	<PlayerInitPositionY>0.2</PlayerInitPositionY>
+	<PlayerScale>0.2</PlayerScale>
+	<PlayerInitPositionY>1.0</PlayerInitPositionY>
 
 	<PhysicsShowDebug>0</PhysicsShowDebug>
-	<ShowDebugText>0</ShowDebugText>
+	<ShowDebugText>1</ShowDebugText>
 
 </Params>

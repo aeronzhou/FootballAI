@@ -42,6 +42,8 @@ public:
 	Team* getOpponent() const;
 	void setOpponent(Team* opponent);
 
+	Player* getPlayerClosestToBall() const;
+
 	StateMachine<Team>* getStateMachine() const;
 
 	/** 
@@ -57,10 +59,19 @@ public:
 
 	/** 
 	  * Set players' current assigned regions
+	  * @param vec_pos Vector to represent the assigned regions
 	  */
 	void setAssignedRegion(const std::vector<int>& vec_pos);
 
+	/** 
+	  * Send players to assigned region and wait for next command
+	  */
 	void sendPlayersToAssignedRegion();
+
+	/** 
+	  * Find player closest to ball so as to chase the ball
+	  */
+	void findPlayerClosestToBall();
 
 private:
 
@@ -71,7 +82,7 @@ private:
 
 private:
 
-	StateMachine<Team>* mStateMachine;   //!< StateMachine
+	StateMachine<Team>* mStateMachine;     //!< StateMachine
 
 	Ball* mBall;
 	Pitch* mPitch;
@@ -81,6 +92,7 @@ private:
 	std::vector<Player*> mPlayers;         //!< Pointers of players this team hold
 
 	Player* mControllingPlayer;            //!< Pointer to the player which is controlling the ball 
+	Player* mPlayerClosestToBall;          //!< Pointer to the player which is closest to the ball
 
 };
 

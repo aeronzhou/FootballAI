@@ -4,7 +4,7 @@
 #include "Region.h"
 #include "Goal.h"
 #include "ParamLoader.h"
-#include "FieldPlayer.h"//////////////////////////////////////////////////////////////////////////
+#include "Utils.h"
 #include <Physics/PhysicsBodyComponent.hpp>
 
 #include <OgreProcedural.h>
@@ -17,10 +17,17 @@ void Pitch::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
-	// Update State Machine
-	//////////////////////////////////////////////////////////////////////////
-
 	Node::onUpdate(time_diff);
+}
+
+void AddPitchWall(dt::Node* parent, QString name, QString mesh_handle, Ogre::Vector3 position, Ogre::Vector3 heading)
+{
+	dt::Node* wall = parent->addChildNode(new dt::Node(name)).get();
+	wall->setPosition(position);
+	wall->setRotation(GetRotationThroughHeading(heading));
+
+	wall->addComponent(new dt::MeshComponent(mesh_handle, "", MESH_COMPONENT));
+	wall->addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, dt::PhysicsBodyComponent::BOX, 0.0f));
 }
 
 void Pitch::onInitialize() 
@@ -43,10 +50,11 @@ void Pitch::onInitialize()
 	// Realize a ball
 	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
 	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "")).get();
-	mBall->setPosition(0, 3, -2);
+	mBall->setPosition(-4, 3, -2);
 	mBall->resetPhysicsBody();
 
 	// Create goals
+	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(0.5, 2, 5)).realizeMesh("Goal");
 	mRedGoal = (Goal*)addChildNode(new Goal("RedGoal", 
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, -Prm.HalfGoalWidth), 
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, Prm.HalfGoalWidth), 
@@ -69,6 +77,16 @@ void Pitch::onInitialize()
 	mBlueTeam = (Team*)addChildNode(new Team(mBall, this, Team::BLUE, mBlueGoal)).get();
 	mRedTeam->setOpponent(mBlueTeam);
 	mBlueTeam->setOpponent(mRedTeam);
+
+	// Create evil walls... -_-|||
+	// That is because we don't let foul-ball exists..
+	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(Prm.HalfPitchWidth * 2, 1, 0.2)).realizeMesh("Wall_Horizonal");
+	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(Prm.HalfPitchHeight * 2, 1, 0.2)).realizeMesh("Wall_Vertical");
+	AddPitchWall(this, "Wall_Up", "Wall_Horizonal", Ogre::Vector3(0, 0, -Prm.HalfPitchHeight), Ogre::Vector3(0, 0, 1));
+	AddPitchWall(this, "Wall_Down", "Wall_Horizonal", Ogre::Vector3(0, 0, Prm.HalfPitchHeight), Ogre::Vector3(0, 0, -1));
+	AddPitchWall(this, "Wall_Left", "Wall_Vertical", Ogre::Vector3(-Prm.HalfPitchWidth, 0, 0), Ogre::Vector3(1, 0, 0));
+	AddPitchWall(this, "Wall_Right", "Wall_Vertical", Ogre::Vector3(Prm.HalfPitchWidth, 0, 0), Ogre::Vector3(-1, 0, 0));
+
 }
 
 void Pitch::onDeinitialize() 

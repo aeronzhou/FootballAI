@@ -109,11 +109,12 @@ public:
 	}
 
 	/** 
-	  * only ever used during debugging to grab the name of the current state
+	  * Show the name of the current state
 	  */
 	QString getNameOfCurrentState() const
 	{
 		std::string s(typeid(*mCurrentState).name());
+		// Class class_name...
 		if (s.size() > 5)
 		{
 			s.erase(0, 6);
