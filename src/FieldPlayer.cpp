@@ -2,6 +2,7 @@
 #include "MotionAider.h"
 #include "Team.h"
 #include "FieldPlayerState.h"
+#include "Utils.h"
 #include "Constant.h"
 
 #include <OgreManualObject.h>
@@ -24,8 +25,6 @@ void FieldPlayer::onInitialize()
 	mMotionAider->separationOn();
 
 	mShootCoolTime = addComponent(new CoolingTimeComponent(0.5));
-
-	setVelocity(Ogre::Vector3(1.f, 0.f, 0.f));
 }
 
 void FieldPlayer::onDeinitialize()
@@ -35,8 +34,6 @@ void FieldPlayer::onDeinitialize()
 	Player::onDeinitialize();
 }
 
-//float sum = 1.f;
-
 void FieldPlayer::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
@@ -44,25 +41,53 @@ void FieldPlayer::onUpdate(double time_diff)
 	mStateMachine->onUpdate();
 
 	// Update here
-	getMotionAider()->calculate();
+	mMotionAider->calculateDrivingForce();
 
-	Ogre::Vector3& force = getMotionAider()->getDrivingForce();
+	// Apply a small rotation 
+	Ogre::Vector3 current_velocity = getVelocity();
+	Ogre::Quaternion rotation = getRotation();
+	Ogre::Vector3 current_heading = GetHeadingThroughRotation(rotation);
+	float velocity_magnitude = current_velocity.length();
+	Ogre::Vector3 driving_force = mMotionAider->getDrivingForce();
 
-	QString qsforce = "x=" + dt::Utils::toString(force.x) + ",z=" + dt::Utils::toString(force.z);
-
-	Ogre::Vector3 velocity = getVelocity();
-
-	velocity = velocity + force / getMass() * TIME_DIFF;
-
-	if (velocity.length() > getMaxSpeed())
+	if (driving_force.length() > EPS)
 	{
-		velocity = velocity.normalisedCopy() * getMaxSpeed();
+		Ogre::Radian angle = current_heading.getRotationTo(driving_force).getYaw();
+
+		if (angle > Ogre::Radian(mTurnRate))
+			angle = Ogre::Radian(mTurnRate);
+
+		if (angle < Ogre::Radian(-mTurnRate))
+			angle = Ogre::Radian(-mTurnRate);
+
+		float accumulate_force = current_heading.dotProduct(driving_force);
+
+		// If at the same line
+		if (fabs(angle.valueRadians()) < EPS && accumulate_force < 0)
+			angle = mTurnRate;
+
+        rotation = rotation * Ogre::Quaternion(angle, Ogre::Vector3(0, 1, 0));
+		btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();
+
+		btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
+		trans.setRotation(BtOgre::Convert::toBullet(rotation));
+		motion->setWorldTransform(trans);
+
+		velocity_magnitude += accumulate_force;
+		
+		if (velocity_magnitude < 0)
+			velocity_magnitude = 0;
 	}
 
-	setVelocity(velocity);
-	setDebugText("len=" + dt::Utils::toString(velocity ));
+	if (velocity_magnitude > mMaxSpeed)
+		velocity_magnitude = mMaxSpeed;
 
-	Player::onUpdate(time_diff);
+	setVelocity(rotation * Ogre::Vector3(0, 0, velocity_magnitude));
+
+	setDebugText(mStateMachine->getNameOfCurrentState());
+
+	//Player::onUpdate(time_diff);
+	dt::Node::onUpdate(time_diff);
 }
 
 StateMachine<FieldPlayer>* FieldPlayer::getStateMachine() const 

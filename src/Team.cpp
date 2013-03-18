@@ -57,20 +57,20 @@ void Team::createPlayers()
 	{
 		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(0), 
 			this, FieldPlayer::FORWARD, vec_pos[0])).get());
-		for (int i = 1; i < 3; ++i)
-		{
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
-		}
-		for (int i = 3; i < 6; ++i)
-		{
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-				this, FieldPlayer::BACK, vec_pos[i])).get());
-		}
-		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(6), 
-			this, FieldPlayer::BACK, vec_pos[6])).get());
+		//for (int i = 1; i < 3; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		//}
+		//for (int i = 3; i < 6; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+		//		this, FieldPlayer::BACK, vec_pos[i])).get());
+		//}
+		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(6), 
+		//	this, FieldPlayer::BACK, vec_pos[6])).get());
 
-		for (int i = 0; i < 7; ++i)
+		for (int i = 0; i < mPlayers.size(); ++i)
 		{
 			mPlayers[i]->placeAtPosition(mPlayers[i]->getPositionWithRegion(), RED_TEAM_HEADING, Prm.PlayerScale);
 		}
@@ -79,20 +79,20 @@ void Team::createPlayers()
 	{
 		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
 			this, FieldPlayer::FORWARD, vec_pos[7])).get());
-		for (int i = 8; i < 10; ++i)
-		{
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
-		}
-		for (int i = 10; i < 13; ++i)
-		{
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
-		}
-		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
-			this, FieldPlayer::MIDFIELD, vec_pos[13])).get());
+		//for (int i = 8; i < 10; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		//}
+		//for (int i = 10; i < 13; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		//}
+		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
+		//	this, FieldPlayer::MIDFIELD, vec_pos[13])).get());
 
-		for (int i = 0; i < 7; ++i)
+		for (int i = 0; i < mPlayers.size(); ++i)
 		{
 			mPlayers[i]->placeAtPosition(mPlayers[i]->getPositionWithRegion(), BLUE_TEAM_HEADING, Prm.PlayerScale);
 		}
@@ -131,9 +131,8 @@ Goal* Team::getGoal() const
 
 void Team::playersBackForKickOff()
 {
-	for (int i = 0; i < 7; ++i)
+	for (int i = mPlayers.size() - 1; i >= 0; --i)
 	{
-		//mPlayers[i]->getStateMachine()->changeState(BackToOrigin::get());
 		MessageDeliverer::get().deliverMessage(DELIVER_IMMEDIATELY,
 			NULL, 
 			mPlayers[i],
@@ -158,16 +157,16 @@ void Team::setAssignedRegion(const std::vector<int>& vec_pos)
 {
 	if (getTeamColor() == RED)
 	{
-		for (int i = 0; i < 7; ++i)
+		for (int i = mPlayers.size() - 1; i >= 0; --i)
 		{
 			mPlayers[i]->setAssignedRegion(vec_pos[i]);
 		}
 	}
 	else 
 	{
-		for (int i = 7; i < 14; ++i)
+		for (int i = mPlayers.size() - 1; i >= 0; --i)
 		{
-			mPlayers[i - 7]->setAssignedRegion(vec_pos[i]);
+			mPlayers[i]->setAssignedRegion(vec_pos[i + 7]);
 		}
 	}
 }

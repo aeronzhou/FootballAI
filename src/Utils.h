@@ -5,6 +5,8 @@
 
 #include <Scene/Node.hpp>
 
+#include <ostream>
+
 // Global functions
 
 inline Ogre::Vector3 Vector3To2(const Ogre::Vector3& vec)
@@ -56,10 +58,24 @@ inline Ogre::Quaternion GetRotationThroughHeading(Ogre::Vector3 heading)
 
 inline void Vector3Truncate(Ogre::Vector3& vec, float magnitude)
 {
-	if (vec.squaredLength() < magnitude * magnitude)
+	if (vec.squaredLength() > magnitude * magnitude)
 	{
 		vec = vec.normalisedCopy() * magnitude;
 	}
 }
+
+// Debug_Mode
+#define DEBUG_MODE_SETUP \
+	double _debug_time_interval = 2; \
+	double _debug_current_time = 2;
+
+#define DEBUG_MODE_BEGIN \
+	_debug_current_time += TIME_DIFF; \
+	if (_debug_current_time > _debug_time_interval) \
+	{ \
+		_debug_current_time = 0; 
+#define DEBUG_MODE_END \
+	}
+// Debug_Mode
 
 #endif

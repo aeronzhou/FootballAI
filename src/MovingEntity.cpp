@@ -25,7 +25,8 @@ void MovingEntity::onUpdate(double time_diff)
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
 	// Update here
-	mHeading = GetHeadingThroughRotation(getRotation());
+	//mHeading = GetHeadingThroughRotation(getRotation());
+	mHeading = getVelocity().normalisedCopy();
 
 	dt::Node::onUpdate(time_diff);
 }
@@ -42,14 +43,12 @@ void MovingEntity::onDeinitialize() {}
 Ogre::Vector3 MovingEntity::getVelocity() const
 {
 	return BtOgre::Convert::toOgre(mPhysicsBody->getRigidBody()->getLinearVelocity());
-	//return mVelocity;
 }
 
 void MovingEntity::setVelocity(Ogre::Vector3 velocity) 
 {
 	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(velocity));
-	mHeading = velocity.normalisedCopy();
-	//mVelocity = velocity;
+	//mHeading = velocity.normalisedCopy();
 }
 
 float MovingEntity::getMaxSpeed() const
@@ -77,7 +76,8 @@ void MovingEntity::placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading
 {
 	setPosition(position);
 	setScale(scale);
-	setHeading(heading);
+	//setHeading(heading);
+	setRotation(GetRotationThroughHeading(heading));
 
 	resetPhysicsBody();
 }
@@ -87,12 +87,17 @@ Ogre::Vector3 MovingEntity::getHeading() const
 	return mHeading;
 }
 
-void MovingEntity::setHeading(Ogre::Vector3 heading)
-{
-	setRotation(GetRotationThroughHeading(mHeading = heading));
-}
+//void MovingEntity::setHeading(Ogre::Vector3 heading)
+//{
+//	setRotation(GetRotationThroughHeading(mHeading = heading));
+//}
 
 bool MovingEntity::handleMessage(const Message& msg) const
 {
 	return false;
+}
+
+float MovingEntity::getTurnRate() const 
+{
+	return mTurnRate;
 }

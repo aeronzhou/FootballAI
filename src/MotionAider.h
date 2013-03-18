@@ -63,7 +63,8 @@ public:
 	/** 
 	  * Calculate the steering force
 	  */
-	void calculate();
+	void calculateDrivingForce();
+
 
 protected:
 

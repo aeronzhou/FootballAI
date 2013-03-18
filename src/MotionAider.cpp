@@ -121,10 +121,6 @@ Ogre::Vector3 MotionAider::arrive(Ogre::Vector3 target, Deceleration decel)
 
 		Ogre::Vector3 disire_velocity = to_target.normalisedCopy() * speed;
 
-		Ogre::Vector3 result = disire_velocity - mPlayer->getVelocity();
-
-		Ogre::Vector3 getVelo = mPlayer->getVelocity();
-
 		return disire_velocity - mPlayer->getVelocity();
 	}
 
@@ -149,22 +145,21 @@ Ogre::Vector3 MotionAider::persuit(const Ball* ball)
 
 Ogre::Vector3 MotionAider::separation()
 {
-	Ogre::Vector3 force(0, 0, 0);
-
 	std::vector<Player*>& members = PlayerManager::get().getAllMembers();
+
+	Ogre::Vector3 force(0, 0, 0);
 
 	for (auto it = members.begin(); it != members.end(); ++it)
 	{
-		if (mPlayer != (*it) && !(*it)->getMotionAider()->isTag())
+		if (mPlayer != (*it) && (*it)->getMotionAider()->isTag())
 		{
-			Ogre::Vector3 to_target = (*it)->getPosition() - mPlayer->getPosition();
+			Ogre::Vector3 to_target = mPlayer->getPosition() - (*it)->getPosition();
 			force += (to_target / to_target.length());
 		}
 	}
 
-	float sep = Prm.SeperationCoefficient;
-	
-	return (force * Prm.SeperationCoefficient);
+	// Add some noise to avoid players gather together
+	return ((force + Ogre::Vector3(-0.1, 0, 0.1) ) * Prm.SeperationCoefficient);
 }
 
 Ogre::Vector3 MotionAider::interpose(const Ball* ball, Ogre::Vector3 target, float dis_from_target)
@@ -172,7 +167,7 @@ Ogre::Vector3 MotionAider::interpose(const Ball* ball, Ogre::Vector3 target, flo
 	return arrive(target + Vector3To2Normalise(ball->getPosition() - target) * dis_from_target, NORMAL);	
 }
 
-void MotionAider::calculate()
+void MotionAider::calculateDrivingForce()
 {
 	// Clear the combine force
 	mDrivingForce = Ogre::Vector3::ZERO;

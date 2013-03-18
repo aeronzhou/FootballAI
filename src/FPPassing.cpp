@@ -13,7 +13,6 @@ Passing* Passing::get()
 void Passing::enter(FieldPlayer* player)
 {
 	dt::Logger::get().debug("Enter to Passing state...");
-	player->getTeam()->set
 }
 
 void Passing::execute(FieldPlayer*)

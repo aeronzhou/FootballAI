@@ -28,12 +28,12 @@ public:
 	void onDeinitialize();
 
 	Ogre::Vector3 getHeading() const;
-	void setHeading(Ogre::Vector3 heading);
 
 	Ogre::Vector3 getVelocity() const;
 	void setVelocity(Ogre::Vector3 velocity);
 
 	float getMass() const;
+	float getTurnRate() const;
 
 	float getMaxSpeed() const;
 	float getMaxForce() const;
@@ -60,8 +60,6 @@ protected:
 
 	Ogre::Vector3 mHeading;                                 //!< Direction this entity heading
 	Ogre::Vector3 mVelocity;                                //!< Velocity of this entity
-
-	Ogre::Vector3 mSide;
 
 	std::shared_ptr<dt::PhysicsBodyComponent> mPhysicsBody; //!< Pointer to physics body	
 	QString mMeshHandle;                                    //!< Mesh handle

@@ -43,7 +43,7 @@ void Pitch::onInitialize()
 	// Realize a ball
 	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
 	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "")).get();
-	mBall->setPosition(0, 3, -2);
+	mBall->setPosition(-4, 3, -2);
 	mBall->resetPhysicsBody();
 
 	// Create goals

@@ -27,13 +27,18 @@ dt::Node* CreatePlayerFlag(dt::Node* parent, const QString& material)
 	return player_flag;
 }
 
-dt::TextComponent* AddTextComponent(dt::Node* parent)
+dt::TextComponent* AddTextComponent(Player* parent)
 {
 	dt::Node* player_text = parent->addChildNode(new dt::Node("player_text")).get();
 	player_text->setPosition(0.f, 1.f, 0.f);
-	dt::TextComponent* pDebugText = (player_text->addComponent(new dt::TextComponent("Hello", 
+	dt::TextComponent* pDebugText = (player_text->addComponent(new dt::TextComponent("Waiting", 
 		parent->getName() + "TextComponent"))).get();
-	pDebugText->setColor(Ogre::ColourValue::White);
+
+	if (parent->getTeam()->getTeamColor() == Team::RED)
+		pDebugText->setColor(Ogre::ColourValue::Red);
+	else 
+		pDebugText->setColor(Ogre::ColourValue::Blue);
+
 	pDebugText->setFont("DejaVuSans");
 	pDebugText->setFontSize(14);
 
@@ -46,12 +51,13 @@ void Player::onInitialize()
 
 	mMotionAider = new MotionAider(this, getBall());
 
-	if (getTeam()->getTeamColor() == Team::RED)
-		CreatePlayerFlag(this, "PlayerFlagRed");
-	else 
-		CreatePlayerFlag(this, "PlayerFlagBlue");
+	//if (getTeam()->getTeamColor() == Team::RED)
+	//	CreatePlayerFlag(this, "PlayerFlagRed");
+	//else 
+	//	CreatePlayerFlag(this, "PlayerFlagBlue");
 
 	mDebugText = AddTextComponent(this);
+
 	if (!Prm.ShowDebugText)
 		mDebugText->disable();
 
@@ -66,9 +72,6 @@ void Player::onDeinitialize()
 void Player::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
-
-	// Set heading through rotation
-	mHeading = GetHeadingThroughRotation(getRotation());
 
 	//setHeading(Ogre::Vector3(1.f, 0.f, 0.f));
 	dt::Node::onUpdate(time_diff);
