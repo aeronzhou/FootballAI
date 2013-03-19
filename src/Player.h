@@ -53,7 +53,15 @@ public:
 	Region* getAssignedRegion() const;
 	void setAssignedRegion(int assigned_region);
 
+	float getControlRange() const;
+
 	void setDebugText(QString debug_text);
+
+	/** 
+	  * Return distance to ball 
+	  * @returns Distance to ball 
+	  */
+	float getDistToBall() const;
 
 	/** 
 	  * Return a position with self's region
@@ -74,6 +82,8 @@ public:
 
 
 protected:
+
+	float mControlRange; 
 
 	PlayerRole mPlayerRole;                          //!< The player's role in this team
 

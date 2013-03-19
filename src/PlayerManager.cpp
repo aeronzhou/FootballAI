@@ -35,7 +35,7 @@ FieldPlayer* PlayerManager::createFieldPlayer(const QString& name,
 	}
 
 	FieldPlayer* player = new FieldPlayer(name,
-										  mFieldPlayer["BoundingRadius"].toFloat(),
+										  mFieldPlayer["ControlRange"].toFloat(),
 										  mFieldPlayer["MaxSpeed"].toFloat(),
 										  mFieldPlayer["MaxForce"].toFloat(),
 										  mFieldPlayer["Mass"].toFloat(),
@@ -65,7 +65,7 @@ GoalKeeper* PlayerManager::createGoalKeeper(const QString& name,
 	}
 
 	GoalKeeper* player = new GoalKeeper(name,
-									    mFieldPlayer["BoundingRadius"].toFloat(), 
+									    mFieldPlayer["ControlRange"].toFloat(), 
 										mFieldPlayer["MaxSpeed"].toFloat(), 
 										mFieldPlayer["MaxForce"].toFloat(), 
 										mFieldPlayer["Mass"].toFloat(), 

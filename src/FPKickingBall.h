@@ -1,15 +1,17 @@
-#ifndef FOOTBALL_AI_FIELD_PLAYER_PASSING_STATE
-#define FOOTBALL_AI_FIELD_PLAYER_PASSING_STATE
+#ifndef FOOTBALL_AI_FIELD_PLAYER_KICKING_BALL
+#define FOOTBALL_AI_FIELD_PLAYER_KICKING_BALL
 
 #include "State.h"
 
 class FieldPlayer;
 
-// Passing
-class Passing: public State<FieldPlayer>
+/** 
+  * Kicking Ball
+  */
+class KickingBall: public State<FieldPlayer>
 {
 public:
-	static Passing* get();
+	static KickingBall* get();
 
 	void enter(FieldPlayer*);
 
@@ -19,6 +21,5 @@ public:
 
 	bool onMessage(FieldPlayer*, const Message&);
 };
-
 
 #endif

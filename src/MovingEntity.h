@@ -13,7 +13,6 @@ class MovingEntity : public dt::Node
 public:
 
 	MovingEntity(const QString name,
-				 float bounding_radius,
 				 float max_speed,
 				 float max_force,
 				 float mass,
@@ -52,7 +51,6 @@ public:
 
 protected:
 
-	float mBoundingRadius; 
 	float mMass;
 	float mMaxSpeed;
 	float mMaxForce;                                        //!< The max force this entity can produce
