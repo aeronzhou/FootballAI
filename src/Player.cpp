@@ -14,8 +14,9 @@
 
 Player::Player(const QString name, float bounding_radius, float max_speed, float max_force,
 	float mass, float turn_rate, QString mesh_handle, QString material_handle, Team* team, int assigned_region, PlayerRole role)
-	: MovingEntity(name, bounding_radius, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
-	mTeam(team), mAssignedRegion(assigned_region), mPlayerRole(role), mDistSqAtTarget(Prm.DistAtTarget * Prm.DistAtTarget) {}
+	: MovingEntity(name, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
+	mTeam(team), mAssignedRegion(assigned_region), mPlayerRole(role), mDistSqAtTarget(Prm.DistAtTarget * Prm.DistAtTarget),
+	mControlRange(bounding_radius) {}
 
 // Add a flag to distinguish RED and BLUE
 dt::Node* CreatePlayerFlag(dt::Node* parent, const QString& material)
@@ -48,6 +49,10 @@ dt::TextComponent* AddTextComponent(Player* parent)
 void Player::onInitialize()
 {
 	MovingEntity::onInitialize();
+
+	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
+	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
+		dt::PhysicsBodyComponent::BOX, mMass));
 
 	mMotionAider = new MotionAider(this, getBall());
 
@@ -144,4 +149,14 @@ bool Player::withinAssignedRegion() const
 	}
 
 	return getAssignedRegion()->inside(getPosition(), Region::HALF_SIZE);
+}
+
+float Player::getDistToBall() const 
+{
+	return getPosition().distance(getBall()->getPosition());
+}
+
+FLOAT Player::getControlRange() const 
+{
+	return mControlRange;
 }

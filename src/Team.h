@@ -73,6 +73,15 @@ public:
 	  */
 	void findPlayerClosestToBall();
 
+	/** 
+	  * Return if the team is controlling the ball
+	  * @returns If the team is controlling the ball
+	  */
+	bool isControllingBall() const;
+
+	Player* getControllingPlayer() const;
+	void setControllingPlayer(Player* player);
+
 private:
 
 	/** 
@@ -90,6 +99,8 @@ private:
 	TeamColor mColor;                      //!< Team color, RED or BLUE
 	Team* mOpponent;                       //!< The opponent team of this
 	std::vector<Player*> mPlayers;         //!< Pointers of players this team hold
+
+	bool mIsControllingBall;               //!< If the team is controlling the ball
 
 	Player* mControllingPlayer;            //!< Pointer to the player which is controlling the ball 
 	Player* mPlayerClosestToBall;          //!< Pointer to the player which is closest to the ball

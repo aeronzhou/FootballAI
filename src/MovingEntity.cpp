@@ -5,12 +5,12 @@
 #include <Graphics/MeshComponent.hpp>
 
 MovingEntity::MovingEntity(const QString name,
-	float bounding_radius, 
+	//float bounding_radius, 
 	float max_speed, 
 	float max_force, float mass, float turn_rate, 
 	QString mesh_handle, QString material_handle)
 	: Node(name),
-	  mBoundingRadius(bounding_radius),
+	  //mControlRange(bounding_radius),
 	  mMaxSpeed(max_speed),
 	  mMaxForce(max_force),
 	  mMass(mass),
@@ -33,9 +33,9 @@ void MovingEntity::onUpdate(double time_diff)
 
 void MovingEntity::onInitialize()
 {
-	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
-	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
-		dt::PhysicsBodyComponent::BOX, mMass));
+	//addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
+	//mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
+	//	dt::PhysicsBodyComponent::BOX, mMass));
 }
 
 void MovingEntity::onDeinitialize() {}

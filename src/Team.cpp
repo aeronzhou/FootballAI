@@ -14,7 +14,8 @@
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
-	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()) {}
+	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()),
+	  mIsControllingBall(false) {}
 
 
 void Team::onInitialize() 
@@ -204,4 +205,21 @@ void Team::findPlayerClosestToBall()
 Player* Team::getPlayerClosestToBall() const 
 {
 	return mPlayerClosestToBall;
+}
+
+bool Team::isControllingBall() const 
+{
+	return mIsControllingBall;
+}
+
+Player* Team::getControllingPlayer() const 
+{
+	return mControllingPlayer;
+}
+
+void Team::setControllingPlayer(Player* player)
+{
+	mIsControllingBall = (player != nullptr);
+
+	mControllingPlayer = player;
 }
