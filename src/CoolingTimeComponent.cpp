@@ -12,11 +12,10 @@ void CoolingTimeComponent::onUpdate(double time_diff)
 	if (isEnabled())
 	{
 		mCurTime += time_diff;
-
-		if (mCurTime > mCoolingTime + EPS)
-		{
-			mCurTime = mCoolingTime;	
-		}
+		//if (mCurTime > mCoolingTime + EPS)
+		//{
+		//	mCurTime = mCoolingTime;	
+		//}
 	}
 }
 

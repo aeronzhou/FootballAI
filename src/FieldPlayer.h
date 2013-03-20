@@ -38,9 +38,9 @@ public:
 
 protected:
 	
-	std::shared_ptr<CoolingTimeComponent> mShootCoolTime;   //!< Cooling time component
+	std::shared_ptr<CoolingTimeComponent> mKickCoolingTime;   //!< Cooling time component
 
-	StateMachine<FieldPlayer>* mStateMachine;               //!< State Machine
+	StateMachine<FieldPlayer>* mStateMachine;                 //!< State Machine
 
 };
 
