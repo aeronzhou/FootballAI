@@ -1,4 +1,5 @@
 #include "FieldPlayerState.h"
+#include "Team.h"
 
 // KickingBall
 KickingBall* KickingBall::get()
@@ -7,13 +8,27 @@ KickingBall* KickingBall::get()
 	return &instance;
 }
 
-void KickingBall::enter(FieldPlayer*)
+void KickingBall::enter(FieldPlayer* player)
 {
+	player->getTeam()->setControllingPlayer(player);
+	player->getTeam()->getOpponent()->setControllingPlayer(nullptr);
+
+	if (!player->isReadyToKick())
+	{
+		player->getStateMachine()->changeState(ChasingBall::get());
+	}
 }
 
 void KickingBall::execute(FieldPlayer* player)
 {
+	// Cannot kick the ball
 
+	// Can shoot
+
+	// Can pass
+
+	// Should dribble
+	player->getStateMachine()->changeState(Dribbling::get());
 }
 
 void KickingBall::exit(FieldPlayer*)

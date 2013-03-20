@@ -1,9 +1,6 @@
 #include "FieldPlayerState.h"
-#include "FieldPlayer.h"
-#include "MessageDeliverer.h"
 #include "Team.h"
-#include "Ball.h"
-#include "Constant.h"
+#include "Goal.h"
 
 
 // Dribbling
@@ -15,24 +12,32 @@ Dribbling* Dribbling::get()
 
 void Dribbling::enter(FieldPlayer* player)
 {
-	// Set team controller	
-	player->getTeam()->setControllingPlayer(player);
-	player->getTeam()->getOpponent()->setControllingPlayer(nullptr);
 }
 
 void Dribbling::execute(FieldPlayer* player)
 {
-	Ogre::Quaternion rotation = player->getRotation();
+	Ogre::Vector3 towards_goal = player->getTeam()->getGoal()->getCenter() - player->getPosition();
+	float dot = player->getHeading().dotProduct(towards_goal);
 
-	// Can shoot 
+	// If the goal is behind this player
+	if (dot < 0)
+	{
+		Ogre::Vector3 direction = player->getRotation() * Ogre::Quaternion(Ogre::Radian(0.2), Ogre::Vector3(0, 1, 0))
+			* Ogre::Vector3(0, 0, 1);
 
-	// Can pass
+		player->getBall()->kick(towards_goal, 0.2);
 
-	// Go on controlling the ball
-	Ball* ball = player->getBall();
-	ball->kick(rotation * Ogre::Vector3(0, 0, 1), 1.f);
+		std::cout << "Turn Left!!!" << std::endl;
+	}
+	else 
+	{
+		// Detect if player in dangerous situation
+		player->getBall()->kick(towards_goal, 0.5);
+
+		std::cout << "Go ONNNNNN!!!!!" << std::endl;
+	}
+
 	player->getStateMachine()->changeState(ChasingBall::get());
-
 }
 
 void Dribbling::exit(FieldPlayer*)
