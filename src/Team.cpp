@@ -25,7 +25,7 @@ void Team::onInitialize()
 	mStateMachine->setCurrentState(WaitingForKickOff::get());	
 
 	// Initialize players
-	_createPlayers();
+	createPlayers();
 
 	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	{
@@ -51,7 +51,7 @@ void Team::onUpdate(double time_diff)
 	dt::Node::onUpdate(time_diff);
 }
 
-void Team::_createPlayers()
+void Team::createPlayers()
 {
 	std::vector<int> vec_pos = PlayerPositionManager::get().getAssignedPosition("WaitingForKickOff");
 

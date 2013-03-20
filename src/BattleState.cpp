@@ -1,6 +1,5 @@
-#include "FootballGame.h"
+#include "BattleState.h"
 #include "Pitch.h"
-#include "MainGameCamera.h"
 #include "ParamLoader.h"
 #include "Constant.h"
 
@@ -15,20 +14,21 @@
 #include <iostream>
 
 
-void FootballGame::onInitialize() 
+void BattleState::onInitialize() 
 {
 	auto scene = addScene(new dt::Scene("scene_01"));
 	// This one is very important
 	OgreProcedural::Root::getInstance()->sceneManager = scene->getSceneManager();
 
 	// Enable debug mode
-	if (Prm.PhysicsShowDebug) 
-	{
+	if (Prm.PhysicsShowDebug)
 		scene->getPhysicsWorld()->setShowDebug(true);
-	}
 
-	MainGameCamera* camnode = (MainGameCamera*)scene->addChildNode(new MainGameCamera("MainGameCamera")).get();
-	camnode->setPosition(0, 2, 0);
+	dt::Node::NodeSP camnode = scene->addChildNode(new dt::Node("CameraNode"));
+	camnode->setPosition(Ogre::Vector3(Prm.CameraPosX, Prm.CameraPosY, Prm.CameraPosZ));
+	camnode->addComponent(new dt::CameraComponent(CAMERA_COMPONENT));
+	camnode->findComponent<dt::CameraComponent>(CAMERA_COMPONENT)->lookAt(Prm.CameraLookAtX, 
+		Prm.CameraLookAtY, Prm.CameraLookAtZ);
 
 	// Initialize light
 	auto light_node = scene->addChildNode(new dt::Node("LightNode"));
@@ -38,12 +38,12 @@ void FootballGame::onInitialize()
 	auto pitch = scene->addChildNode(new Pitch());	
 }
 
-void FootballGame::onDeinitialize() 
+void BattleState::onDeinitialize() 
 {
 
 }
 
-void FootballGame::updateStateFrame(double simulation_frame_time) 
+void BattleState::updateStateFrame(double simulation_frame_time) 
 {
 
 }

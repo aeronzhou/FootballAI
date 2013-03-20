@@ -17,10 +17,11 @@ void ChasingBall::execute(FieldPlayer* player)
 {
 	player->getMotionAider()->setTarget(player->getBall()->getPosition());
 
-	// If the ball within kicking range
+	// If within controlling area
 	if (player->getDistToBall() < player->getControlRange())
 	{
-		player->getStateMachine()->changeState(KickingBall::get());
+		player->getStateMachine()->changeState(Dribbling::get());
+		//dt::Logger::get().debug("Give you a kick");
 	}
 }
 

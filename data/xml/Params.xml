@@ -14,13 +14,11 @@
 	<HalfGoalHeight>1.0</HalfGoalHeight>
 
 	<CameraPosX>0.0</CameraPosX>
-	<CameraPosY>20</CameraPosY>
-	<CameraPosZ>30</CameraPosZ>
+	<CameraPosY>28.0</CameraPosY>
+	<CameraPosZ>40</CameraPosZ>
 	<CameraLookAtX>0</CameraLookAtX>
 	<CameraLookAtY>0</CameraLookAtY>
 	<CameraLookAtZ>0</CameraLookAtZ>
-	<CameraSpeed>0.2</CameraSpeed>
-	<MouseSensitivity>0.5</MouseSensitivity>
 
 	<VelocityToForceCoefficient>1.0</VelocityToForceCoefficient>
 	<DecelerationTweaker>0.3</DecelerationTweaker>
@@ -33,9 +31,8 @@
 
 	<PlayerScale>0.1</PlayerScale>
 	<PlayerInitPositionY>0.5</PlayerInitPositionY>
-	<PlayerKickCoolingTime>1.0</PlayerKickCoolingTime>
 
-	<PhysicsShowDebug>0</PhysicsShowDebug>
+	<PhysicsShowDebug>1</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
 
 </Params>

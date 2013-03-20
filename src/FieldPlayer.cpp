@@ -2,7 +2,6 @@
 #include "MotionAider.h"
 #include "Team.h"
 #include "FieldPlayerState.h"
-#include "ParamLoader.h"
 #include "Utils.h"
 #include "Constant.h"
 
@@ -26,7 +25,7 @@ void FieldPlayer::onInitialize()
 
 	mMotionAider->separationOn();
 
-	mKickCoolingTime = addComponent(new CoolingTimeComponent(Prm.PlayerKickCoolingTime));
+	mShootCoolTime = addComponent(new CoolingTimeComponent(0.5));
 }
 
 void FieldPlayer::onDeinitialize()
@@ -105,7 +104,7 @@ StateMachine<FieldPlayer>* FieldPlayer::getStateMachine() const
 
 bool FieldPlayer::isReadyToKick() const
 {
-	return mKickCoolingTime->ready();
+	return mShootCoolTime->ready();
 }
 
 bool FieldPlayer::handleMessage(const Message& msg) const 

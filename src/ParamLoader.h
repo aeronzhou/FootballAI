@@ -45,8 +45,6 @@ public:
 		CameraLookAtX = mParamTables["CameraLookAtX"].toFloat();
 		CameraLookAtY = mParamTables["CameraLookAtY"].toFloat();
 		CameraLookAtZ = mParamTables["CameraLookAtZ"].toFloat();
-		CameraSpeed = mParamTables["CameraSpeed"].toFloat();
-		MouseSensitivity = mParamTables["MouseSensitivity"].toFloat();
 
 		VelocityToForceCoefficient = mParamTables["VelocityToForceCoefficient"].toFloat();
 		DecelerationTweaker = mParamTables["DecelerationTweaker"].toFloat();
@@ -59,7 +57,6 @@ public:
 
 		PlayerScale = mParamTables["PlayerScale"].toFloat();
 		PlayerInitPositionY = mParamTables["PlayerInitPositionY"].toFloat();
-		PlayerKickCoolingTime = mParamTables["PlayerKickCoolingTime"].toFloat();
 
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
@@ -97,8 +94,6 @@ public:
 	float CameraLookAtX;
 	float CameraLookAtY;
 	float CameraLookAtZ;
-	float CameraSpeed;
-	float MouseSensitivity;
 
 	// Motion Aider 
 	float VelocityToForceCoefficient;
@@ -114,7 +109,6 @@ public:
 	// Players
 	float PlayerScale;
 	float PlayerInitPositionY;
-	float PlayerKickCoolingTime;
 
 	// Others
 	int PhysicsShowDebug;

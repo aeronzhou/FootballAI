@@ -1,5 +1,5 @@
 #include "InitialState.h"
-#include "FootballGame.h"
+#include "BattleState.h"
 
 #include <Graphics/DisplayManager.hpp>
 #include <Scene/StateManager.hpp>
@@ -21,5 +21,5 @@ void InitialState::onDeinitialize() {}
 
 void InitialState::updateStateFrame(double simulation_frame_time) 
 {
-	dt::StateManager::get()->setNewState(new FootballGame());	
+	dt::StateManager::get()->setNewState(new BattleState());	
 }

@@ -87,7 +87,7 @@ private:
 	/** 
 	  * Genrate players 
 	  */
-	void _createPlayers();
+	void createPlayers();
 
 private:
 
