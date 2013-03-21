@@ -39,6 +39,9 @@ public:
 	  */
 	bool isScored();
 
+	/** 
+	  * Call after position or rotation is changed
+	  */
 	void resetPhysicsBody();
 
 private:

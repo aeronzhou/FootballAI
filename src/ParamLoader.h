@@ -28,6 +28,8 @@ public:
 		BallFriction = mParamTables["BallFriction"].toFloat();
 		BallRadius = mParamTables["BallRadius"].toFloat();
 		BallMass = mParamTables["BallMass"].toFloat(); 
+		DribblingForce = mParamTables["DribblingForce"].toFloat();
+		TurnAroundForce = mParamTables["TurnAroundForce"].toFloat();	
 
 		NumRegionsHorizontal = mParamTables["NumRegionsHorizontal"].toInt();
 		NumRegionsVertical = mParamTables["NumRegionsVertical"].toInt();
@@ -76,6 +78,8 @@ public:
 	float BallFriction;
 	float BallRadius;
 	float BallMass;
+	float DribblingForce;
+	float TurnAroundForce;
 
 	// Regions
 	int NumRegionsHorizontal;

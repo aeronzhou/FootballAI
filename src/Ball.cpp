@@ -18,7 +18,7 @@ void Ball::onInitialize()
 	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
 		dt::PhysicsBodyComponent::CONVEX, mMass));
 
-	mPhysicsBody->getRigidBody()->setFriction(Prm.BallFriction);
+	mPhysicsBody->getRigidBody()->setFriction(10.f /*Prm.BallFriction*/);
 }
 
 void Ball::onUpdate(double time_diff)
@@ -27,6 +27,13 @@ void Ball::onUpdate(double time_diff)
 
 	// Update every frame
 	//Ogre::Vector3 velocity = getVelocity();
+
+	Ogre::Vector3 velocity = getVelocity();
+
+	velocity.x *= Prm.BallFriction;
+	velocity.z *= Prm.BallFriction;
+
+	setVelocity(velocity);
 
 	MovingEntity::onUpdate(time_diff);
 }

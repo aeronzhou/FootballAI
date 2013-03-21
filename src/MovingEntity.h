@@ -2,6 +2,7 @@
 #define FOOTBALL_AI_MOVING_ENTITY
 
 #include <Scene/Node.hpp>
+#include <Graphics/MeshComponent.hpp>
 #include <Physics/PhysicsBodyComponent.hpp>
 
 struct Message;
@@ -59,6 +60,7 @@ protected:
 	Ogre::Vector3 mVelocity;                                //!< Velocity of this entity
 
 	std::shared_ptr<dt::PhysicsBodyComponent> mPhysicsBody; //!< Pointer to physics body	
+	std::shared_ptr<dt::MeshComponent> mMesh;               //!< Pointer to mesh component
 	QString mMeshHandle;                                    //!< Mesh handle
 	QString mMaterialHandle;                                //!< Material handle
 };

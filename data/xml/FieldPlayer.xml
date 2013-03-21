@@ -4,7 +4,7 @@
 	<MaxForce>20</MaxForce>
 	<Mass>70</Mass>
 	<TurnRate>0.03</TurnRate>
-	<RedMeshHandle>SinbadRed.mesh</RedMeshHandle>
-	<BlueMeshHandle>SinbadRed.mesh</BlueMeshHandle>
+	<RedMeshHandle>Sinbad.mesh</RedMeshHandle>
+	<BlueMeshHandle>Sinbad.mesh</BlueMeshHandle>
 	<MaterialHandle></MaterialHandle>
 </FieldPlayer>

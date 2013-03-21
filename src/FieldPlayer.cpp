@@ -26,6 +26,11 @@ void FieldPlayer::onInitialize()
 
 	mMotionAider->separationOn();
 
+	// Set defult animation
+	mMesh->setAnimation("RunBase");
+	mMesh->setLoopAnimation(true);
+	//mMesh->playAnimation();
+
 	mKickCoolingTime = addComponent(new CoolingTimeComponent(Prm.PlayerKickCoolingTime));
 }
 
@@ -91,6 +96,12 @@ void FieldPlayer::onUpdate(double time_diff)
 	if (velocity_magnitude > mMaxSpeed)
 		velocity_magnitude = mMaxSpeed;
 
+	// About animation
+	if (velocity_magnitude < 1e-6)
+		mMesh->stopAnimation();
+	else
+		mMesh->playAnimation();
+
 
 	//// Set velocity 
 	mVelocity = rotation * Ogre::Vector3(0, 0, velocity_magnitude);
@@ -99,9 +110,6 @@ void FieldPlayer::onUpdate(double time_diff)
 	motion->setWorldTransform(trans);
 
 	setDebugText(getStateMachine()->getNameOfCurrentState());
-	//DEBUG_MODE_BEGIN
-	//setDebugText(dt::Utils::toString(mVelocity));
-	//DEBUG_MODE_END
 
 	dt::Node::onUpdate(time_diff);
 }

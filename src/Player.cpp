@@ -46,18 +46,13 @@ dt::TextComponent* AddTextComponent(Player* parent)
 	return pDebugText;
 }
 
-//Ogre::Vector3 Player::getHeading() const 
-//{
-//	return getRotation() * Ogre::Vector3(0, 0, 1);
-//}
-
 void Player::onInitialize()
 {
 	MovingEntity::onInitialize();
 
-	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
+	mMesh = addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
 	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
-		dt::PhysicsBodyComponent::BOX, mMass));
+		dt::PhysicsBodyComponent::CONVEX, mMass));
 
 	// Become KinematicBody to save the world
 	mPhysicsBody->getRigidBody()->setCollisionFlags(mPhysicsBody->getRigidBody()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);

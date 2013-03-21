@@ -1,9 +1,10 @@
 <Params>
 	<BallMaxSpeed>2.0</BallMaxSpeed>
-	<BallMass>10.0</BallMass>
-	<BallFriction>10.0</BallFriction>
+	<BallMass>1.0</BallMass>
+	<BallFriction>0.98</BallFriction>
 	<BallRadius>0.10</BallRadius>
-	<DribblingForce>1.0</DribblingForce>
+	<DribblingForce>5</DribblingForce>
+	<TurnAroundForce>0.2</TurnAroundForce>
 
 	<NumRegionsHorizontal>9</NumRegionsHorizontal>
 	<NumRegionsVertical>5</NumRegionsVertical>
@@ -35,7 +36,7 @@
 	<PlayerInitPositionY>0.5</PlayerInitPositionY>
 	<PlayerKickCoolingTime>1.0</PlayerKickCoolingTime>
 
-	<PhysicsShowDebug>1</PhysicsShowDebug>
+	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
 
 </Params>
