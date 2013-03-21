@@ -10,5 +10,6 @@
 #include "FPCloseSafeGuard.h"
 #include "FPIntercepting.h"
 #include "FPReceiving.h"
+#include "FPFindRightPlace.h"
 
 #endif

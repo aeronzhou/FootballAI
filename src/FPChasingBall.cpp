@@ -1,5 +1,6 @@
 #include "FieldPlayerState.h"
 #include "Ball.h"
+#include "Team.h"
 
 // ChasingBall
 ChasingBall* ChasingBall::get()
@@ -21,7 +22,17 @@ void ChasingBall::execute(FieldPlayer* player)
 	if (player->getDistToBall() < player->getControlRange())
 	{
 		player->getStateMachine()->changeState(KickingBall::get());
+		return;
 	}
+
+	// If the team has controlled the ball, find right place
+	if (player->getTeam()->isControllingBall() && player->getTeam()->getControllingPlayer() != player)
+	{
+		player->getStateMachine()->changeState(FindRightPlace::get());
+	}
+
+	// If the team hasn't controlled the ball, but not proper to chase the ball
+
 }
 
 void ChasingBall::exit(FieldPlayer* player)
