@@ -10,7 +10,10 @@
 #include <OgreProcedural.h>
 
 Goal::Goal(const QString& name, Ogre::Vector3 left, Ogre::Vector3 right, Ogre::Vector3 facing, Ball* ball)
-	: dt::Node(name), mLeftPost(left), mRightPost(right), mFacing(facing), mBall(ball), mScores(0) {}
+	: dt::Node(name), mLeftPost(left), mRightPost(right), mFacing(facing), mBall(ball), mScores(0) 
+{
+	mCenter = (mLeftPost + mRightPost) / 2;
+}
 
 void Goal::onInitialize()
 {

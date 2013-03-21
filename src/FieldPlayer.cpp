@@ -36,6 +36,8 @@ void FieldPlayer::onDeinitialize()
 	Player::onDeinitialize();
 }
 
+DEBUG_MODE_SETUP
+
 void FieldPlayer::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
@@ -46,11 +48,15 @@ void FieldPlayer::onUpdate(double time_diff)
 	mMotionAider->calculateDrivingForce();
 
 	// Apply a small rotation 
-	Ogre::Vector3 current_velocity = getVelocity();
 	Ogre::Quaternion rotation = getRotation();
-	Ogre::Vector3 current_heading = GetHeadingThroughRotation(rotation);
+	Ogre::Vector3 current_velocity = getVelocity();
+	Ogre::Vector3 current_heading = rotation * Ogre::Vector3(0, 0, 1);
+
 	float velocity_magnitude = current_velocity.length();
 	Ogre::Vector3 driving_force = mMotionAider->getDrivingForce();
+
+	btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
+	btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();
 
 	if (driving_force.length() > EPS)
 	{
@@ -69,11 +75,8 @@ void FieldPlayer::onUpdate(double time_diff)
 			angle = mTurnRate;
 
         rotation = rotation * Ogre::Quaternion(angle, Ogre::Vector3(0, 1, 0));
-		btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();
 
-		btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
 		trans.setRotation(BtOgre::Convert::toBullet(rotation));
-		motion->setWorldTransform(trans);
 
 		velocity_magnitude += accumulate_force;
 		
@@ -88,11 +91,16 @@ void FieldPlayer::onUpdate(double time_diff)
 	if (velocity_magnitude > mMaxSpeed)
 		velocity_magnitude = mMaxSpeed;
 
-	setVelocity(rotation * Ogre::Vector3(0, 0, velocity_magnitude));
 
-	setDebugText(mStateMachine->getNameOfCurrentState());
+	//// Set velocity 
+	mVelocity = rotation * Ogre::Vector3(0, 0, velocity_magnitude);
+
+	trans.setOrigin(trans.getOrigin() + BtOgre::Convert::toBullet(mVelocity) * 0.02);
+	motion->setWorldTransform(trans);
+
+	setDebugText(getStateMachine()->getNameOfCurrentState());
 	//DEBUG_MODE_BEGIN
-	//setDebugText(dt::Utils::toString(current_velocity));
+	//setDebugText(dt::Utils::toString(mVelocity));
 	//DEBUG_MODE_END
 
 	dt::Node::onUpdate(time_diff);

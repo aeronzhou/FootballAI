@@ -40,7 +40,7 @@ void Pitch::onInitialize()
 	auto play_ground_node = this->addChildNode(new dt::Node("PlayGround"));
 	play_ground_node->addComponent(new dt::MeshComponent("PlayGround", "PrimitivesTest/Pebbles", "PlayGroundMesh"));
 	play_ground_node->addComponent(new dt::PhysicsBodyComponent("PlayGroundMesh", "PlayGroundBody",
-		dt::PhysicsBodyComponent::CONVEX, 0.0f));
+		dt::PhysicsBodyComponent::BOX, 0.0f));
 
 	// Create regions
 	mPlayGround = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight);	
@@ -50,7 +50,7 @@ void Pitch::onInitialize()
 	// Realize a ball
 	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
 	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "")).get();
-	mBall->setPosition(-4, 3, -2);
+	mBall->setPosition(0, 3, 0);
 	mBall->resetPhysicsBody();
 
 	// Create goals

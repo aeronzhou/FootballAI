@@ -29,6 +29,11 @@ public:
 
 	Ogre::Vector3 getOldPos() { return mOldPos; }
 
+	Ogre::Vector3 getVelocity() const;
+	void setVelocity(Ogre::Vector3 velocity);
+
+	Ogre::Vector3 getHeading() const;
+
 private:
 
 	Ogre::Vector3 mOldPos; //!< Previous position of the ball
