@@ -44,6 +44,8 @@ public:
 
 	void onUpdate(double time_diff);
 
+	//Ogre::Vector3 getHeading() const;
+
 	MotionAider* getMotionAider() const;
 
 	Team* getTeam() const;

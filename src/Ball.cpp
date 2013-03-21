@@ -16,9 +16,9 @@ void Ball::onInitialize()
 
 	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
 	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
-		dt::PhysicsBodyComponent::SPHERE, mMass));
+		dt::PhysicsBodyComponent::CONVEX, mMass));
 
-	mPhysicsBody->getRigidBody()->setFriction(Prm.BallFriction);
+	mPhysicsBody->getRigidBody()->setFriction(10.f /*Prm.BallFriction*/);
 }
 
 void Ball::onUpdate(double time_diff)
@@ -26,6 +26,14 @@ void Ball::onUpdate(double time_diff)
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
 	// Update every frame
+	//Ogre::Vector3 velocity = getVelocity();
+
+	Ogre::Vector3 velocity = getVelocity();
+
+	velocity.x *= Prm.BallFriction;
+	velocity.z *= Prm.BallFriction;
+
+	setVelocity(velocity);
 
 	MovingEntity::onUpdate(time_diff);
 }
@@ -36,4 +44,19 @@ void Ball::kick(Ogre::Vector3 direction, float force)
 	
 	// Give it a momentary force
 	mPhysicsBody->applyCentralImpulse(BtOgre::Convert::toBullet(direction));
+}
+
+Ogre::Vector3 Ball::getVelocity() const
+{
+	return BtOgre::Convert::toOgre(mPhysicsBody->getRigidBody()->getLinearVelocity());
+}
+
+void Ball::setVelocity(Ogre::Vector3 velocity) 
+{
+	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(velocity));
+}
+
+Ogre::Vector3 Ball::getHeading() const 
+{
+	return getVelocity().normalisedCopy();
 }

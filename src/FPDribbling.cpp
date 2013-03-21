@@ -1,6 +1,8 @@
 #include "FieldPlayerState.h"
 #include "Team.h"
 #include "Goal.h"
+#include "ParamLoader.h"
+#include "Utils.h"
 
 
 // Dribbling
@@ -14,27 +16,25 @@ void Dribbling::enter(FieldPlayer* player)
 {
 }
 
+//DEBUG_MODE_SETUP
+
 void Dribbling::execute(FieldPlayer* player)
 {
-	Ogre::Vector3 towards_goal = player->getTeam()->getGoal()->getCenter() - player->getPosition();
-	float dot = player->getHeading().dotProduct(towards_goal);
+	float dot = player->getHeading().dotProduct(player->getTeam()->getGoal()->getFacing());
 
 	// If the goal is behind this player
 	if (dot < 0)
 	{
-		Ogre::Vector3 direction = player->getRotation() * Ogre::Quaternion(Ogre::Radian(0.2), Ogre::Vector3(0, 1, 0))
+		Ogre::Vector3 direction = player->getRotation() * Ogre::Quaternion(Ogre::Radian(-PI / 3), Ogre::Vector3(0, 1, 0))
 			* Ogre::Vector3(0, 0, 1);
 
-		player->getBall()->kick(towards_goal, 0.2);
-
-		std::cout << "Turn Left!!!" << std::endl;
+		player->getBall()->kick(direction, 3);
 	}
 	else 
 	{
 		// Detect if player in dangerous situation
-		player->getBall()->kick(towards_goal, 0.5);
-
-		std::cout << "Go ONNNNNN!!!!!" << std::endl;
+		Ogre::Vector3 towards_goal = player->getTeam()->getOpponent()->getGoal()->getCenter() - player->getPosition();
+		player->getBall()->kick(towards_goal, Prm.DribblingForce);
 	}
 
 	player->getStateMachine()->changeState(ChasingBall::get());
