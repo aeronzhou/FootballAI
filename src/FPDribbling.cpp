@@ -1,6 +1,7 @@
 #include "FieldPlayerState.h"
 #include "Team.h"
 #include "Goal.h"
+#include "Utils.h"
 
 
 // Dribbling
@@ -14,9 +15,17 @@ void Dribbling::enter(FieldPlayer* player)
 {
 }
 
+//DEBUG_MODE_SETUP
+
 void Dribbling::execute(FieldPlayer* player)
 {
-	Ogre::Vector3 towards_goal = player->getTeam()->getGoal()->getCenter() - player->getPosition();
+	Ogre::Vector3 towards_goal = player->getTeam()->getOpponent()->getGoal()->getCenter() - player->getPosition();
+
+	//DEBUG_MODE_BEGIN
+		std::cout << "to_goal = " << towards_goal << std::endl; 
+		std::cout << "heading = " << player->getHeading() << std::endl;
+	//DEBUG_MODE_END
+
 	float dot = player->getHeading().dotProduct(towards_goal);
 
 	// If the goal is behind this player
@@ -32,7 +41,7 @@ void Dribbling::execute(FieldPlayer* player)
 	else 
 	{
 		// Detect if player in dangerous situation
-		player->getBall()->kick(towards_goal, 0.5);
+		player->getBall()->kick(towards_goal, 5);
 
 		std::cout << "Go ONNNNNN!!!!!" << std::endl;
 	}

@@ -17,16 +17,12 @@ MovingEntity::MovingEntity(const QString name,
 	  mTurnRate(turn_rate),
 	  mMeshHandle(mesh_handle),
 	  mMaterialHandle(material_handle),
-	  mHeading(0.f, 0.f, 1.f),
+	  mHeading(0.f, 0.f, 1.f), 
 	  mVelocity(Ogre::Vector3::ZERO) {}
 
 void MovingEntity::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
-
-	// Update here
-	//mHeading = GetHeadingThroughRotation(getRotation());
-	mHeading = getVelocity().normalisedCopy();
 
 	dt::Node::onUpdate(time_diff);
 }
@@ -39,12 +35,12 @@ void MovingEntity::onDeinitialize() {}
 
 Ogre::Vector3 MovingEntity::getVelocity() const
 {
-	return BtOgre::Convert::toOgre(mPhysicsBody->getRigidBody()->getLinearVelocity());
+	return mVelocity;
 }
 
 void MovingEntity::setVelocity(Ogre::Vector3 velocity) 
 {
-	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(velocity));
+	mVelocity = velocity;
 }
 
 float MovingEntity::getMaxSpeed() const
@@ -79,7 +75,7 @@ void MovingEntity::placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading
 
 Ogre::Vector3 MovingEntity::getHeading() const 
 {
-	return mHeading;
+	return getRotation() * Ogre::Vector3(0, 0, 1);
 }
 
 bool MovingEntity::handleMessage(const Message& msg) const

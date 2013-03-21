@@ -1,7 +1,7 @@
 <Params>
 	<BallMaxSpeed>2.0</BallMaxSpeed>
 	<BallMass>10.0</BallMass>
-	<BallFriction>20.0</BallFriction>
+	<BallFriction>10.0</BallFriction>
 	<BallRadius>0.10</BallRadius>
 	<DribblingForce>1.0</DribblingForce>
 
@@ -14,8 +14,8 @@
 	<HalfGoalHeight>1.0</HalfGoalHeight>
 
 	<CameraPosX>0.0</CameraPosX>
-	<CameraPosY>20</CameraPosY>
-	<CameraPosZ>30</CameraPosZ>
+	<CameraPosY>2</CameraPosY>
+	<CameraPosZ>8</CameraPosZ>
 	<CameraLookAtX>0</CameraLookAtX>
 	<CameraLookAtY>0</CameraLookAtY>
 	<CameraLookAtZ>0</CameraLookAtZ>
@@ -35,7 +35,7 @@
 	<PlayerInitPositionY>0.5</PlayerInitPositionY>
 	<PlayerKickCoolingTime>1.0</PlayerKickCoolingTime>
 
-	<PhysicsShowDebug>0</PhysicsShowDebug>
+	<PhysicsShowDebug>1</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
 
 </Params>

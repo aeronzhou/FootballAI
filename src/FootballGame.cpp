@@ -28,7 +28,7 @@ void FootballGame::onInitialize()
 	}
 
 	MainGameCamera* camnode = (MainGameCamera*)scene->addChildNode(new MainGameCamera("MainGameCamera")).get();
-	camnode->setPosition(0, 2, 0);
+	camnode->setPosition(Prm.CameraPosX, Prm.CameraPosY, Prm.CameraPosZ);
 
 	// Initialize light
 	auto light_node = scene->addChildNode(new dt::Node("LightNode"));

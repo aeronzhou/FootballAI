@@ -1,8 +1,8 @@
 <FieldPlayer>
 	<ControlRange>0.8</ControlRange>
-	<MaxSpeed>3.0</MaxSpeed>
+	<MaxSpeed>2.0</MaxSpeed>
 	<MaxForce>20</MaxForce>
-	<Mass>50</Mass>
+	<Mass>70</Mass>
 	<TurnRate>0.03</TurnRate>
 	<RedMeshHandle>SinbadRed.mesh</RedMeshHandle>
 	<BlueMeshHandle>SinbadRed.mesh</BlueMeshHandle>

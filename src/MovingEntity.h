@@ -26,10 +26,9 @@ public:
 
 	void onDeinitialize();
 
-	Ogre::Vector3 getHeading() const;
-
-	Ogre::Vector3 getVelocity() const;
-	void setVelocity(Ogre::Vector3 velocity);
+	virtual Ogre::Vector3 getVelocity() const;
+	virtual void setVelocity(Ogre::Vector3 velocity);
+	virtual Ogre::Vector3 getHeading() const;
 
 	float getMass() const;
 	float getTurnRate() const;
