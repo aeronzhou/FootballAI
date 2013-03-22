@@ -34,7 +34,7 @@
 	<PlayerScale>0.1</PlayerScale>
 	<PlayerInitPositionY>0.5</PlayerInitPositionY>
 	<PlayerKickCoolingTime>1.0</PlayerKickCoolingTime>
-	<PlayerMaxPassingForce>10</PlayerMaxPassingForce>
+	<PlayerMaxPassingForce>20</PlayerMaxPassingForce>
 	<PlayerMaxShootingForce>15</PlayerMaxShootingForce>
 
 	<PhysicsShowDebug>0</PhysicsShowDebug>

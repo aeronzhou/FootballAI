@@ -16,7 +16,7 @@ Player::Player(const QString name, float bounding_radius, float max_speed, float
 	float mass, float turn_rate, QString mesh_handle, QString material_handle, Team* team, int assigned_region, PlayerRole role)
 	: MovingEntity(name, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
 	mTeam(team), mAssignedRegion(assigned_region), mPlayerRole(role), mDistSqAtTarget(Prm.DistAtTarget * Prm.DistAtTarget),
-	mControlRange(bounding_radius) {}
+	mControlRange(bounding_radius), mIsTurnningAroundAtTarget(0) {}
 
 // Add a flag to distinguish RED and BLUE
 dt::Node* CreatePlayerFlag(dt::Node* parent, const QString& material)
@@ -142,7 +142,7 @@ void Player::setTarget(Ogre::Vector3 target)
 
 bool Player::atTarget() const
 {
-	return (getPosition()).normalisedCopy().squaredDistance(getMotionAider()->getTarget()) < mDistSqAtTarget;
+	return (getPosition()).squaredDistance(getMotionAider()->getTarget()) < mDistSqAtTarget;
 }
 
 bool Player::withinAssignedRegion() const 
@@ -167,9 +167,6 @@ FLOAT Player::getControlRange() const
 
 void Player::_rotateToFaceTarget(const Ogre::Vector3& target)
 {
-	btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
-	btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();
-
 	Ogre::Vector3 current_heading = getHeading();
 	Ogre::Vector3 to_target = target - getPosition();
 	Ogre::Radian angle = current_heading.getRotationTo(to_target).getYaw();
@@ -184,8 +181,7 @@ void Player::_rotateToFaceTarget(const Ogre::Vector3& target)
 	if (fabs(angle.valueRadians()) < EPS && current_heading.dotProduct(to_target) < 0)
 		angle = mTurnRate;
 
-	trans.setRotation(BtOgre::Convert::toBullet(getRotation() * Ogre::Quaternion(angle, Ogre::Vector3(0, 1, 0))));
-	motion->setWorldTransform(trans);
+	mIsTurnningAroundAtTarget = angle;
 }
 
 void Player::turnAroundToBall()

@@ -107,12 +107,6 @@ public:
 	  */
 	void askForPassing();
 
-	///** 
-	//  * Find teammate to pass
-	//  */
-	//bool findTeammateToPass(Player*& receiver, float max_passing_force);
-
-
 protected:
 
 	/** 
@@ -126,6 +120,7 @@ protected:
 
 	float mControlRange;                             //!< Within this region, player can kick the ball
 	float mReceivingRange;                           //!< Within this region, player can receive the ball
+	Ogre::Radian mIsTurnningAroundAtTarget;          //!< Angle turnning around after the player arrive the target
 
 	PlayerRole mPlayerRole;                          //!< The player's role in this team
 

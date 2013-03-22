@@ -12,12 +12,14 @@ Receiving* Receiving::get()
 void Receiving::enter(FieldPlayer* player)
 {
 	player->getMotionAider()->setArriveOn();	
+	player->getTeam()->setControllingPlayer(player);
 }
 
 void Receiving::execute(FieldPlayer* player)
 {
 	// The ball is interuppted by others
-	if (!player->getTeam()->isControllingBall())
+	if (!player->getTeam()->isControllingBall() || 
+		player->getDistToBall() < 3 )
 	{
 		player->getStateMachine()->changeState(ChasingBall::get());
 	}
