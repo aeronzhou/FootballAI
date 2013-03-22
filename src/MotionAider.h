@@ -41,24 +41,21 @@ public:
 	Ogre::Vector3 getDrivingForce() const;
 
 	// Set On 
-	void seekOn();
-	void arriveOn();
-	void pursuitOn();
-	void separationOn();
-	void interposeOn();
+	void setSeekOn();
+	void setArriveOn();
+	void setPursuitOn();
+	void setSeparationOn();
 
 	// Set off
-	void seekOff();
-	void arriveOff();
-	void persuitOff();
-	void seperationOff();
-	void interposeOff();
+	void setSeekOff();
+	void setArriveOff();
+	void setPersuitOff();
+	void setSeperationOff();
 
 	bool isSeekOn() const;
 	bool isArriveOn() const;
 	bool isPersuitOn() const;
 	bool isSeperationOn() const;
-	bool isInterposeOn() const; 
 
 	/** 
 	  * Calculate the steering force
@@ -70,7 +67,6 @@ protected:
 
 	Ogre::Vector3 mTarget;           
 	Ogre::Vector3 mDrivingForce;     
-	float mInterposeDist;             //!< Distance the player try to interpose opponents
 
 	Player* mPlayer;                  //!< The player this steering component attach to
 	Ball* mBall;   
@@ -90,8 +86,6 @@ private:
 	Ogre::Vector3 persuit(const Ball* ball);
 
 	Ogre::Vector3 separation();
-
-	Ogre::Vector3 interpose(const Ball* ball, Ogre::Vector3 target, float dis_from_target);
 
 	/** 
 	  * Return if the previous force can add another one

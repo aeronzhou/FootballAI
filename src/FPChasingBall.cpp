@@ -11,7 +11,7 @@ ChasingBall* ChasingBall::get()
 
 void ChasingBall::enter(FieldPlayer* player)
 {
-	player->getMotionAider()->seekOn();
+	player->getMotionAider()->setSeekOn();
 }
 
 void ChasingBall::execute(FieldPlayer* player)
@@ -37,7 +37,7 @@ void ChasingBall::execute(FieldPlayer* player)
 
 void ChasingBall::exit(FieldPlayer* player)
 {
-	player->getMotionAider()->seekOff();
+	player->getMotionAider()->setSeekOff();
 }
 
 bool ChasingBall::onMessage(FieldPlayer*, const Message&)

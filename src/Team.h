@@ -82,6 +82,24 @@ public:
 	Player* getControllingPlayer() const;
 	void setControllingPlayer(Player* player);
 
+	/** 
+	  * Find a possible pass, return true if the pass exists
+	  * @param passer Player who is passing the ball
+	  * @param receiver Possible receiver
+	  * @param proper_target Proper target
+	  * @param max_force Max passing force
+	  * @returns If there is a chance to pass
+	  */
+	bool canPass(Player* passer, Player*& receiver, Ogre::Vector3& proper_target, float max_force);
+
+	/** 
+	  * Return true if the player is able to shoot
+	  * @param player The shooter
+	  * @param max_force Max shooting force
+	  * @returns If the player can shoot now
+	  */
+	bool canShoot(Player* player, float max_force);
+
 private:
 
 	/** 

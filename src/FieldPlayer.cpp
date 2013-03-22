@@ -22,14 +22,12 @@ void FieldPlayer::onInitialize()
 	mStateMachine = new StateMachine<FieldPlayer>(this);
 	mStateMachine->setCurrentState(Waiting::get());
 	mStateMachine->setGlobalState(FieldPlayerGlobalState::get());
-	//setDebugText(mStateMachine->getNameOfCurrentState());
 
-	mMotionAider->separationOn();
+	mMotionAider->setSeparationOn();
 
 	// Set defult animation
 	mMesh->setAnimation("RunBase");
 	mMesh->setLoopAnimation(true);
-	//mMesh->playAnimation();
 
 	mKickCoolingTime = addComponent(new CoolingTimeComponent(Prm.PlayerKickCoolingTime));
 }
@@ -102,8 +100,7 @@ void FieldPlayer::onUpdate(double time_diff)
 	else
 		mMesh->playAnimation();
 
-
-	//// Set velocity 
+	// Set velocity 
 	mVelocity = rotation * Ogre::Vector3(0, 0, velocity_magnitude);
 
 	trans.setOrigin(trans.getOrigin() + BtOgre::Convert::toBullet(mVelocity) * 0.02);
@@ -127,4 +124,10 @@ bool FieldPlayer::isReadyToKick() const
 bool FieldPlayer::handleMessage(const Message& msg) const 
 {
 	return mStateMachine->handleMessage(msg);	
+}
+
+bool FieldPlayer::isMoreAdvantageousToAttack() const 
+{
+	//////////////////////////////////////////////////////////////////////////
+	return true;
 }

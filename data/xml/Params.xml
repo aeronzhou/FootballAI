@@ -3,6 +3,8 @@
 	<BallMass>1.0</BallMass>
 	<BallFriction>0.98</BallFriction>
 	<BallRadius>0.10</BallRadius>
+	<BallPosX>-10</BallPosX>
+	<BallPosZ>0</BallPosZ>
 	<DribblingForce>5</DribblingForce>
 	<TurnAroundForce>0.2</TurnAroundForce>
 
@@ -17,9 +19,6 @@
 	<CameraPosX>0.0</CameraPosX>
 	<CameraPosY>2</CameraPosY>
 	<CameraPosZ>8</CameraPosZ>
-	<CameraLookAtX>0</CameraLookAtX>
-	<CameraLookAtY>0</CameraLookAtY>
-	<CameraLookAtZ>0</CameraLookAtZ>
 	<CameraSpeed>0.2</CameraSpeed>
 	<MouseSensitivity>0.5</MouseSensitivity>
 
@@ -35,6 +34,8 @@
 	<PlayerScale>0.1</PlayerScale>
 	<PlayerInitPositionY>0.5</PlayerInitPositionY>
 	<PlayerKickCoolingTime>1.0</PlayerKickCoolingTime>
+	<PlayerMaxPassingForce>10</PlayerMaxPassingForce>
+	<PlayerMaxShootingForce>15</PlayerMaxShootingForce>
 
 	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>

@@ -11,7 +11,7 @@ Receiving* Receiving::get()
 
 void Receiving::enter(FieldPlayer* player)
 {
-	player->getMotionAider()->arriveOn();	
+	player->getMotionAider()->setArriveOn();	
 }
 
 void Receiving::execute(FieldPlayer* player)
@@ -21,11 +21,19 @@ void Receiving::execute(FieldPlayer* player)
 	{
 		player->getStateMachine()->changeState(ChasingBall::get());
 	}
+
+	// Player arrive there
+	if (player->atTarget())
+	{
+		// Wait there and face to the ball
+		player->getMotionAider()->setArriveOff();
+		player->turnAroundToBall();
+	}
 }
 
 void Receiving::exit(FieldPlayer* player)
 {
-	player->getMotionAider()->arriveOff();
+	player->getMotionAider()->setArriveOff();
 }
 
 bool Receiving::onMessage(FieldPlayer*, const Message&)

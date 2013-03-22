@@ -28,6 +28,8 @@ public:
 		BallFriction = mParamTables["BallFriction"].toFloat();
 		BallRadius = mParamTables["BallRadius"].toFloat();
 		BallMass = mParamTables["BallMass"].toFloat(); 
+		BallPosX = mParamTables["BallPosX"].toFloat();
+		BallPosZ = mParamTables["BallPosZ"].toFloat();
 		DribblingForce = mParamTables["DribblingForce"].toFloat();
 		TurnAroundForce = mParamTables["TurnAroundForce"].toFloat();	
 
@@ -44,9 +46,6 @@ public:
 		CameraPosX = mParamTables["CameraPosX"].toFloat();
 		CameraPosY = mParamTables["CameraPosY"].toFloat();
 		CameraPosZ = mParamTables["CameraPosZ"].toFloat();
-		CameraLookAtX = mParamTables["CameraLookAtX"].toFloat();
-		CameraLookAtY = mParamTables["CameraLookAtY"].toFloat();
-		CameraLookAtZ = mParamTables["CameraLookAtZ"].toFloat();
 		CameraSpeed = mParamTables["CameraSpeed"].toFloat();
 		MouseSensitivity = mParamTables["MouseSensitivity"].toFloat();
 
@@ -62,6 +61,8 @@ public:
 		PlayerScale = mParamTables["PlayerScale"].toFloat();
 		PlayerInitPositionY = mParamTables["PlayerInitPositionY"].toFloat();
 		PlayerKickCoolingTime = mParamTables["PlayerKickCoolingTime"].toFloat();
+		PlayerMaxPassingForce = mParamTables["PlayerMaxPassingForce"].toFloat();
+		PlayerMaxShootingForce = mParamTables["PlayerMaxShootingForce"].toFloat();
 
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
@@ -78,6 +79,8 @@ public:
 	float BallFriction;
 	float BallRadius;
 	float BallMass;
+	float BallPosX;
+	float BallPosZ;
 	float DribblingForce;
 	float TurnAroundForce;
 
@@ -98,9 +101,6 @@ public:
 	float CameraPosX;
 	float CameraPosY;
 	float CameraPosZ;
-	float CameraLookAtX;
-	float CameraLookAtY;
-	float CameraLookAtZ;
 	float CameraSpeed;
 	float MouseSensitivity;
 
@@ -119,6 +119,8 @@ public:
 	float PlayerScale;
 	float PlayerInitPositionY;
 	float PlayerKickCoolingTime;
+	float PlayerMaxPassingForce;
+	float PlayerMaxShootingForce;
 
 	// Others
 	int PhysicsShowDebug;

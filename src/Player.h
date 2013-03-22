@@ -44,10 +44,7 @@ public:
 
 	void onUpdate(double time_diff);
 
-	//Ogre::Vector3 getHeading() const;
-
 	MotionAider* getMotionAider() const;
-
 	Team* getTeam() const;
 	Ball* getBall() const;
 	Pitch* getPitch() const;
@@ -82,10 +79,53 @@ public:
 
 	bool withinAssignedRegion() const;
 
+	/** 
+	  * Return if the player is in receiving range, so as to chase and control the ball
+	  * @returns If the player is in receiving range
+	  */
+	bool withinReceivingRange() const;
+
+	/** 
+	  * Turn around to face towards the ball
+	  */
+	void turnAroundToBall();
+
+	/** 
+	  * Turn around to face to the target
+	  * @target Target to face to
+	  */
+	void turnAroundToTarget(const Ogre::Vector3& target);
+
+	/** 
+	  * Return if the player is threatened by others, goto findReceiver if threatened
+	  * @returns If the player is threatened by others
+	  */
+	bool isThreatened() const;
+
+	/** 
+	  * Ask for passing, change state to receiving
+	  */
+	void askForPassing();
+
+	///** 
+	//  * Find teammate to pass
+	//  */
+	//bool findTeammateToPass(Player*& receiver, float max_passing_force);
+
 
 protected:
 
-	float mControlRange; 
+	/** 
+	  * Rotate to face a target with a turn rate
+	  * @param target Target to face to
+	  */
+	void _rotateToFaceTarget(const Ogre::Vector3& target);
+
+
+protected:
+
+	float mControlRange;                             //!< Within this region, player can kick the ball
+	float mReceivingRange;                           //!< Within this region, player can receive the ball
 
 	PlayerRole mPlayerRole;                          //!< The player's role in this team
 
@@ -95,7 +135,6 @@ protected:
 	float mDistSqAtTarget;                           //!< Distance square to be at target
 
 	MotionAider* mMotionAider;                       //!< Motion aider
-	bool mTag;                                       //!< Flag to indicate this player is chosen
 
 	dt::TextComponent* mDebugText;                   //!< Text to show players' current state
 

@@ -13,7 +13,7 @@ BackToOrigin* BackToOrigin::get()
 void BackToOrigin::enter(FieldPlayer* player)
 {
 	//dt::Logger::get().debug("Enter to Back To Origin...");
-	player->getMotionAider()->arriveOn();
+	player->getMotionAider()->setArriveOn();
 	player->setTarget(player->getAssignedRegion()->getCenter());
 }
 
@@ -28,7 +28,7 @@ void BackToOrigin::execute(FieldPlayer* player)
 
 void BackToOrigin::exit(FieldPlayer* player)
 {
-	player->getMotionAider()->arriveOff();
+	player->getMotionAider()->setArriveOff();
 }
 
 bool BackToOrigin::onMessage(FieldPlayer*, const Message&)

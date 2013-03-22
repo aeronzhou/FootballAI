@@ -21,7 +21,9 @@ bool FieldPlayerGlobalState::onMessage(FieldPlayer* receiver, const Message& msg
 
 	case MSG_PASS:
 		{
-
+			Ogre::Vector3 target = *((Ogre::Vector3*)(msg.data));
+			receiver->setTarget(target);
+			receiver->getStateMachine()->changeState(Receiving::get());
 		}
 	}
 	return false;

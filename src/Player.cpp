@@ -164,3 +164,47 @@ FLOAT Player::getControlRange() const
 {
 	return mControlRange;
 }
+
+void Player::_rotateToFaceTarget(const Ogre::Vector3& target)
+{
+	btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
+	btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();
+
+	Ogre::Vector3 current_heading = getHeading();
+	Ogre::Vector3 to_target = target - getPosition();
+	Ogre::Radian angle = current_heading.getRotationTo(to_target).getYaw();
+
+	if (angle > Ogre::Radian(mTurnRate))
+		angle = Ogre::Radian(mTurnRate);
+
+	if (angle < Ogre::Radian(-mTurnRate))
+		angle = Ogre::Radian(-mTurnRate);
+
+	// Avoid same line
+	if (fabs(angle.valueRadians()) < EPS && current_heading.dotProduct(to_target) < 0)
+		angle = mTurnRate;
+
+	trans.setRotation(BtOgre::Convert::toBullet(getRotation() * Ogre::Quaternion(angle, Ogre::Vector3(0, 1, 0))));
+	motion->setWorldTransform(trans);
+}
+
+void Player::turnAroundToBall()
+{
+	_rotateToFaceTarget(getBall()->getPosition());
+}
+
+void Player::turnAroundToTarget(const Ogre::Vector3& target)
+{
+	_rotateToFaceTarget(target);
+}
+
+bool Player::isThreatened() const 
+{
+	//////////////////////////////////////////////////////////////////////////
+	return false;
+}
+
+void Player::askForPassing()
+{
+	
+}
