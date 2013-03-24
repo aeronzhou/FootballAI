@@ -36,6 +36,9 @@ public:
 
 	StateMachine<FieldPlayer>* getStateMachine() const;
 
+	bool isMoreAdvantageousToAttack() const;
+
+
 protected:
 	
 	std::shared_ptr<CoolingTimeComponent> mKickCoolingTime;   //!< Cooling time component

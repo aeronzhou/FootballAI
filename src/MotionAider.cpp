@@ -15,29 +15,24 @@ bool MotionAider::on(MotionType type) const
 }
 
 // Set On 
-void MotionAider::seekOn()
+void MotionAider::setSeekOn()
 {
 	mFlag |= SEEK;
 }
 
-void MotionAider::arriveOn()
+void MotionAider::setArriveOn()
 {
 	mFlag |= ARRIVE;
 }
 
-void MotionAider::pursuitOn()
+void MotionAider::setPursuitOn()
 {
 	mFlag |= PERSUIT;
 }
 
-void MotionAider::separationOn()
+void MotionAider::setSeparationOn()
 {
 	mFlag |= SEPARATION;
-}
-
-void MotionAider::interposeOn()
-{
-	mFlag |= INTERPOSE;
 }
 
 // Bool
@@ -62,38 +57,27 @@ bool MotionAider::isSeperationOn() const
 	return on(SEPARATION);
 }
 
-bool MotionAider::isInterposeOn() const 
-{
-	return on(SEPARATION);
-}
-
 // Set Off
 
-void MotionAider::seekOff()
+void MotionAider::setSeekOff()
 {
 	if (on(SEEK))
 		mFlag ^= SEEK;
 }
 
-void MotionAider::arriveOff()
+void MotionAider::setArriveOff()
 {
 	if (on(ARRIVE))
 		mFlag ^= ARRIVE;
 }
 
-void MotionAider::interposeOff()
-{
-	if (on(INTERPOSE))
-		mFlag ^= INTERPOSE;
-}
-
-void MotionAider::persuitOff()
+void MotionAider::setPersuitOff()
 {
 	if (on(PERSUIT))
 		mFlag ^= PERSUIT;
 }
 
-void MotionAider::seperationOff()
+void MotionAider::setSeperationOff()
 {
 	if (on(SEPARATION))
 		mFlag ^= SEPARATION;
@@ -162,11 +146,6 @@ Ogre::Vector3 MotionAider::separation()
 	return ((force /*+ Ogre::Vector3(-0.1, 0, 0.1)*/ ) * Prm.SeperationCoefficient);
 }
 
-Ogre::Vector3 MotionAider::interpose(const Ball* ball, Ogre::Vector3 target, float dis_from_target)
-{
-	return arrive(target + Vector3To2Normalise(ball->getPosition() - target) * dis_from_target, NORMAL);	
-}
-
 void MotionAider::calculateDrivingForce()
 {
 	// Clear the combine force
@@ -207,13 +186,6 @@ void MotionAider::combineForce()
 	if (on(PERSUIT))
 	{
 		force += persuit(mBall);
-		if (!accumulateForce(mDrivingForce, force))
-			return;
-	}
-
-	if (on(INTERPOSE))
-	{
-		force += interpose(mBall, mTarget, mInterposeDist);
 		if (!accumulateForce(mDrivingForce, force))
 			return;
 	}

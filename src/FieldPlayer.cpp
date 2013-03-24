@@ -22,14 +22,13 @@ void FieldPlayer::onInitialize()
 	mStateMachine = new StateMachine<FieldPlayer>(this);
 	mStateMachine->setCurrentState(Waiting::get());
 	mStateMachine->setGlobalState(FieldPlayerGlobalState::get());
-	//setDebugText(mStateMachine->getNameOfCurrentState());
 
-	mMotionAider->separationOn();
+	// Turn on seperation
+	//mMotionAider->setSeparationOn();
 
 	// Set defult animation
 	mMesh->setAnimation("RunBase");
 	mMesh->setLoopAnimation(true);
-	//mMesh->playAnimation();
 
 	mKickCoolingTime = addComponent(new CoolingTimeComponent(Prm.PlayerKickCoolingTime));
 }
@@ -93,6 +92,13 @@ void FieldPlayer::onUpdate(double time_diff)
 		velocity_magnitude *= 0.8;
 	}
 
+	// Is at target
+	if (mIsTurnningAroundAtTarget != Ogre::Radian(0))
+	{
+		rotation = rotation * Ogre::Quaternion(mIsTurnningAroundAtTarget, Ogre::Vector3(0, 1, 0));
+		trans.setRotation(BtOgre::Convert::toBullet(rotation));
+	}
+
 	if (velocity_magnitude > mMaxSpeed)
 		velocity_magnitude = mMaxSpeed;
 
@@ -102,12 +108,13 @@ void FieldPlayer::onUpdate(double time_diff)
 	else
 		mMesh->playAnimation();
 
-
-	//// Set velocity 
+	// Set velocity 
 	mVelocity = rotation * Ogre::Vector3(0, 0, velocity_magnitude);
 
 	trans.setOrigin(trans.getOrigin() + BtOgre::Convert::toBullet(mVelocity) * 0.02);
 	motion->setWorldTransform(trans);
+
+	mIsTurnningAroundAtTarget = Ogre::Radian(0);
 
 	setDebugText(getStateMachine()->getNameOfCurrentState());
 
@@ -127,4 +134,10 @@ bool FieldPlayer::isReadyToKick() const
 bool FieldPlayer::handleMessage(const Message& msg) const 
 {
 	return mStateMachine->handleMessage(msg);	
+}
+
+bool FieldPlayer::isMoreAdvantageousToAttack() const 
+{
+	//////////////////////////////////////////////////////////////////////////
+	return true;
 }

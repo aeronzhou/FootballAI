@@ -25,6 +25,7 @@ void Dribbling::execute(FieldPlayer* player)
 	// If the goal is behind this player
 	if (dot < 0)
 	{
+		// Move the safe position
 		Ogre::Vector3 direction = player->getRotation() * Ogre::Quaternion(Ogre::Radian(-PI / 3), Ogre::Vector3(0, 1, 0))
 			* Ogre::Vector3(0, 0, 1);
 

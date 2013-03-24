@@ -29,8 +29,7 @@ void Team::onInitialize()
 
 	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	{
-		// Initilize players' position, heading, etc.
-		(*it)->getMotionAider()->separationOn();
+		(*it)->getMotionAider()->setSeparationOn();
 	}
 }
 
@@ -60,11 +59,11 @@ void Team::_createPlayers()
 	{
 		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(0), 
 			this, FieldPlayer::FORWARD, vec_pos[0])).get());
-		//for (int i = 1; i < 3; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
-		//}
+		for (int i = 1; i < 3; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		}
 		//for (int i = 3; i < 6; ++i)
 		//{
 		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
@@ -183,7 +182,7 @@ void Team::sendPlayersToAssignedRegion()
 {
 	for (std::vector<Player*>::iterator it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	{
-		(*it)->getMotionAider()->arriveOn();
+		(*it)->getMotionAider()->setArriveOn();
 		(*it)->setTarget((*it)->getAssignedRegion()->getCenter());
 	}
 }
@@ -222,4 +221,27 @@ void Team::setControllingPlayer(Player* player)
 	mIsControllingBall = (player != nullptr);
 
 	mControllingPlayer = player;
+}
+
+bool Team::canPass(Player* passer, Player*& receiver, Ogre::Vector3& proper_target, float max_force)
+{
+	/************************************************************************/
+	/* Write for debug                                                      */
+	/************************************************************************/
+	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
+	{
+		if (*it != passer)
+		{
+			proper_target = (*it)->getPosition();
+			receiver = (*it);
+			return true;
+		}
+	}
+
+	return (receiver != nullptr);
+}
+
+bool Team::canShoot(Player* player, float max_force)
+{
+	return false;
 }
