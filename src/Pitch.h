@@ -49,7 +49,7 @@ private:
 	Goal* mBlueGoal;               //!< Goal of blue team
 
 	std::vector<Region*> mRegions; //!< Regions
-	Region* mPlayGround;           //!< Play ground area
+	Region* mPlayingArea;          //!< Play ground area
 
 };
 

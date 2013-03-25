@@ -1,5 +1,5 @@
 <FieldPlayer>
-	<ControlRange>0.8</ControlRange>
+	<ControlRange>0.65</ControlRange>
 	<MaxSpeed>2.0</MaxSpeed>
 	<MaxForce>20</MaxForce>
 	<Mass>70</Mass>

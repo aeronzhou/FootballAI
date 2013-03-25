@@ -5,6 +5,8 @@
 
 #define Prm (*ParamLoader::get())
 
+#include <iostream>
+
 /** 
   * Class to fetch global parameters
   */
@@ -26,18 +28,20 @@ public:
 
 		BallMaxSpeed = mParamTables["BallMaxSpeed"].toFloat();
 		BallFriction = mParamTables["BallFriction"].toFloat();
+		BallDeceleration = mParamTables["BallDeceleration"].toFloat();
+		BallResistance = mParamTables["BallResistance"].toFloat();
+		BallResistanceInterval = mParamTables["BallResistanceInterval"].toFloat();
 		BallRadius = mParamTables["BallRadius"].toFloat();
 		BallMass = mParamTables["BallMass"].toFloat(); 
 		BallPosX = mParamTables["BallPosX"].toFloat();
 		BallPosZ = mParamTables["BallPosZ"].toFloat();
-		DribblingForce = mParamTables["DribblingForce"].toFloat();
-		TurnAroundForce = mParamTables["TurnAroundForce"].toFloat();	
 
 		NumRegionsHorizontal = mParamTables["NumRegionsHorizontal"].toInt();
 		NumRegionsVertical = mParamTables["NumRegionsVertical"].toInt();
 
 		HalfPitchWidth = mParamTables["HalfPitchWidth"].toFloat();
 		HalfPitchHeight = mParamTables["HalfPitchHeight"].toFloat(); 
+		PitchMargin = mParamTables["PitchMargin"].toFloat();
 
 		HalfGoalWidth = mParamTables["HalfGoalWidth"].toFloat();
 		HalfGoalHeight = mParamTables["HalfGoalHeight"].toFloat();
@@ -51,7 +55,7 @@ public:
 
 		VelocityToForceCoefficient = mParamTables["VelocityToForceCoefficient"].toFloat();
 		DecelerationTweaker = mParamTables["DecelerationTweaker"].toFloat();
-		VisibleRangeSqr = mParamTables["VisibleRange"].toFloat() * mParamTables["VisibleRange"].toFloat();
+		VisibleRange = mParamTables["VisibleRange"].toFloat();
 		SeperationCoefficient = mParamTables["SeperationCoefficient"].toFloat();
 		DistAtTarget = mParamTables["DistAtTarget"].toFloat();
 
@@ -61,8 +65,13 @@ public:
 		PlayerScale = mParamTables["PlayerScale"].toFloat();
 		PlayerInitPositionY = mParamTables["PlayerInitPositionY"].toFloat();
 		PlayerKickCoolingTime = mParamTables["PlayerKickCoolingTime"].toFloat();
+		PlayerDribblingForce = mParamTables["PlayerDribblingForce"].toFloat();
+		PlayerTurnAroundForce = mParamTables["PlayerTurnAroundForce"].toFloat();
 		PlayerMaxPassingForce = mParamTables["PlayerMaxPassingForce"].toFloat();
 		PlayerMaxShootingForce = mParamTables["PlayerMaxShootingForce"].toFloat();
+		PlayerThreatenedRange = mParamTables["PlayerThreatenedRange"].toFloat();
+		PlayerShootingRange = mParamTables["PlayerShootingRange"].toFloat();
+		PlayerShootingTryNum = mParamTables["PlayerShootingTryNum"].toFloat();
 
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
@@ -77,12 +86,13 @@ public:
 	// Ball
 	float BallMaxSpeed;
 	float BallFriction;
+	float BallDeceleration;
+	float BallResistance;
+	float BallResistanceInterval;
 	float BallRadius;
 	float BallMass;
 	float BallPosX;
 	float BallPosZ;
-	float DribblingForce;
-	float TurnAroundForce;
 
 	// Regions
 	int NumRegionsHorizontal;
@@ -91,6 +101,7 @@ public:
 	// Pitch
 	float HalfPitchWidth;
 	float HalfPitchHeight;
+	float PitchMargin;
 
 	// Goal
 	float HalfGoalWidth;
@@ -107,7 +118,7 @@ public:
 	// Motion Aider 
 	float VelocityToForceCoefficient;
 	float DecelerationTweaker;
-	float VisibleRangeSqr;
+	float VisibleRange;
 	float SeperationCoefficient;
 	float DistAtTarget;
 
@@ -119,8 +130,13 @@ public:
 	float PlayerScale;
 	float PlayerInitPositionY;
 	float PlayerKickCoolingTime;
+	float PlayerDribblingForce;
+	float PlayerTurnAroundForce;
 	float PlayerMaxPassingForce;
 	float PlayerMaxShootingForce;
+	float PlayerThreatenedRange;
+	float PlayerShootingRange;
+	float PlayerShootingTryNum;
 
 	// Others
 	int PhysicsShowDebug;

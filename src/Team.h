@@ -44,6 +44,8 @@ public:
 
 	Player* getPlayerClosestToBall() const;
 
+	std::vector<Player*>& getPlayers();
+
 	StateMachine<Team>* getStateMachine() const;
 
 	/** 
@@ -90,15 +92,16 @@ public:
 	  * @param max_force Max passing force
 	  * @returns If there is a chance to pass
 	  */
-	bool canPass(Player* passer, Player*& receiver, Ogre::Vector3& proper_target, float max_force);
+	bool canPass(Player* passer, Player*& receiver, Ogre::Vector3& proper_target, float passing_force);
 
 	/** 
 	  * Return true if the player is able to shoot
 	  * @param player The shooter
+	  * @param proper_target Proper target
 	  * @param max_force Max shooting force
 	  * @returns If the player can shoot now
 	  */
-	bool canShoot(Player* player, float max_force);
+	bool canShoot(Player* player, Ogre::Vector3& proper_target, float shooting_force);
 
 private:
 
@@ -106,6 +109,28 @@ private:
 	  * Genrate players 
 	  */
 	void _createPlayers();
+
+	bool _isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre::Vector3& target, float force);
+
+	bool _isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vector3& target, float force, Player* opponent);
+
+	/** 
+	  * Get the score of current position, 
+	  * If it gets more scores, it means to be more beneficial for attacking(or defending)
+	  * @param position Current position
+	  * @returns Scores
+	  */
+	float _getScoreOfPosition(const Ogre::Vector3& position);
+
+	/** 
+	  * Get the best receiving spot
+	  * @param receiver Receiver
+	  * @param pass_force Passing force
+	  * @param target Proper target
+	  * @returns Score of the best spot
+	  */
+	float _getBestSpotOfReceiving(Player* receiver, float pass_force, Ogre::Vector3& target);
+
 
 private:
 

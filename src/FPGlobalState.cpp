@@ -19,7 +19,7 @@ bool FieldPlayerGlobalState::onMessage(FieldPlayer* receiver, const Message& msg
 			return true;
 		}
 
-	case MSG_PASS:
+	case MSG_RECEIVE_BALL:
 		{
 			Ogre::Vector3 target = *((Ogre::Vector3*)(msg.data));
 			receiver->setTarget(target);

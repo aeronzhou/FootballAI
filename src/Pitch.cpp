@@ -5,10 +5,12 @@
 #include "Goal.h"
 #include "ParamLoader.h"
 #include "Utils.h"
+
+#include <Utils/Random.hpp>
+
 #include <Physics/PhysicsBodyComponent.hpp>
 
 #include <OgreProcedural.h>
-
 
 Pitch::Pitch(const QString name /* = "Pitch" */)
 	: dt::Node(name) {}
@@ -16,6 +18,17 @@ Pitch::Pitch(const QString name /* = "Pitch" */)
 void Pitch::onUpdate(double time_diff) 
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
+
+#define TEST_BALL_TIME_SPENT 0
+#if	TEST_BALL_TIME_SPENT
+	static bool test_ball = true; 
+	if (test_ball)
+	{
+		test_ball = false;
+		std::cout << "Ball cover time = " << mBall->getTimeToGoThroughDistance(3, 4) << std::endl;		
+	}
+	mBall->testTimeSpentByInitialForce(3, 4);
+#endif
 
 	Node::onUpdate(time_diff);
 }
@@ -43,13 +56,13 @@ void Pitch::onInitialize()
 		dt::PhysicsBodyComponent::BOX, 0.0f));
 
 	// Create regions
-	mPlayGround = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight);	
+	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight, -1, Prm.PitchMargin);	
 	mRegions.resize(Prm.NumRegionsHorizontal * Prm.NumRegionsVertical);
 	createRegions(Prm.HalfPitchWidth * 2 / Prm.NumRegionsHorizontal, Prm.HalfPitchHeight * 2 / Prm.NumRegionsVertical);
 
 	// Realize a ball
 	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
-	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "")).get();
+	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "PlayerFlagBlue")).get();
 	mBall->setPosition(Prm.BallPosX, 1, Prm.BallPosZ);
 	mBall->resetPhysicsBody();
 
@@ -87,16 +100,19 @@ void Pitch::onInitialize()
 	AddPitchWall(this, "Wall_Left", "Wall_Vertical", Ogre::Vector3(-Prm.HalfPitchWidth, 0, 0), Ogre::Vector3(1, 0, 0));
 	AddPitchWall(this, "Wall_Right", "Wall_Vertical", Ogre::Vector3(Prm.HalfPitchWidth, 0, 0), Ogre::Vector3(-1, 0, 0));
 
+	// Initialize Random Value
+	dt::Random::initialize();
 }
 
 void Pitch::onDeinitialize() 
 {
 	// Avoid naked pointers
-	delete mPlayGround;
+	delete mPlayingArea;
 
 	for (auto it = mRegions.begin(); it != mRegions.end(); ++it)
+	{
 		delete(*it);
-
+	}
 }
 
 Ball* Pitch::getBall() const 
@@ -111,7 +127,7 @@ Region* Pitch::getRegionFromIndex(int index)
 
 Region* Pitch::getPlayingArea() const
 {
-	return mPlayGround;
+	return mPlayingArea;
 }
 
 void Pitch::createRegions(float width, float height)
@@ -122,8 +138,8 @@ void Pitch::createRegions(float width, float height)
 	{
 		for (int j = 0; j < Prm.NumRegionsHorizontal; ++j)
 		{
-			mRegions[idx] = new Region(mPlayGround->getLeft() + j * width, mPlayGround->getTop() + i * height,
-				                       mPlayGround->getLeft() + j * width + width, mPlayGround->getTop() + i * height + height, idx);
+			mRegions[idx] = new Region(mPlayingArea->getLeft() + j * width, mPlayingArea->getTop() + i * height,
+				                       mPlayingArea->getLeft() + j * width + width, mPlayingArea->getTop() + i * height + height, idx);
 			++idx;
 		}
 	}
