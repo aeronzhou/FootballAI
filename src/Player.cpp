@@ -196,7 +196,16 @@ void Player::turnAroundToTarget(const Ogre::Vector3& target)
 
 bool Player::isThreatened() const 
 {
-	//////////////////////////////////////////////////////////////////////////
+	std::vector<Player*>& opponents = getTeam()->getOpponent()->getPlayers();
+	Ogre::Vector3 position = getPosition();
+
+	for (auto it = opponents.begin(); it != opponents.end(); ++it)
+	{
+		if (position.distance((*it)->getPosition()) < Prm.PlayerThreatenedRange)
+		{
+			return true;
+		}
+	}
 	return false;
 }
 

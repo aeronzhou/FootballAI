@@ -1,6 +1,7 @@
 #include "FieldPlayerState.h"
 #include "Team.h"
 #include "MessageDeliverer.h"
+#include "Utils.h"
 #include "ParamLoader.h"
 
 // KickingBall
@@ -37,8 +38,12 @@ void KickingBall::execute(FieldPlayer* player)
 
 	// Can shoot
 	float shooting_foce = Prm.PlayerMaxShootingForce * dot;
-	if (player->getTeam()->canShoot(player, shooting_foce))
+	if (player->getTeam()->canShoot(player, target, shooting_foce))
 	{
+		target = AddNoiseToTarget(ball->getPosition(), target);
+		ball->kick(target - ball->getPosition(), shooting_foce);
+		player->getStateMachine()->changeState(ChasingBall::get());
+
 		return;
 	}
 
@@ -46,14 +51,14 @@ void KickingBall::execute(FieldPlayer* player)
 	Player* receiver = nullptr;
 	float passing_force = Prm.PlayerMaxPassingForce;
 
-	if (/*player->isThreatened() && */
+	if (player->isThreatened() && 
 		player->getTeam()->canPass(player, receiver, target, dot))
 	{
 		MessageDeliverer::get().deliverMessage(
 			0,
 			player, 
 			receiver,
-			MSG_PASS,
+			MSG_RECEIVE_BALL,
 			&target	
 			);
 

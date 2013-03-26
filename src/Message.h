@@ -9,8 +9,10 @@
 
 enum MessageType
 {
-	MSG_PASS,
+	MSG_REQUEST_PASS,
+	MSG_RECEIVE_BALL,
 	MSG_BACK_TO_ORIGIN,
+	MSG_WAIT
 };
 
 struct Message

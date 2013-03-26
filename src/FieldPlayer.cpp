@@ -133,7 +133,7 @@ bool FieldPlayer::isReadyToKick() const
 
 bool FieldPlayer::handleMessage(const Message& msg) const 
 {
-	return mStateMachine->handleMessage(msg);	
+	return mStateMachine->handleMessage(msg);
 }
 
 bool FieldPlayer::isMoreAdvantageousToAttack() const 

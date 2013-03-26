@@ -36,6 +36,10 @@ public:
 
 	StateMachine<FieldPlayer>* getStateMachine() const;
 
+	/** 
+      * Return true if the player are closer to the goal
+	  * or more beneficial to attack
+	  */
 	bool isMoreAdvantageousToAttack() const;
 
 

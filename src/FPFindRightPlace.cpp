@@ -6,9 +6,9 @@ FindRightPlace* FindRightPlace::get()
 	return &instance;
 }
 
-void FindRightPlace::enter(FieldPlayer*)
+void FindRightPlace::enter(FieldPlayer* player)
 {
-
+	
 }
 
 void FindRightPlace::execute(FieldPlayer* player)

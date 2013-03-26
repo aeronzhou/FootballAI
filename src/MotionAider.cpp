@@ -212,7 +212,7 @@ void MotionAider::tagNeighbouringPlayers()
 		(*it)->getMotionAider()->setTag(false);
 		
 		if ((*it) != mPlayer &&  
-			(*it)->getPosition().squaredDistance(mPlayer->getPosition()) < Prm.VisibleRangeSqr)
+			(*it)->getPosition().distance(mPlayer->getPosition()) < Prm.VisibleRange)
 		{
 			(*it)->getMotionAider()->setTag(true);
 		}

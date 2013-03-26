@@ -1,12 +1,18 @@
 #include "Region.h"
 
+#include <Utils/Random.hpp>
 
-Region::Region(float left, float top, float right, float bottom, int id)
-	: mLeft(left), mRight(right), mTop(top), mBottom(bottom), mID(id)
+#include <math.h>
+
+Region::Region(float left, float top, float right, float bottom, int id, float margin)
+	: mLeft(left), mRight(right), mTop(top), mBottom(bottom), mID(id), mMargin(margin)
 {
 	mWidth = mRight - mLeft;
 	mHeight = mBottom - mTop;
 	mCenter = Ogre::Vector3(mLeft + mWidth / 2, 0.f, mTop + mHeight / 2);
+
+	mMargin = std::min(mMargin, mWidth / 2);
+	mMargin = std::min(mMargin, mHeight / 2);
 }
 
 bool Region::inside(Ogre::Vector3 position, RegionType type) const
@@ -26,8 +32,17 @@ bool Region::inside(Ogre::Vector3 position, RegionType type) const
 
 Ogre::Vector3 Region::getRandomPosition() const
 {
-	//////////////////////////////////////////////////////////////////////////
-	return Ogre::Vector3(0, 0, 0);
+	float x = dt::Random::get(mLeft, mRight);
+	float z = dt::Random::get(mTop, mBottom);
+	return Ogre::Vector3(x, 0, z);
+}
+
+bool Region::onMargin(const Ogre::Vector3& position) const 
+{
+	return (position.x < mLeft + mMargin || 
+		position.x > mRight - mMargin ||
+		position.z < mTop + mMargin ||
+		position.z > mBottom - mMargin);
 }
 
 float Region::getLeft() const {	return mLeft; }
