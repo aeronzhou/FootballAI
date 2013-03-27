@@ -30,6 +30,9 @@ void Pitch::onUpdate(double time_diff)
 	mBall->testTimeSpentByInitialForce(3, 4);
 #endif
 
+	// Test if the ball is scored!!!
+	// Set team to kick off and send players back to origin region
+
 	Node::onUpdate(time_diff);
 }
 
@@ -38,7 +41,6 @@ void AddPitchWall(dt::Node* parent, QString name, QString mesh_handle, Ogre::Vec
 	dt::Node* wall = parent->addChildNode(new dt::Node(name)).get();
 	wall->setPosition(position);
 	wall->setRotation(GetRotationThroughHeading(heading));
-
 	wall->addComponent(new dt::MeshComponent(mesh_handle, "", MESH_COMPONENT));
 	wall->addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, dt::PhysicsBodyComponent::BOX, 0.0f));
 }
@@ -90,6 +92,7 @@ void Pitch::onInitialize()
 	mBlueTeam = (Team*)addChildNode(new Team(mBall, this, Team::BLUE, mBlueGoal)).get();
 	mRedTeam->setOpponent(mBlueTeam);
 	mBlueTeam->setOpponent(mRedTeam);
+	setTeamToKickOff(mRedTeam);
 
 	// Create evil walls... -_-|||
 	// That is because we don't let foul-ball exists..
@@ -102,6 +105,10 @@ void Pitch::onInitialize()
 
 	// Initialize Random Value
 	dt::Random::initialize();
+
+	// Start the game
+	mGameOn = true;
+	mGoalKeeperHasBall = false;
 }
 
 void Pitch::onDeinitialize() 
@@ -145,3 +152,38 @@ void Pitch::createRegions(float width, float height)
 	}
 }
 
+
+const std::vector<Region*>& Pitch::getAllRegions() const 
+{
+	return mRegions;
+}
+
+bool Pitch::isGameOn() const 
+{
+	return mGameOn;
+}
+
+void Pitch::setGameOn(bool flag)
+{
+	mGameOn = flag;
+}
+
+void Pitch::setTeamToKickOff(Team* team)
+{
+	mTeamToKickOff = team;
+}
+
+bool Pitch::isGoingForKickingOff(Team* team)
+{
+	return mTeamToKickOff == team;
+}
+
+bool Pitch::isGoalKeeperHasBall() const 
+{
+	return mGoalKeeperHasBall;
+}
+
+void Pitch::setGoalKeeperHasBall(bool flag)
+{
+	mGoalKeeperHasBall = flag;
+}

@@ -8,15 +8,17 @@
 #include "PlayerPositionManager.h"
 #include "Goal.h"
 #include "TeamState.h"
+#include "FieldPlayerState.h"
 #include "ParamLoader.h"
-#include "MessageDeliverer.h"
+#include "MessageDispatcher.h"
+#include "GeometryHelper.h"
 #include "Utils.h"
 #include "Constant.h"
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
 	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()),
-	  mIsControllingBall(false) {}
+	  mIsControllingBall(false), mSupportingPlayer(nullptr), mReceivingPlayer(nullptr) {}
 
 
 void Team::onInitialize() 
@@ -30,8 +32,10 @@ void Team::onInitialize()
 
 	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	{
-		(*it)->getMotionAider()->setSeparationOn();
+		(*it)->getSteering()->setSeparationOn();
 	}
+
+	_findPlayerClosestToBall();
 }
 
 void Team::onDeinitialize()
@@ -46,7 +50,7 @@ void Team::onUpdate(double time_diff)
 	// Update StateMachine
 	mStateMachine->onUpdate();	
 
-	findPlayerClosestToBall();
+	_findPlayerClosestToBall();
 
 	dt::Node::onUpdate(time_diff);
 }
@@ -136,7 +140,7 @@ void Team::playersBackForKickOff()
 {
 	for (int i = mPlayers.size() - 1; i >= 0; --i)
 	{
-		MessageDeliverer::get().deliverMessage(DELIVER_IMMEDIATELY,
+		MessageDispatcher::get().dispatchMessage(DELIVER_IMMEDIATELY,
 			NULL, 
 			mPlayers[i],
 			MSG_BACK_TO_ORIGIN,
@@ -183,12 +187,16 @@ void Team::sendPlayersToAssignedRegion()
 {
 	for (std::vector<Player*>::iterator it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	{
-		(*it)->getMotionAider()->setArriveOn();
-		(*it)->setTarget((*it)->getAssignedRegion()->getCenter());
+		MessageDispatcher::get().dispatchMessage(
+			0, 
+			nullptr,
+			*it,
+			MSG_BACK_TO_ORIGIN,
+			nullptr);
 	}
 }
 
-void Team::findPlayerClosestToBall()
+void Team::_findPlayerClosestToBall()
 {
 	float min_value = MAX_VALUE;
 	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
@@ -207,7 +215,7 @@ Player* Team::getPlayerClosestToBall() const
 	return mPlayerClosestToBall;
 }
 
-bool Team::isControllingBall() const 
+bool Team::isInControl() const 
 {
 	return mIsControllingBall;
 }
@@ -222,6 +230,26 @@ void Team::setControllingPlayer(Player* player)
 	mIsControllingBall = (player != nullptr);
 
 	mControllingPlayer = player;
+}
+
+Player* Team::getSupportingPlayer() const 
+{
+	return mSupportingPlayer;
+}
+
+void Team::setSupportingPlayer(Player* player)
+{
+	mSupportingPlayer = player;
+}
+
+Player* Team::getReceivingPlayer() const 
+{
+	return mReceivingPlayer;
+}
+
+void Team::setReceivingPlayer(Player* player)
+{
+	mReceivingPlayer = player;
 }
 
 bool Team::canPass(Player* passer, Player*& receiver, Ogre::Vector3& proper_target, float passing_force)
@@ -280,7 +308,7 @@ bool Team::canShoot(Player* player, Ogre::Vector3& proper_target, float shooting
 		
 		// If safe to shot
 		// or with some possibility
-		if (_isSafeGoingThroughAllOpponents(mBall->getPosition(), target, shooting_force) ||
+		if (isSafeGoingThroughAllOpponents(mBall->getPosition(), target, shooting_force) ||
 			WithPossibility(0.05))
 		{
 			proper_target = target;
@@ -296,13 +324,13 @@ std::vector<Player*>& Team::getPlayers()
 	return mPlayers;
 }
 
-bool Team::_isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre::Vector3& target, float force)
+bool Team::isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre::Vector3& target, float force)
 {
 	std::vector<Player*>& opponents = getOpponent()->getPlayers();
 
 	for (auto it = opponents.begin(); it != opponents.end(); ++it)
 	{
-		if (!_isSafeGoingThroughOpponent(from, target, force, *it))
+		if (!isSafeGoingThroughOpponent(from, target, force, *it))
 		{
 			return false;
 		}
@@ -310,18 +338,7 @@ bool Team::_isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre
 	return true;
 }
 
-#define CONST_VECTOR3 const Ogre::Vector3& 
-
-// Function to find intersection of two line-segement                   
-float _xmult(CONST_VECTOR3 p1, CONST_VECTOR3 p2, CONST_VECTOR3 p0);
-int _dot_online_in(CONST_VECTOR3 p, CONST_VECTOR3 l1, CONST_VECTOR3 l2);
-int _same_side(CONST_VECTOR3 p1, CONST_VECTOR3 p2, CONST_VECTOR3 l1, CONST_VECTOR3 l2);
-int _parallel(CONST_VECTOR3 u1, CONST_VECTOR3 u2, CONST_VECTOR3 v1, CONST_VECTOR3 v2);
-int _dots_inline(CONST_VECTOR3 p1, CONST_VECTOR3 p2, CONST_VECTOR3 p3);
-int _intersect_in(CONST_VECTOR3 u1, CONST_VECTOR3 u2, CONST_VECTOR3 v1, CONST_VECTOR3 v2);
-bool IntersectionPoint(CONST_VECTOR3 u1, CONST_VECTOR3 u2, CONST_VECTOR3 v1, CONST_VECTOR3 v2, Ogre::Vector3 &ret);
-
-bool Team::_isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vector3& target, float force, Player* opponent)
+bool Team::isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vector3& target, float force, Player* opponent)
 {
 	Ogre::Vector3 to_target = target - from;
 	Ogre::Vector3 to_opponent = Vector3To2(opponent->getPosition() - from);
@@ -344,7 +361,7 @@ bool Team::_isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Ve
 	Ogre::Vector3 oppo_pos = Vector3To2(opponent->getPosition());
 	Ogre::Vector3 oppo_pos_away = oppo_pos + Ogre::Vector3(x, 0, z).normalisedCopy() * 300.f;
 	Ogre::Vector3 intersect_point;
-	if (IntersectionPoint(from, target, oppo_pos, oppo_pos_away, intersect_point))
+	if (GeometryHelper::get().lineSegmentIntersect(from, target, oppo_pos, oppo_pos_away, intersect_point))
 	{
 		float oppo_to_intersect = oppo_pos.distance(intersect_point);
 		float ball_to_intersect = from.distance(intersect_point);
@@ -354,57 +371,6 @@ bool Team::_isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Ve
 			return false;
 		}
 	}
-
-	return true;
-}
-
-#define zero(x) (((x)>0?(x):-(x))<EPS)
-
-float _xmult(CONST_VECTOR3 p1, CONST_VECTOR3 p2, CONST_VECTOR3 p0)
-{
-	return (p1.x - p0.x) * (p2.z - p0.z) - (p2.x - p0.x) * (p1.z - p0.z);
-}
-
-int _dot_online_in(CONST_VECTOR3 p, CONST_VECTOR3 l1, CONST_VECTOR3 l2)
-{
-	return zero(_xmult(p, l1, l2)) && (l1.x - p.x) * (l2.x - p.x) < EPS && (l1.z - p.z) * (l2.z - p.z) < EPS;
-}
-
-int _same_side(CONST_VECTOR3 p1, CONST_VECTOR3 p2, CONST_VECTOR3 l1, CONST_VECTOR3 l2)
-{
-	return _xmult(l1, p1, l2) * _xmult(l1, p2, l2) > EPS;
-}
-
-int _parallel(CONST_VECTOR3 u1, CONST_VECTOR3 u2, CONST_VECTOR3 v1, CONST_VECTOR3 v2)
-{
-	return zero((u1.x - u2.x) * (v1.z - v2.z) - (v1.x - v2.x) * (u1.z - u2.z));
-}
-
-int _dots_inline(CONST_VECTOR3 p1, CONST_VECTOR3 p2, CONST_VECTOR3 p3)
-{
-	return zero(_xmult(p1, p2, p3));
-}
-
-int _intersect_in(CONST_VECTOR3 u1, CONST_VECTOR3 u2, CONST_VECTOR3 v1, CONST_VECTOR3 v2)
-{
-	if (!_dots_inline(u1, u2, v1) || !_dots_inline(u1, u2, v2))
-		return !_same_side(u1, u2, v1, v2) && !_same_side(v1, v2, u1, u2);
-	return _dot_online_in(u1, v1, v2) || _dot_online_in(u2, v1, v2) || _dot_online_in(v1, u1, u2) || _dot_online_in(v2, u1, u2);
-}
-
-
-bool IntersectionPoint(CONST_VECTOR3 u1, CONST_VECTOR3 u2,
-	CONST_VECTOR3 v1, CONST_VECTOR3 v2, Ogre::Vector3 &ret)
-{
-	if (_parallel(u1, u2, v1, v2) || !_intersect_in(u1, u2, v1, v2))
-		return false;
-
-	ret = u1;
-	float t = ((u1.x - v1.x) * (v1.z - v2.z) - (u1.z - v1.z) * (v1.x - v2.x))
-		/ ((u1.x - u2.x) * (v1.z - v2.z) - (u1.z - u2.z) * (v1.x - v2.x));
-	ret.x += (u2.x - u1.x) * t;
-	ret.z += (u2.z - u1.z) * t;
-	ret.y = 0.f;
 
 	return true;
 }
@@ -433,7 +399,7 @@ float Team::_getBestSpotOfReceiving(Player* receiver, float passing_force, Ogre:
 		Ogre::Quaternion rotation = GetRotationThroughHeading(to_reciver) * Ogre::Quaternion(angle, Ogre::Vector3(0, 1, 0));
 		Ogre::Vector3 aim_target = ball_pos + rotation * Ogre::Vector3(0, 0, dist_to_receiver);
 
-		if (_isSafeGoingThroughAllOpponents(ball_pos, aim_target, passing_force))
+		if (isSafeGoingThroughAllOpponents(ball_pos, aim_target, passing_force))
 		{
 			float score = _getScoreOfPosition(aim_target);
 			if (score > best_score)
@@ -447,4 +413,40 @@ float Team::_getBestSpotOfReceiving(Player* receiver, float passing_force, Ogre:
 	return best_score;
 }
 
+void Team::requestPass(Player* player, double delay_time /* = 0 */)
+{
+	// With a possibility to execute
+	if (WithPossibility(0.3))
+	{
+		if (isSafeGoingThroughAllOpponents(
+			getControllingPlayer()->getPosition(), 
+			player->getPosition(), 
+			Prm.PlayerMaxPassingForce))
+		{
+			MessageDispatcher::get().dispatchMessage(
+				0,
+				player,
+				getControllingPlayer(),
+				MSG_REQUEST_PASS,
+				player);	
+		}
+	}
+}
 
+// Send back to home region
+void Team::updateTargetsOfWaitingPlayers()
+{
+	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
+	{
+		if ((*it)->getPlayerRole() != Player::GOAL_KEEPER)
+		{
+			FieldPlayer* player = static_cast<FieldPlayer*>(*it);
+
+			if (player->getStateMachine()->isInState(*Waiting::get()) ||
+				player->getStateMachine()->isInState(*BackToOrigin::get()))
+			{
+				player->setTarget(player->getAssignedRegion()->getCenter());
+			}
+		}
+	}
+}

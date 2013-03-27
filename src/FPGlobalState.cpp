@@ -1,6 +1,6 @@
 #include "FieldPlayerState.h"
 #include "FieldPlayer.h"
-#include "MessageDeliverer.h"
+#include "MessageDispatcher.h"
 #include "Constant.h"
 
 FieldPlayerGlobalState* FieldPlayerGlobalState::get()

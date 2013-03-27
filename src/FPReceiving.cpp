@@ -1,6 +1,6 @@
 #include "FieldPlayerState.h"
 #include "FieldPlayer.h"
-#include "MotionAider.h"
+#include "SteeringBehaviors.h"
 #include "Team.h"
 
 Receiving* Receiving::get()
@@ -11,14 +11,14 @@ Receiving* Receiving::get()
 
 void Receiving::enter(FieldPlayer* player)
 {
-	player->getMotionAider()->setArriveOn();	
+	player->getSteering()->setArriveOn();	
 	player->getTeam()->setControllingPlayer(player);
 }
 
 void Receiving::execute(FieldPlayer* player)
 {
 	// The ball is interuppted by others
-	if (!player->getTeam()->isControllingBall() || 
+	if (!player->getTeam()->isInControl() || 
 		player->getDistToBall() < 3 )
 	{
 		player->getStateMachine()->changeState(ChasingBall::get());
@@ -28,14 +28,14 @@ void Receiving::execute(FieldPlayer* player)
 	if (player->atTarget())
 	{
 		// Wait there and face to the ball
-		player->getMotionAider()->setArriveOff();
+		player->getSteering()->setArriveOff();
 		player->turnAroundToBall();
 	}
 }
 
 void Receiving::exit(FieldPlayer* player)
 {
-	player->getMotionAider()->setArriveOff();
+	player->getSteering()->setArriveOff();
 }
 
 bool Receiving::onMessage(FieldPlayer*, const Message&)

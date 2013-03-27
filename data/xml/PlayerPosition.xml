@@ -20,7 +20,7 @@
 		</Blue>
 	</WaitingForKickOff>
 	
-	<PositionalAttacking>
+	<Attacking>
 		<Red>
 			<p0>24</p0>
 			<p1>13</p1>
@@ -39,9 +39,9 @@
 			<p5>43</p5>
 			<p6>26</p6>
 		</Blue>
-	</PositionalAttacking>
+	</Attacking>
 
-	<PositionalDefending>
+	<Defending>
 		<Red>
 			<p0>21</p0>
 			<p1>12</p1>
@@ -60,6 +60,6 @@
 			<p5>43</p5>
 			<p6>26</p6>
 		</Blue>
-	</PositionalDefending>
+	</Defending>
 </PlayerPosition>
 

@@ -3,7 +3,8 @@
 #include "Team.h"
 #include "Ball.h"
 #include "Region.h"
-#include "MotionAider.h"
+#include "Goal.h"
+#include "SteeringBehaviors.h"
 #include "ParamLoader.h"
 #include "Utils.h"
 
@@ -58,7 +59,7 @@ void Player::onInitialize()
 	mPhysicsBody->getRigidBody()->setCollisionFlags(mPhysicsBody->getRigidBody()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
 	mPhysicsBody->getRigidBody()->setActivationState(DISABLE_DEACTIVATION);
 
-	mMotionAider = new MotionAider(this, getBall());
+	mSteeringBehaviors = new SteeringBehaviors(this, getBall());
 
 	mDebugText = AddTextComponent(this);
 
@@ -70,7 +71,7 @@ void Player::onInitialize()
 
 void Player::onDeinitialize() 
 {
-	delete mMotionAider;
+	delete mSteeringBehaviors;
 }
 
 void Player::onUpdate(double time_diff)
@@ -124,9 +125,14 @@ Ogre::Vector3 Player::getPositionWithRegion(bool random /* = false */)
 	}
 }
 
-MotionAider* Player::getMotionAider() const 
+SteeringBehaviors* Player::getSteering() const 
 {
-	return mMotionAider;
+	return mSteeringBehaviors;
+}
+
+Player::PlayerRole Player::getPlayerRole() const 
+{
+	return mPlayerRole;
 }
 
 
@@ -137,12 +143,12 @@ void Player::setDebugText(QString debug_text)
 
 void Player::setTarget(Ogre::Vector3 target)
 {
-	mMotionAider->setTarget(target);
+	mSteeringBehaviors->setTarget(target);
 }
 
 bool Player::atTarget() const
 {
-	return (getPosition()).squaredDistance(getMotionAider()->getTarget()) < mDistSqAtTarget;
+	return (getPosition()).squaredDistance(getSteering()->getTarget()) < mDistSqAtTarget;
 }
 
 bool Player::withinAssignedRegion() const 
@@ -209,7 +215,18 @@ bool Player::isThreatened() const
 	return false;
 }
 
-void Player::askForPassing()
+bool Player::isClosestTeamMemberToBall() const 
 {
-	
+	return mTeam->getPlayerClosestToBall() == this;
+}
+
+bool Player::isControllingPlayer() const 
+{
+	return mTeam->getControllingPlayer() == this;
+}
+
+bool Player::isAheadOfController() const 
+{
+	return fabs(getPosition().x - mTeam->getGoal()->getCenter().x) > 
+		fabs(mTeam->getControllingPlayer()->getPosition().x - mTeam->getGoal()->getCenter().x);
 }

@@ -1,6 +1,6 @@
 #include "FieldPlayerState.h"
 #include "Team.h"
-#include "MessageDeliverer.h"
+#include "MessageDispatcher.h"
 #include "Utils.h"
 #include "ParamLoader.h"
 
@@ -54,7 +54,7 @@ void KickingBall::execute(FieldPlayer* player)
 	if (player->isThreatened() && 
 		player->getTeam()->canPass(player, receiver, target, dot))
 	{
-		MessageDeliverer::get().deliverMessage(
+		MessageDispatcher::get().dispatchMessage(
 			0,
 			player, 
 			receiver,

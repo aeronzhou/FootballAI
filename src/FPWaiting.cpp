@@ -1,7 +1,7 @@
 #include "FieldPlayerState.h"
 #include "FieldPlayer.h"
 #include "Team.h"
-#include "MessageDeliverer.h"
+#include "MessageDispatcher.h"
 #include "Constant.h"
 
 // Waiting
@@ -17,14 +17,41 @@ void Waiting::enter(FieldPlayer*)
 
 void Waiting::execute(FieldPlayer* player)
 {
-	// If game is not started, don't respond
-	//////////////////////////////////////////////////////////////////////////
-
-	// Ball coming or closest to the ball, chase it
-	if (player == (FieldPlayer*)player->getTeam()->getPlayerClosestToBall())
+	// Pushed out of target 
+	if (!player->atTarget())
 	{
-		player->getStateMachine()->changeState(ChasingBall::get());
+		player->getSteering()->setArriveOn();
+		return;
 	}
+	else 
+	{
+		// Face to the ball
+		player->getSteering()->setArriveOff();		
+		player->setVelocity(Ogre::Vector3::ZERO);
+		player->turnAroundToBall();
+	}
+
+	// If this player is more beneficial to attack
+	// Ask for pass now
+	if (player->getTeam()->isInControl() &&
+		!player->isControllingPlayer() &&
+		player->isAheadOfController())
+	{
+		player->getTeam()->requestPass(player);
+	}
+
+	if (player->getPitch()->isGameOn())
+	{
+		// Lose the ball
+		// Go and catch it
+		if (player->isClosestTeamMemberToBall() &&
+			player->getTeam()->getReceivingPlayer() == nullptr &&
+			!player->getPitch()->isGoalKeeperHasBall())
+		{
+			player->getStateMachine()->changeState(ChasingBall::get());
+		}
+	}
+
 }
 
 void Waiting::exit(FieldPlayer*)

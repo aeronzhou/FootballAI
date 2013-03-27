@@ -1,4 +1,4 @@
-#include "MotionAider.h"
+#include "SteeringBehaviors.h"
 #include "Player.h"
 #include "Ball.h"
 #include "ParamLoader.h"
@@ -6,91 +6,91 @@
 #include "Utils.h"
 #include "Constant.h"
 
-MotionAider::MotionAider(Player* player, Ball* ball)
+SteeringBehaviors::SteeringBehaviors(Player* player, Ball* ball)
 	: mPlayer(player), mBall(ball),	mFlag(0), mMaxForce(player->getMaxForce()) {}
 
-bool MotionAider::on(MotionType type) const
+bool SteeringBehaviors::on(SteeringType type) const
 {
 	 return ((mFlag & type) == type);
 }
 
 // Set On 
-void MotionAider::setSeekOn()
+void SteeringBehaviors::setSeekOn()
 {
 	mFlag |= SEEK;
 }
 
-void MotionAider::setArriveOn()
+void SteeringBehaviors::setArriveOn()
 {
 	mFlag |= ARRIVE;
 }
 
-void MotionAider::setPursuitOn()
+void SteeringBehaviors::setPursuitOn()
 {
 	mFlag |= PERSUIT;
 }
 
-void MotionAider::setSeparationOn()
+void SteeringBehaviors::setSeparationOn()
 {
 	mFlag |= SEPARATION;
 }
 
 // Bool
 
-bool MotionAider::isSeekOn() const 
+bool SteeringBehaviors::isSeekOn() const 
 {
 	return on(SEEK);
 }
 
-bool MotionAider::isArriveOn() const 
+bool SteeringBehaviors::isArriveOn() const 
 {
 	return on(ARRIVE);
 }
 
-bool MotionAider::isPersuitOn() const 
+bool SteeringBehaviors::isPersuitOn() const 
 {
 	return on(PERSUIT);
 }
 
-bool MotionAider::isSeperationOn() const 
+bool SteeringBehaviors::isSeperationOn() const 
 {
 	return on(SEPARATION);
 }
 
 // Set Off
 
-void MotionAider::setSeekOff()
+void SteeringBehaviors::setSeekOff()
 {
 	if (on(SEEK))
 		mFlag ^= SEEK;
 }
 
-void MotionAider::setArriveOff()
+void SteeringBehaviors::setArriveOff()
 {
 	if (on(ARRIVE))
 		mFlag ^= ARRIVE;
 }
 
-void MotionAider::setPersuitOff()
+void SteeringBehaviors::setPersuitOff()
 {
 	if (on(PERSUIT))
 		mFlag ^= PERSUIT;
 }
 
-void MotionAider::setSeperationOff()
+void SteeringBehaviors::setSeperationOff()
 {
 	if (on(SEPARATION))
 		mFlag ^= SEPARATION;
 }
 
-Ogre::Vector3 MotionAider::seek(Ogre::Vector3 target)
+Ogre::Vector3 SteeringBehaviors::seek(Ogre::Vector3 target)
 {
 	Ogre::Vector3 velocity = Vector3To2Normalise(target - mPlayer->getPosition()) * mPlayer->getMaxSpeed();
 
 	return (velocity - mPlayer->getVelocity());
 }
 
-Ogre::Vector3 MotionAider::arrive(Ogre::Vector3 target, Deceleration decel)
+Ogre::Vector3 SteeringBehaviors::arrive(Ogre::Vector3 target, Deceleration decel)
 {
 	Ogre::Vector3 to_target = target - mPlayer->getPosition();
 	Ogre::Vector3 this_pos = mPlayer->getPosition();
@@ -111,7 +111,7 @@ Ogre::Vector3 MotionAider::arrive(Ogre::Vector3 target, Deceleration decel)
 	return Ogre::Vector3::ZERO;
 }
 
-Ogre::Vector3 MotionAider::persuit(const Ball* ball)
+Ogre::Vector3 SteeringBehaviors::persuit(const Ball* ball)
 {
 	Ogre::Vector3 to_target = ball->getPosition() - mPlayer->getPosition();
 	float ball_dot_player = ball->getHeading().dotProduct(mPlayer->getHeading());
@@ -127,7 +127,7 @@ Ogre::Vector3 MotionAider::persuit(const Ball* ball)
 	return seek(ball->getPosition() + ball->getVelocity() * look_ahead_time);	
 }
 
-Ogre::Vector3 MotionAider::separation()
+Ogre::Vector3 SteeringBehaviors::separation()
 {
 	std::vector<Player*>& members = PlayerManager::get().getAllMembers();
 
@@ -135,7 +135,7 @@ Ogre::Vector3 MotionAider::separation()
 
 	for (auto it = members.begin(); it != members.end(); ++it)
 	{
-		if (mPlayer != (*it) && (*it)->getMotionAider()->isTag())
+		if (mPlayer != (*it) && (*it)->getSteering()->isTag())
 		{
 			Ogre::Vector3 to_target = mPlayer->getPosition() - (*it)->getPosition();
 			force += (to_target / to_target.length());
@@ -146,17 +146,17 @@ Ogre::Vector3 MotionAider::separation()
 	return ((force /*+ Ogre::Vector3(-0.1, 0, 0.1)*/ ) * Prm.SeperationCoefficient);
 }
 
-void MotionAider::calculateDrivingForce()
+void SteeringBehaviors::calculateDrivingForce()
 {
 	// Clear the combine force
-	mDrivingForce = Ogre::Vector3::ZERO;
+	mSteeringForce = Ogre::Vector3::ZERO;
 
 	combineForce();
 
 	regularizeForce();
 }
 
-void MotionAider::combineForce()
+void SteeringBehaviors::combineForce()
 {
 	Ogre::Vector3 force(0, 0, 0);
 
@@ -165,71 +165,71 @@ void MotionAider::combineForce()
 	if (on(SEPARATION))
 	{
 		force += separation();
-		if (!accumulateForce(mDrivingForce, force)) 
+		if (!accumulateForce(mSteeringForce, force)) 
 			return;
 	}
 
 	if (on(SEEK))
 	{
 		force += seek(mTarget);
-		if (!accumulateForce(mDrivingForce, force))
+		if (!accumulateForce(mSteeringForce, force))
 			return;
 	}
 
 	if (on(ARRIVE))
 	{
 		force += arrive(mTarget, FAST);
-		if (!accumulateForce(mDrivingForce, force))
+		if (!accumulateForce(mSteeringForce, force))
 			return;
 	}
 
 	if (on(PERSUIT))
 	{
 		force += persuit(mBall);
-		if (!accumulateForce(mDrivingForce, force))
+		if (!accumulateForce(mSteeringForce, force))
 			return;
 	}
 }
 
-void MotionAider::regularizeForce()
+void SteeringBehaviors::regularizeForce()
 {
-	if (mDrivingForce.squaredLength() > mMaxForce * mMaxForce)
+	if (mSteeringForce.squaredLength() > mMaxForce * mMaxForce)
 	{
-		mDrivingForce = Vector3To2Normalise(mDrivingForce) * mMaxForce;
+		mSteeringForce = Vector3To2Normalise(mSteeringForce) * mMaxForce;
 	}
 	else
 	{
-		mDrivingForce = Vector3To2(mDrivingForce);
+		mSteeringForce = Vector3To2(mSteeringForce);
 	}
 }
 
-void MotionAider::tagNeighbouringPlayers()
+void SteeringBehaviors::tagNeighbouringPlayers()
 {
 	std::vector<Player*>& members = PlayerManager::get().getAllMembers();
 
 	for (auto it = members.begin(); it != members.end(); ++it)
 	{
-		(*it)->getMotionAider()->setTag(false);
+		(*it)->getSteering()->setTag(false);
 		
 		if ((*it) != mPlayer &&  
 			(*it)->getPosition().distance(mPlayer->getPosition()) < Prm.VisibleRange)
 		{
-			(*it)->getMotionAider()->setTag(true);
+			(*it)->getSteering()->setTag(true);
 		}
 	}
 }
 
-bool MotionAider::isTag() const
+bool SteeringBehaviors::isTag() const
 {
 	return mTag;
 }
 
-void MotionAider::setTag(bool tag)
+void SteeringBehaviors::setTag(bool tag)
 {
 	mTag = tag;
 }
 
-bool MotionAider::accumulateForce(Ogre::Vector3& prev_force, Ogre::Vector3 force_add)
+bool SteeringBehaviors::accumulateForce(Ogre::Vector3& prev_force, Ogre::Vector3 force_add)
 {
 	float magnitude_remain = mMaxForce - prev_force.length();
 
@@ -249,17 +249,17 @@ bool MotionAider::accumulateForce(Ogre::Vector3& prev_force, Ogre::Vector3 force
 	return true;
 }
 
-Ogre::Vector3 MotionAider::getDrivingForce() const 
+Ogre::Vector3 SteeringBehaviors::getSteeringForce() const 
 {
-	return mDrivingForce;
+	return mSteeringForce;
 }
 
-Ogre::Vector3 MotionAider::getTarget() const 
+Ogre::Vector3 SteeringBehaviors::getTarget() const 
 {
 	return mTarget;
 }
 
-void MotionAider::setTarget(Ogre::Vector3 target)
+void SteeringBehaviors::setTarget(Ogre::Vector3 target)
 {
 	mTarget = target;
 }

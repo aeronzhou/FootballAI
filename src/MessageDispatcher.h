@@ -1,5 +1,5 @@
-#ifndef FOOTBALL_AI_MESSAGE_DELIVERER
-#define FOOTBALL_AI_MESSAGE_DELIVERER
+#ifndef FOOTBALL_AI_MESSAGE_DISPATCHER	
+#define FOOTBALL_AI_MESSAGE_DISPATCHER
 
 #include "Message.h"
 
@@ -8,16 +8,16 @@
 /** 
   * A singleton class to dispatch message
   */ 
-class MessageDeliverer
+class MessageDispatcher
 {
 public:
 
 	/** 
 	  * Singleton
 	  */
-	static MessageDeliverer& get();
+	static MessageDispatcher& get();
 
-	void deliverMessage(double delay_time, 
+	void dispatchMessage(double delay_time, 
 						MovingEntity* sender,
 						MovingEntity* receiver,
 						MessageType msg_type,
@@ -26,11 +26,11 @@ public:
 	/** 
 	  * Lately deliver message, called every frame
 	  */
-	void latelyDeliverMessage();
+	void latelyDispatchMessage();
 
 private:
 
-	void deliverMessageNow(const Message& msg);
+	void dispatchMessageNow(const Message& msg);
 
 	std::set<Message> mMessagePool;      //!< Pool to store lately deliver message
 
