@@ -13,6 +13,8 @@ void Defending::enter(Team* team)
 {
 	// Set team's assigned region
 	team->setAssignedRegion(PlayerPositionManager::get().getAssignedPosition("Defending"));
+
+	team->updateTargetsOfWaitingPlayers();
 }
 
 void Defending::execute(Team* team)

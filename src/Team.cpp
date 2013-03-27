@@ -30,10 +30,10 @@ void Team::onInitialize()
 	// Initialize players
 	_createPlayers();
 
-	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
-	{
-		(*it)->getSteering()->setSeparationOn();
-	}
+	//for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
+	//{
+	//	(*it)->getSteering()->setSeparationOn();
+	//}
 
 	_findPlayerClosestToBall();
 }

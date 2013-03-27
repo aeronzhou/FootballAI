@@ -23,9 +23,6 @@ void FieldPlayer::onInitialize()
 	mStateMachine->setCurrentState(Waiting::get());
 	mStateMachine->setGlobalState(FieldPlayerGlobalState::get());
 
-	// Turn on seperation
-	//mSteeringBehaviors->setSeparationOn();
-
 	// Set defult animation
 	mMesh->setAnimation("RunBase");
 	mMesh->setLoopAnimation(true);
@@ -116,7 +113,8 @@ void FieldPlayer::onUpdate(double time_diff)
 
 	mIsTurnningAroundAtTarget = Ogre::Radian(0);
 
-	setDebugText(getStateMachine()->getNameOfCurrentState());
+	//setDebugText(getStateMachine()->getNameOfCurrentState());
+	setDebugText(dt::Utils::toString(getSteering()->getTarget()));
 
 	dt::Node::onUpdate(time_diff);
 }
