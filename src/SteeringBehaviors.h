@@ -44,17 +44,20 @@ public:
 	void setSeekOn();
 	void setArriveOn();
 	void setPursuitOn();
+	void setInterposeOn();
 	void setSeparationOn();
 
 	// Set off
 	void setSeekOff();
 	void setArriveOff();
-	void setPersuitOff();
+	void setPursuitOff();
+	void setInterposeOff();
 	void setSeperationOff();
 
 	bool isSeekOn() const;
 	bool isArriveOn() const;
 	bool isPersuitOn() const;
+	bool isInterposeOn() const;
 	bool isSeperationOn() const;
 
 	/** 
@@ -83,7 +86,9 @@ private:
 
 	Ogre::Vector3 arrive(Ogre::Vector3 target, Deceleration decel);
 
-	Ogre::Vector3 persuit(const Ball* ball);
+	Ogre::Vector3 pursuit(const Ball* ball);
+
+	Ogre::Vector3 interpose(const Ball* ball, Ogre::Vector3 pos, float dist_from_target);
 
 	Ogre::Vector3 separation();
 

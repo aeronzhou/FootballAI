@@ -44,6 +44,8 @@ public:
 
 	Player* getPlayerClosestToBall() const;
 
+	float getClosestDistToBall() const;
+
 	std::vector<Player*>& getPlayers();
 
 	StateMachine<Team>* getStateMachine() const;

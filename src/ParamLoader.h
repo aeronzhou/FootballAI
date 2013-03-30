@@ -73,6 +73,9 @@ public:
 		PlayerShootingRange = mParamTables["PlayerShootingRange"].toFloat();
 		PlayerShootingTryNum = mParamTables["PlayerShootingTryNum"].toFloat();
 
+		GoalKeeperInterceptRange = mParamTables["GoalKeeperInterceptRange"].toFloat();
+		GoalKeeperControlRange = mParamTables["GoalKeeperControlRange"].toFloat();
+
 		SpotPassSafeScore = mParamTables["SpotPassSafeScore"].toFloat();
 		SpotCanShootScore = mParamTables["SpotCanShootScore"].toFloat();
 
@@ -140,6 +143,10 @@ public:
 	float PlayerThreatenedRange;
 	float PlayerShootingRange;
 	float PlayerShootingTryNum;
+
+	// GoalKeeper
+	float GoalKeeperInterceptRange;
+	float GoalKeeperControlRange;
 
 	// Spot
 	float SpotPassSafeScore;

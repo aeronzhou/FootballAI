@@ -13,11 +13,11 @@
 
 #include <OgreProcedural.h>
 
-Player::Player(const QString name, float bounding_radius, float max_speed, float max_force,
+Player::Player(const QString name, float control_range, float max_speed, float max_force,
 	float mass, float turn_rate, QString mesh_handle, QString material_handle, Team* team, int assigned_region, PlayerRole role)
 	: MovingEntity(name, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
 	mTeam(team), mAssignedRegion(assigned_region), mPlayerRole(role), mDistSqAtTarget(Prm.DistAtTarget * Prm.DistAtTarget),
-	mControlRange(bounding_radius), mIsTurnningAroundAtTarget(0) {}
+	mControlRange(control_range), mIsTurnningAroundAtTarget(0) {}
 
 // Add a flag to distinguish RED and BLUE
 dt::Node* CreatePlayerFlag(dt::Node* parent, const QString& material)
@@ -95,6 +95,11 @@ Ball* Player::getBall() const
 Region* Player::getAssignedRegion() const 
 {
 	return getPitch()->getRegionFromIndex(mAssignedRegion);
+}
+
+bool Player::isBallWithinControlRange() const 
+{
+	return getDistToBall() < mControlRange;
 }
 
 Pitch* Player::getPitch() const 
@@ -230,4 +235,9 @@ bool Player::isAheadOfController() const
 {
 	return fabs(getPosition().x - mTeam->getGoal()->getCenter().x) > 
 		fabs(mTeam->getControllingPlayer()->getPosition().x - mTeam->getGoal()->getCenter().x);
+}
+
+bool Player::isClosestPlayerOnPitchToBall() const 
+{
+	return isClosestTeamMemberToBall() && (getDistToBall() < mTeam->getOpponent()->getClosestDistToBall());
 }

@@ -73,3 +73,13 @@ void Goal::resetPhysicsBody()
 	physics_body->disable();
 	physics_body->enable();
 }
+
+float Goal::getPenaltyAreaLength() const 
+{
+	return mPenaltyAreaLength;
+}
+
+float Goal::getPenaltyAreaWidth() const 
+{
+	return mPenaltyAreaWidth;
+}

@@ -27,7 +27,7 @@ public:
 	};
 
 	Player(const QString name,
-		float bounding_radius,
+		float control_range,
 		float max_speed,
 		float max_force,
 		float mass,
@@ -58,6 +58,8 @@ public:
 	void setDebugText(QString debug_text);
 
 	bool isClosestTeamMemberToBall() const;
+
+	bool isClosestPlayerOnPitchToBall() const;
 
 	/** 
 	  * Return true if this player is controlling the ball
@@ -97,7 +99,13 @@ public:
 	  * Return if the player is in receiving range, so as to chase and control the ball
 	  * @returns If the player is in receiving range
 	  */
-	bool withinReceivingRange() const;
+	bool isWithinReceivingRange() const;
+
+	/** 
+	  * Return if the player is in control range, so as to control the ball
+	  * @return if the player is in control range
+	  */
+	bool isBallWithinControlRange() const;
 
 	/** 
 	  * Turn around to face towards the ball

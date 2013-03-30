@@ -215,6 +215,11 @@ Player* Team::getPlayerClosestToBall() const
 	return mPlayerClosestToBall;
 }
 
+float Team::getClosestDistToBall() const 
+{
+	return mPlayerClosestToBall->getDistToBall();
+}
+
 bool Team::isInControl() const 
 {
 	return mIsControllingBall;
