@@ -2,6 +2,7 @@
 #include "Team.h"
 #include "PlayerPositionManager.h"
 
+
 // Defending
 Defending* Defending::get()
 {

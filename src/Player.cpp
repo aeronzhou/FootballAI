@@ -148,7 +148,8 @@ void Player::setTarget(Ogre::Vector3 target)
 
 bool Player::atTarget() const
 {
-	return (getPosition()).squaredDistance(getSteering()->getTarget()) < mDistSqAtTarget;
+	//return (getPosition()).squaredDistance(getSteering()->getTarget()) < mDistSqAtTarget;
+	return Vector3To2(getPosition() - getSteering()->getTarget()).length() < 0.5;
 }
 
 bool Player::withinAssignedRegion() const 

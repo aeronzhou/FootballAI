@@ -69,13 +69,13 @@ void Team::_createPlayers()
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
 				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
 		}
-		//for (int i = 3; i < 6; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-		//		this, FieldPlayer::BACK, vec_pos[i])).get());
-		//}
-		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(6), 
-		//	this, FieldPlayer::BACK, vec_pos[6])).get());
+		for (int i = 3; i < 6; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+				this, FieldPlayer::BACK, vec_pos[i])).get());
+		}
+		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(6), 
+			this, FieldPlayer::BACK, vec_pos[6])).get());
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
@@ -84,20 +84,20 @@ void Team::_createPlayers()
 	}
 	else 
 	{
-		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
-		//	this, FieldPlayer::FORWARD, vec_pos[7])).get());
-		//for (int i = 8; i < 10; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
-		//}
-		//for (int i = 10; i < 13; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
-		//}
-		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
-		//	this, FieldPlayer::MIDFIELD, vec_pos[13])).get());
+		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
+			this, FieldPlayer::FORWARD, vec_pos[7])).get());
+		for (int i = 8; i < 10; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		}
+		for (int i = 10; i < 13; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		}
+		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
+			this, FieldPlayer::MIDFIELD, vec_pos[13])).get());
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
