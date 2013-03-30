@@ -70,19 +70,21 @@ public:
 	  */
 	void sendPlayersToAssignedRegion();
 
-	/** 
-	  * Find player closest to ball so as to chase the ball
-	  */
-	void findPlayerClosestToBall();
 
 	/** 
 	  * Return if the team is controlling the ball
 	  * @returns If the team is controlling the ball
 	  */
-	bool isControllingBall() const;
+	bool isInControl() const;
 
 	Player* getControllingPlayer() const;
 	void setControllingPlayer(Player* player);
+
+	Player* getSupportingPlayer() const;
+	void setSupportingPlayer(Player* player);
+
+	Player* getReceivingPlayer() const;
+	void setReceivingPlayer(Player* player);
 
 	/** 
 	  * Find a possible pass, return true if the pass exists
@@ -103,6 +105,26 @@ public:
 	  */
 	bool canShoot(Player* player, Ogre::Vector3& proper_target, float shooting_force);
 
+	/**  
+	  * Test if the ball can go through all opponents from a place to another
+	  * @param from From place
+	  * @param target Target place
+	  * @param force Force to kick the ball
+	  * @returns True if the ball can go througth all opponents
+	  */
+	bool isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre::Vector3& target, float force);
+
+	bool isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vector3& target, float force, Player* opponent);
+
+	/** 
+	  *	Player ask for pass, but with a possibility to execute
+	  * @param player Player who is asking for pass
+	  * @param delay_time Time to delay the pass
+	  */
+	void requestPass(Player* player, double delay_time = 0);
+
+	void updateTargetsOfWaitingPlayers();
+
 private:
 
 	/** 
@@ -110,9 +132,13 @@ private:
 	  */
 	void _createPlayers();
 
-	bool _isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre::Vector3& target, float force);
+	/** 
+	  * Find player closest to ball so as to chase the ball
+	  */
+	void _findPlayerClosestToBall();
 
-	bool _isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vector3& target, float force, Player* opponent);
+
+
 
 	/** 
 	  * Get the score of current position, 
@@ -147,6 +173,8 @@ private:
 
 	Player* mControllingPlayer;            //!< Pointer to the player which is controlling the ball 
 	Player* mPlayerClosestToBall;          //!< Pointer to the player which is closest to the ball
+	Player* mSupportingPlayer;             //!< Pointer to supporting player
+	Player* mReceivingPlayer;              //!< Pointer to receiving player
 
 };
 

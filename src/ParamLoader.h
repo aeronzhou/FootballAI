@@ -73,6 +73,9 @@ public:
 		PlayerShootingRange = mParamTables["PlayerShootingRange"].toFloat();
 		PlayerShootingTryNum = mParamTables["PlayerShootingTryNum"].toFloat();
 
+		SpotPassSafeScore = mParamTables["SpotPassSafeScore"].toFloat();
+		SpotCanShootScore = mParamTables["SpotCanShootScore"].toFloat();
+
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
 	}
@@ -137,6 +140,10 @@ public:
 	float PlayerThreatenedRange;
 	float PlayerShootingRange;
 	float PlayerShootingTryNum;
+
+	// Spot
+	float SpotPassSafeScore;
+	float SpotCanShootScore;
 
 	// Others
 	int PhysicsShowDebug;

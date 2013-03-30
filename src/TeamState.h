@@ -2,8 +2,8 @@
 #define FOOTBALL_AI_TEAM_STATE
 
 
-#include "TPositionalAttacking.h"
-#include "TPositionalDefending.h"
+#include "TAttacking.h"
+#include "TDefending.h"
 #include "TWaitingForKickoff.h"
 
 

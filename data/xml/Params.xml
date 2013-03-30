@@ -46,6 +46,10 @@
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>10</PlayerShootingTryNum>
 
+	<SpotPassSafeScore>10</SpotPassSafeScore>
+	<SpotCanShootScore>20</SpotCanShootScore>
+	<SpotDistFromControllingPlayerScore>25</SpotDistFromControllingPlayerScore>
+
 	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
 

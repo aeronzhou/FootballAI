@@ -12,7 +12,8 @@ enum MessageType
 	MSG_REQUEST_PASS,
 	MSG_RECEIVE_BALL,
 	MSG_BACK_TO_ORIGIN,
-	MSG_WAIT
+	MSG_SUPPORT_ATTACKER,
+	MSG_WAIT	
 };
 
 struct Message
@@ -22,7 +23,6 @@ struct Message
 	MovingEntity*   receiver;		//!< the entity that is to receive this message
 	MessageType		msg_type;		//!< the message type 
 	void*			data;		    //!< any additional data that may accompany the message
-	
 
 	Message();
 

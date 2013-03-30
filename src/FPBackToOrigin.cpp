@@ -1,7 +1,7 @@
 #include "FieldPlayerState.h"
 #include "FPWaiting.h"
 #include "FieldPlayer.h"
-#include "MessageDeliverer.h"
+#include "MessageDispatcher.h"
 #include "Constant.h"
 
 BackToOrigin* BackToOrigin::get()
@@ -13,7 +13,7 @@ BackToOrigin* BackToOrigin::get()
 void BackToOrigin::enter(FieldPlayer* player)
 {
 	//dt::Logger::get().debug("Enter to Back To Origin...");
-	player->getMotionAider()->setArriveOn();
+	player->getSteering()->setArriveOn();
 	player->setTarget(player->getAssignedRegion()->getCenter());
 }
 
@@ -28,7 +28,7 @@ void BackToOrigin::execute(FieldPlayer* player)
 
 void BackToOrigin::exit(FieldPlayer* player)
 {
-	player->getMotionAider()->setArriveOff();
+	player->getSteering()->setArriveOff();
 }
 
 bool BackToOrigin::onMessage(FieldPlayer*, const Message&)

@@ -2,14 +2,14 @@
 #define FOOTBALL_AI_PLAYER
 
 #include "MovingEntity.h"
-#include "MotionAider.h"
+#include "SteeringBehaviors.h"
 #include "Region.h"
 
 #include <Graphics/TextComponent.hpp>
 
 class Team;
 class Ball;
-class MotionAider;
+class SteeringBehaviors;
 class Pitch;
 
 class Player : public MovingEntity
@@ -44,10 +44,11 @@ public:
 
 	void onUpdate(double time_diff);
 
-	MotionAider* getMotionAider() const;
+	SteeringBehaviors* getSteering() const;
 	Team* getTeam() const;
 	Ball* getBall() const;
 	Pitch* getPitch() const;
+	PlayerRole getPlayerRole() const;
 
 	Region* getAssignedRegion() const;
 	void setAssignedRegion(int assigned_region);
@@ -55,6 +56,19 @@ public:
 	float getControlRange() const;
 
 	void setDebugText(QString debug_text);
+
+	bool isClosestTeamMemberToBall() const;
+
+	/** 
+	  * Return true if this player is controlling the ball
+	  * @returns True if this player is controlling the ball
+	  */
+	bool isControllingPlayer() const;
+
+	/** 
+	  * Return true if this player is being ahead of the controlling player
+	  */
+	bool isAheadOfController() const;
 
 	/** 
 	  * Return distance to ball 
@@ -102,10 +116,6 @@ public:
 	  */
 	bool isThreatened() const;
 
-	/** 
-	  * Ask for passing, change state to receiving
-	  */
-	void askForPassing();
 
 protected:
 
@@ -129,7 +139,7 @@ protected:
 	float mDistSqToBall;                             //!< Distance square from the ball
 	float mDistSqAtTarget;                           //!< Distance square to be at target
 
-	MotionAider* mMotionAider;                       //!< Motion aider
+	SteeringBehaviors* mSteeringBehaviors;           //!< Motion aider
 
 	dt::TextComponent* mDebugText;                   //!< Text to show players' current state
 

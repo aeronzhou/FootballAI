@@ -9,11 +9,11 @@ class Player;
 /** 
   * Motion aider of moving entity
   */
-class MotionAider 
+class SteeringBehaviors 
 {
 public:
 	
-	enum MotionType
+	enum SteeringType
 	{
 		NONE =       0x0000,
 		SEEK =       0x0001,
@@ -30,7 +30,7 @@ public:
 		FAST = 1
 	};
 
-	MotionAider(Player* player, Ball* ball);
+	SteeringBehaviors(Player* player, Ball* ball);
 
 	Ogre::Vector3 getTarget() const;
 	void setTarget(Ogre::Vector3 target);
@@ -38,7 +38,7 @@ public:
 	bool isTag() const;
 	void setTag(bool tag);
 
-	Ogre::Vector3 getDrivingForce() const;
+	Ogre::Vector3 getSteeringForce() const;
 
 	// Set On 
 	void setSeekOn();
@@ -66,7 +66,7 @@ public:
 protected:
 
 	Ogre::Vector3 mTarget;           
-	Ogre::Vector3 mDrivingForce;     
+	Ogre::Vector3 mSteeringForce;     
 
 	Player* mPlayer;                  //!< The player this steering component attach to
 	Ball* mBall;   
@@ -77,7 +77,7 @@ protected:
 
 private:
 
-	bool on(MotionType type) const;
+	bool on(SteeringType type) const;
 
 	Ogre::Vector3 seek(Ogre::Vector3 target);
 

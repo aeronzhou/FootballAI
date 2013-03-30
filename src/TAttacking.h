@@ -1,15 +1,15 @@
-#ifndef FOOTBALL_AI_TEAM_POSITIONAL_DEFENDING_STATE
-#define FOOTBALL_AI_TEAM_POSITIONAL_DEFENDING_STATE
+#ifndef FOOTBALL_AI_TEAM_POSITIONAL_ATTACKING_STATE
+#define FOOTBALL_AI_TEAM_POSITIONAL_ATTACKING_STATE
 
 #include "State.h"
 #include <vector>
 
 class Team;
 
-class PositionalDefending : public State<Team>
+class Attacking : public State<Team>
 {
 public:
-	static PositionalDefending* get();
+	static Attacking* get();
 
 	void enter(Team* team);
 

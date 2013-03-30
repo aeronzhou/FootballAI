@@ -1,5 +1,5 @@
 #include "FieldPlayer.h"
-#include "MotionAider.h"
+#include "SteeringBehaviors.h"
 #include "Team.h"
 #include "FieldPlayerState.h"
 #include "ParamLoader.h"
@@ -22,9 +22,6 @@ void FieldPlayer::onInitialize()
 	mStateMachine = new StateMachine<FieldPlayer>(this);
 	mStateMachine->setCurrentState(Waiting::get());
 	mStateMachine->setGlobalState(FieldPlayerGlobalState::get());
-
-	// Turn on seperation
-	//mMotionAider->setSeparationOn();
 
 	// Set defult animation
 	mMesh->setAnimation("RunBase");
@@ -49,7 +46,7 @@ void FieldPlayer::onUpdate(double time_diff)
 	mStateMachine->onUpdate();
 
 	// Update here
-	mMotionAider->calculateDrivingForce();
+	mSteeringBehaviors->calculateDrivingForce();
 
 	// Apply a small rotation 
 	Ogre::Quaternion rotation = getRotation();
@@ -57,7 +54,7 @@ void FieldPlayer::onUpdate(double time_diff)
 	Ogre::Vector3 current_heading = rotation * Ogre::Vector3(0, 0, 1);
 
 	float velocity_magnitude = current_velocity.length();
-	Ogre::Vector3 driving_force = mMotionAider->getDrivingForce();
+	Ogre::Vector3 driving_force = mSteeringBehaviors->getSteeringForce();
 
 	btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
 	btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();
@@ -116,7 +113,8 @@ void FieldPlayer::onUpdate(double time_diff)
 
 	mIsTurnningAroundAtTarget = Ogre::Radian(0);
 
-	setDebugText(getStateMachine()->getNameOfCurrentState());
+	//setDebugText(getStateMachine()->getNameOfCurrentState());
+	setDebugText(dt::Utils::toString(getSteering()->getTarget()));
 
 	dt::Node::onUpdate(time_diff);
 }

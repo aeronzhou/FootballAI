@@ -11,12 +11,12 @@ ChasingBall* ChasingBall::get()
 
 void ChasingBall::enter(FieldPlayer* player)
 {
-	player->getMotionAider()->setSeekOn();
+	player->getSteering()->setSeekOn();
 }
 
 void ChasingBall::execute(FieldPlayer* player)
 {
-	player->getMotionAider()->setTarget(player->getBall()->getPosition());
+	player->getSteering()->setTarget(player->getBall()->getPosition());
 
 	// If the ball within kicking range
 	if (player->getDistToBall() < player->getControlRange())
@@ -26,7 +26,7 @@ void ChasingBall::execute(FieldPlayer* player)
 	}
 
 	// If the team has controlled the ball, find right place
-	if (player->getTeam()->isControllingBall() && player->getTeam()->getControllingPlayer() != player)
+	if (player->getTeam()->isInControl() && player->getTeam()->getControllingPlayer() != player)
 	{
 		player->getStateMachine()->changeState(FindRightPlace::get());
 	}
@@ -37,7 +37,7 @@ void ChasingBall::execute(FieldPlayer* player)
 
 void ChasingBall::exit(FieldPlayer* player)
 {
-	player->getMotionAider()->setSeekOff();
+	player->getSteering()->setSeekOff();
 }
 
 bool ChasingBall::onMessage(FieldPlayer*, const Message&)

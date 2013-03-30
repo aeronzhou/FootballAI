@@ -1,21 +1,21 @@
-#include "MessageDeliverer.h"
+#include "MessageDispatcher.h"
 #include "Timer.h"
 #include "Constant.h"
 
-MessageDeliverer& MessageDeliverer::get()
+MessageDispatcher& MessageDispatcher::get()
 {
-	static MessageDeliverer singleton;
+	static MessageDispatcher singleton;
 	return singleton;
 }
 
-void MessageDeliverer::deliverMessage(double delay_time, MovingEntity* sender, 
+void MessageDispatcher::dispatchMessage(double delay_time, MovingEntity* sender, 
 	MovingEntity* receiver, MessageType msg_type, void* data)
 {
 	Message msg(delay_time, sender, receiver, msg_type, data);
 
 	if (delay_time < EPS)
 	{
-		deliverMessageNow(msg);
+		dispatchMessageNow(msg);
 	}
 	else 
 	{
@@ -24,21 +24,21 @@ void MessageDeliverer::deliverMessage(double delay_time, MovingEntity* sender,
 	}
 }
 
-void MessageDeliverer::deliverMessageNow(const Message& msg)
+void MessageDispatcher::dispatchMessageNow(const Message& msg)
 {
 	MovingEntity* receiver = msg.receiver;
 
 	receiver->handleMessage(msg);
 }
 
-void MessageDeliverer::latelyDeliverMessage()
+void MessageDispatcher::latelyDispatchMessage()
 {
 	double current_time = Timer::get().getCurrentTime();
 
 	while (!mMessagePool.empty() &&
 		   mMessagePool.begin()->deliver_time < current_time)
 	{
-		deliverMessageNow(*mMessagePool.begin());
+		dispatchMessageNow(*mMessagePool.begin());
 		mMessagePool.erase(mMessagePool.begin());
 	}
 }

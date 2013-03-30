@@ -41,7 +41,7 @@ private:
 
 	double mCurrentTime;            //!< Current time
 
-	bool mGameStopped;              //!< Indicate if the game is stopped
+	bool mGameStopped;              //!< Indicate if the game is on
 
 	double mCriticalMinutes;        //!< The last few minutes considered as critical so as to push players
 	                                //!< to play more considerately
