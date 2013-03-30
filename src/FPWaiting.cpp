@@ -21,7 +21,7 @@ void Waiting::execute(FieldPlayer* player)
 	if (!player->atTarget())
 	{
 		player->getSteering()->setArriveOn();
-		return;
+		//return;
 	}
 	else 
 	{
@@ -38,6 +38,7 @@ void Waiting::execute(FieldPlayer* player)
 		player->isAheadOfController())
 	{
 		player->getTeam()->requestPass(player);
+		return;
 	}
 
 	if (player->getPitch()->isGameOn())

@@ -55,6 +55,9 @@ void FieldPlayer::onUpdate(double time_diff)
 
 	float velocity_magnitude = current_velocity.length();
 	Ogre::Vector3 driving_force = mSteeringBehaviors->getSteeringForce();
+	//QString current_state = mStateMachine->getNameOfCurrentState();
+	//std::cout << "driving_force = " << driving_force << std::endl;
+	//std::cout << "current_state = " << current_state.toStdString() << std::endl;
 
 	btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
 	btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();
@@ -72,7 +75,7 @@ void FieldPlayer::onUpdate(double time_diff)
 		float accumulate_force = current_heading.dotProduct(driving_force);
 
 		// If at the same line
-		if (fabs(angle.valueRadians()) < EPS && accumulate_force < 0)
+		if (fabs(angle.valueRadians()) < 1e-3 && accumulate_force < 0)
 			angle = mTurnRate;
 
         rotation = rotation * Ogre::Quaternion(angle, Ogre::Vector3(0, 1, 0));
@@ -113,8 +116,11 @@ void FieldPlayer::onUpdate(double time_diff)
 
 	mIsTurnningAroundAtTarget = Ogre::Radian(0);
 
-	//setDebugText(getStateMachine()->getNameOfCurrentState());
-	setDebugText(dt::Utils::toString(getSteering()->getTarget()));
+	setDebugText(getStateMachine()->getNameOfCurrentState());
+	//setDebugText(dt::Utils::toString(getSteering()->getTarget()));
+	//DEBUG_MODE_BEGIN
+	//setDebugText(dt::Utils::toString(getSteering()->getSteeringForce()));
+	//DEBUG_MODE_END
 
 	dt::Node::onUpdate(time_diff);
 }
