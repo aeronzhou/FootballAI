@@ -2,13 +2,14 @@
 #define FOOTBALL_AI_GOAL_KEEPER
 
 #include "Player.h"
+#include "StateMachine.h"
 
 class GoalKeeper : public Player
 {
 public:
 	
 	GoalKeeper(const QString name,
-		float bounding_radius,
+		float control_range,
 		float max_speed,
 		float max_force,
 		float mass,
@@ -24,24 +25,32 @@ public:
 
 	void onUpdate(double time_diff);
 
-	//StateMachine<GoalKeeper>* getFSM() const;
+	StateMachine<GoalKeeper>* getStateMachine() const;
+
+	float getDistToGoal() const;
 
 	/** 
 	  * @returns True if ball is close enough for goal keeper to consider to intercept
 	  */
-	bool ballWithRangeForIntercept() const;
+	bool isBallWithInterceptRange() const;
 
 	/** 
       * @returns True if the goal keeper is too far away from goal mouth
 	  */
-	bool tooFarFromGoalMouth() const;
+	bool isTooFarFromGoalMouth() const;
+
+	/** 
+	  * To determined the target when the keeper is tending goal
+	  * @returns Target when the keeper is tending goal
+	  */
+	Ogre::Vector3 getRearInterposeTarget() const;
 
 
 	
 
 protected:
 
-	//StateMachine<GoalKeeper>* mStateMachine;
+	StateMachine<GoalKeeper>* mStateMachine;
 
 
 };

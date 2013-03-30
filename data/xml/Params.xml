@@ -46,6 +46,9 @@
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>10</PlayerShootingTryNum>
 
+	<GoalKeeperInterceptRange>12</GoalKeeperInterceptRange>
+	<GoalKeeperControlRange>0.8</GoalKeeperControlRange>
+
 	<SpotPassSafeScore>10</SpotPassSafeScore>
 	<SpotCanShootScore>20</SpotCanShootScore>
 	<SpotDistFromControllingPlayerScore>25</SpotDistFromControllingPlayerScore>

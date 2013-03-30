@@ -31,6 +31,8 @@ public:
 	Ogre::Vector3 getRightPost() const;
 	Ogre::Vector3 getCenter() const;
 	Ogre::Vector3 getFacing() const;
+	float getPenaltyAreaWidth() const;
+	float getPenaltyAreaLength() const;
 	
 	int getScores() const;
 
@@ -50,6 +52,8 @@ private:
 	Ogre::Vector3 mRightPost;
 	Ogre::Vector3 mFacing;
 	Ogre::Vector3 mCenter;                                   //!< Center of this goal
+	float mPenaltyAreaLength;                                //!< Penalty area length
+	float mPenaltyAreaWidth;                                 //!< Penalty area width 
 
 	int mScores;                                             //!< Number of points has been scored
 

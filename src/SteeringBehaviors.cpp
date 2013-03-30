@@ -30,6 +30,11 @@ void SteeringBehaviors::setPursuitOn()
 	mFlag |= PERSUIT;
 }
 
+void SteeringBehaviors::setInterposeOn()
+{
+	mFlag |= INTERPOSE;
+}
+
 void SteeringBehaviors::setSeparationOn()
 {
 	mFlag |= SEPARATION;
@@ -52,6 +57,11 @@ bool SteeringBehaviors::isPersuitOn() const
 	return on(PERSUIT);
 }
 
+bool SteeringBehaviors::isInterposeOn() const 
+{
+	return on(INTERPOSE);
+}
+
 bool SteeringBehaviors::isSeperationOn() const 
 {
 	return on(SEPARATION);
@@ -71,10 +81,16 @@ void SteeringBehaviors::setArriveOff()
 		mFlag ^= ARRIVE;
 }
 
-void SteeringBehaviors::setPersuitOff()
+void SteeringBehaviors::setPursuitOff()
 {
 	if (on(PERSUIT))
 		mFlag ^= PERSUIT;
+}
+
+void SteeringBehaviors::setInterposeOff()
+{
+	if (on(INTERPOSE))
+		mFlag ^= INTERPOSE;
 }
 
 void SteeringBehaviors::setSeperationOff()
@@ -111,7 +127,7 @@ Ogre::Vector3 SteeringBehaviors::arrive(Ogre::Vector3 target, Deceleration decel
 	return Ogre::Vector3::ZERO;
 }
 
-Ogre::Vector3 SteeringBehaviors::persuit(const Ball* ball)
+Ogre::Vector3 SteeringBehaviors::pursuit(const Ball* ball)
 {
 	Ogre::Vector3 to_target = ball->getPosition() - mPlayer->getPosition();
 	float ball_dot_player = ball->getHeading().dotProduct(mPlayer->getHeading());
@@ -125,6 +141,11 @@ Ogre::Vector3 SteeringBehaviors::persuit(const Ball* ball)
 	float look_ahead_time = to_target.length() / (mPlayer->getMaxSpeed() + ball->getMaxSpeed());
 	
 	return seek(ball->getPosition() + ball->getVelocity() * look_ahead_time);	
+}
+
+Ogre::Vector3 SteeringBehaviors::interpose(const Ball* ball, Ogre::Vector3 target, float dist_from_target)
+{
+	return arrive(target + (ball->getPosition() - target).normalisedCopy() * dist_from_target, NORMAL);
 }
 
 Ogre::Vector3 SteeringBehaviors::separation()
@@ -185,7 +206,7 @@ void SteeringBehaviors::combineForce()
 
 	if (on(PERSUIT))
 	{
-		force += persuit(mBall);
+		force += pursuit(mBall);
 		if (!accumulateForce(mSteeringForce, force))
 			return;
 	}

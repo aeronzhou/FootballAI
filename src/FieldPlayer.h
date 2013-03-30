@@ -10,7 +10,7 @@ class FieldPlayer : public Player
 public:
 
 	FieldPlayer(const QString name,
-		float bounding_radius,
+		float control_range,
 		float max_speed,
 		float max_force,
 		float mass,
