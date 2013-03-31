@@ -24,7 +24,7 @@ void TendGoal::execute(GoalKeeper* keeper)
 	{
 		keeper->getBall()->stop();
 		keeper->getPitch()->setGoalKeeperHasBall(true);
-		//keeper->getStateMachine()->changeState(PutBallBackInPlay::get());
+		keeper->getStateMachine()->changeState(PutBallBackInPlayState::get());
 		return;
 	}
 
@@ -37,7 +37,7 @@ void TendGoal::execute(GoalKeeper* keeper)
 
 	if (keeper->isTooFarFromGoalMouth() && keeper->getTeam()->isInControl())
 	{
-		//keeper->getStateMachine()->changeState(ReturnHome::get());
+		keeper->getStateMachine()->changeState(ReturnHomeState::get());
 	}
 }
 
