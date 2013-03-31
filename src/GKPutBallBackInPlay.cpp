@@ -40,7 +40,7 @@ void PutBallBackInPlayState::execute(GoalKeeper* keeper)
 		keeper->getStateMachine()->changeState(TendGoal::get());
 		return;
 	}
-	keeper->setVelocity(Ogre::Vector3());
+	keeper->setVelocity(Ogre::Vector3()::ZERO);
 }
 
 void PutBallBackInPlayState::exit(GoalKeeper* keeper)
