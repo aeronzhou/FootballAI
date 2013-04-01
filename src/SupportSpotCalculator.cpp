@@ -10,7 +10,7 @@ SupportSpotCalculator::SupportSpotCalculator(const QString& name, Team* team)
  
 void SupportSpotCalculator::onInitialize() 
 {
-	mCoolingTime = addComponent(new CoolingTimeComponent(0.5f));
+	mCoolingTime = addComponent(new CoolingTimeComponent(0.8f));
 
 	mSpots.clear();
 	const std::vector<Region*>& regions = mTeam->getPitch()->getAllRegions();

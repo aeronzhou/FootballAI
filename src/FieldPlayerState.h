@@ -7,9 +7,8 @@
 #include "FPDribbling.h"
 #include "FPKickingBall.h"
 #include "FPChasingBall.h"
-#include "FPCloseSafeGuard.h"
-#include "FPIntercepting.h"
 #include "FPReceiving.h"
-#include "FPFindRightPlace.h"
+#include "FPPositioning.h"
+#include "FPSupportAttacker.h"
 
 #endif

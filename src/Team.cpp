@@ -94,7 +94,7 @@ void Team::_createPlayers()
 		for (int i = 10; i < 13; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+				this, FieldPlayer::BACK, vec_pos[i])).get());
 		}
 		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
 			this, FieldPlayer::MIDFIELD, vec_pos[13])).get());

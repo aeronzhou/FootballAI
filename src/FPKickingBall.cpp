@@ -28,7 +28,9 @@ void KickingBall::execute(FieldPlayer* player)
 	float dot = player->getHeading().dotProduct(player->getBall()->getPosition() - player->getPosition());
 	Ogre::Vector3 target;
 
-	if (dot < 0)
+	if (dot < 0 ||
+		player->getTeam()->getReceivingPlayer() == nullptr ||
+		player->getPitch()->isGoalKeeperHasBall() )
 	{
 		// This player is behind the ball
 		player->getStateMachine()->changeState(ChasingBall::get());

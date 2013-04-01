@@ -28,7 +28,7 @@ void ChasingBall::execute(FieldPlayer* player)
 	// If the team has controlled the ball, find right place
 	if (player->getTeam()->isInControl() && player->getTeam()->getControllingPlayer() != player)
 	{
-		player->getStateMachine()->changeState(FindRightPlace::get());
+		player->getStateMachine()->changeState(Positioning::get());
 	}
 
 	// If the team hasn't controlled the ball, but not proper to chase the ball

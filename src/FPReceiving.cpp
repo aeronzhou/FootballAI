@@ -12,6 +12,9 @@ Receiving* Receiving::get()
 void Receiving::enter(FieldPlayer* player)
 {
 	player->getSteering()->setArriveOn();	
+	player->getTeam()->setReceivingPlayer(player);	
+
+	// The player is also the controlling player
 	player->getTeam()->setControllingPlayer(player);
 }
 
@@ -30,12 +33,14 @@ void Receiving::execute(FieldPlayer* player)
 		// Wait there and face to the ball
 		player->getSteering()->setArriveOff();
 		player->turnAroundToBall();
+		player->setVelocity(Ogre::Vector3::ZERO);
 	}
 }
 
 void Receiving::exit(FieldPlayer* player)
 {
 	player->getSteering()->setArriveOff();
+	player->getTeam()->setReceivingPlayer(nullptr);
 }
 
 bool Receiving::onMessage(FieldPlayer*, const Message&)

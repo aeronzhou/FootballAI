@@ -241,3 +241,8 @@ bool Player::isClosestPlayerOnPitchToBall() const
 {
 	return isClosestTeamMemberToBall() && (getDistToBall() < mTeam->getOpponent()->getClosestDistToBall());
 }
+
+void Player::findSupport() 
+{
+
+}

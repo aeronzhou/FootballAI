@@ -124,6 +124,12 @@ public:
 	  */
 	bool isThreatened() const;
 
+	/** 
+	  * This function is to find the best support spot and 
+	  * set the player closest to it as the supporter
+	  */
+	void findSupport();
+
 
 protected:
 
