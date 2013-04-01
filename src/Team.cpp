@@ -10,6 +10,7 @@
 #include "TeamState.h"
 #include "FieldPlayerState.h"
 #include "ParamLoader.h"
+#include "SupportSpotCalculator.h"
 #include "MessageDispatcher.h"
 #include "GeometryHelper.h"
 #include "Utils.h"
@@ -454,4 +455,9 @@ void Team::updateTargetsOfWaitingPlayers()
 			}
 		}
 	}
+}
+
+Ogre::Vector3 Team::getBestSupportSpot() const 
+{
+	return mSupportSpotCalculator->getBestSupportSpot();
 }

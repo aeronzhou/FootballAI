@@ -151,6 +151,11 @@ void Player::setTarget(Ogre::Vector3 target)
 	mSteeringBehaviors->setTarget(target);
 }
 
+Ogre::Vector3 Player::getTarget() const 
+{
+	return mSteeringBehaviors->getTarget();
+}
+
 bool Player::atTarget() const
 {
 	//return (getPosition()).squaredDistance(getSteering()->getTarget()) < mDistSqAtTarget;

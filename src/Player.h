@@ -89,7 +89,9 @@ public:
 	  * Return true if this player is within target or near it
 	  * @returns true if this player is within target or near it
 	  */
-	bool atTarget() const;
+	bool isAtTarget() const;
+
+	Ogre::Vector3 getTarget() const;
 
 	void setTarget(Ogre::Vector3 target);
 

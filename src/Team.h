@@ -12,6 +12,7 @@ class Ball;
 class Pitch;
 class Player;
 class Goal;
+class SupportSpotCalculator;
 
 class Team : public dt::Node
 {
@@ -127,6 +128,12 @@ public:
 
 	void updateTargetsOfWaitingPlayers();
 
+	/** 
+	  * Return the best support spot
+	  * @returns the best support spot
+	  */
+	Ogre::Vector3 getBestSupportSpot() const;
+
 private:
 
 	/** 
@@ -162,21 +169,22 @@ private:
 
 private:
 
-	StateMachine<Team>* mStateMachine;     //!< StateMachine
+	StateMachine<Team>* mStateMachine;                //!< StateMachine
 
 	Ball* mBall;
 	Pitch* mPitch;
 	Goal* mGoal;
-	TeamColor mColor;                      //!< Team color, RED or BLUE
-	Team* mOpponent;                       //!< The opponent team of this
-	std::vector<Player*> mPlayers;         //!< Pointers of players this team hold
+	TeamColor mColor;                                 //!< Team color, RED or BLUE
+	Team* mOpponent;                                  //!< The opponent team of this
+	std::vector<Player*> mPlayers;                    //!< Pointers of players this team hold
 
-	bool mIsControllingBall;               //!< If the team is controlling the ball
+	bool mIsControllingBall;                          //!< If the team is controlling the ball
 
-	Player* mControllingPlayer;            //!< Pointer to the player which is controlling the ball 
-	Player* mPlayerClosestToBall;          //!< Pointer to the player which is closest to the ball
-	Player* mSupportingPlayer;             //!< Pointer to supporting player
-	Player* mReceivingPlayer;              //!< Pointer to receiving player
+	Player* mControllingPlayer;                       //!< Pointer to the player which is controlling the ball 
+	Player* mPlayerClosestToBall;                     //!< Pointer to the player which is closest to the ball
+	Player* mSupportingPlayer;                        //!< Pointer to supporting player
+	Player* mReceivingPlayer;                         //!< Pointer to receiving player
+	SupportSpotCalculator* mSupportSpotCalculator;    //!< Calculator of best support spot
 
 };
 
