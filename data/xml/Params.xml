@@ -55,5 +55,8 @@
 
 	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
+	
+	<GAGeneration>20</GAGeneration>
+	<GACrossCostPerRgn>0.001</GACrossCostPerRgn>
 
 </Params>

@@ -81,6 +81,10 @@ public:
 
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
+
+		GAGeneration = mParamTables["GAGeneration"].toInt();
+		GACrossCostPerRgn = mParamTables["GACrossCostPerRgn"].toFloat();
+
 	}
 
 private:
@@ -154,8 +158,11 @@ public:
 
 	// Others
 	int PhysicsShowDebug;
-	int ShowDebugText;                       
-	
+	int ShowDebugText;   
+
+	//GA
+	int GAGeneration;
+	float GACrossCostPerRgn;
 };
 
 #endif
