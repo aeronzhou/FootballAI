@@ -69,7 +69,8 @@
 	<GAPlayerKeepBallValue>10</GAPlayerKeepBallValue>
 	<GAPlayerChaseBallValue>10</GAPlayerChaseBallValue>
 	<GAPlayerDefendValue>10</GAPlayerDefendValue>
-	<GAPlayerAttackValue>10</GAPlayerDefendValue>
+	<GAPlayerAttackValue>10</GAPlayerAttackValue>
 	<GAColonySize>100</GAColonySize>
 	
+
 </Params>
