@@ -42,16 +42,18 @@
 	<PlayerDribblingForce>2.0</PlayerDribblingForce>
 	<PlayerTurnAroundForce>1.5</PlayerTurnAroundForce>
 	<PlayerMaxShootingForce>20</PlayerMaxShootingForce>
-	<PlayerThreatenedRange>4</PlayerThreatenedRange>
+	<PlayerThreatenedRange>3</PlayerThreatenedRange>
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>10</PlayerShootingTryNum>
+	<PlayerReceivingRange>5</PlayerReceivingRange>
 
 	<PlayerRangeRadius>1.2</PlayerRangeRadius>
 	<PlayerRangeThickness>0.1</PlayerRangeThickness>
-	<PlayerRangeMateiral>BaseWhiteNoLighting</PlayerRangeMateiral>
+	<PlayerRangeMateiral>BaseWhite</PlayerRangeMateiral>
 	<ShowPlayerRange>1</ShowPlayerRange>
+	<ShowPlayerTarget>1</ShowPlayerTarget>
 	<ShowSupportSpot>1</ShowSupportSpot>
-
+	 	
 	<GoalKeeperInterceptRange>12</GoalKeeperInterceptRange>
 	<GoalKeeperControlRange>0.8</GoalKeeperControlRange>
 

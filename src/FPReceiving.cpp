@@ -22,7 +22,7 @@ void Receiving::execute(FieldPlayer* player)
 {
 	// The ball is interuppted by others
 	if (!player->getTeam()->isInControl() || 
-		player->getDistToBall() < 3 )
+		player->isWithinReceivingRange())
 	{
 		player->getStateMachine()->changeState(ChasingBall::get());
 	}

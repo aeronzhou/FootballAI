@@ -95,7 +95,7 @@ public:
 
 	void setTarget(Ogre::Vector3 target);
 
-	bool withinAssignedRegion() const;
+	bool isWithinAssignedRegion() const;
 
 	/** 
 	  * Return if the player is in receiving range, so as to chase and control the ball
