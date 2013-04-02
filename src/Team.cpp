@@ -268,6 +268,12 @@ bool Team::canPass(Player* passer, Player*& receiver, Ogre::Vector3& proper_targ
 	{
 		if (*it != passer)
 		{
+			// If the receiver is behind this pass, ignore him
+			if (passer->getHeading().dotProduct((*it)->getPosition() - passer->getPosition()) < 0)
+			{
+				continue;
+			}
+
 			float score = _getBestSpotOfReceiving(*it, passing_force, target);
 			if (score > best_score)
 			{
