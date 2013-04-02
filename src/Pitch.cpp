@@ -142,11 +142,11 @@ Region* Pitch::getRegionByIndex(int index)
 	return mRegions[index];
 }
 
-Region* Pitch::getRegionByPosition(const Ogre::Vector3& position)
+int Pitch::getRegionIndexByPosition(const Ogre::Vector3& position)
 {
 	int n = (position.z - mPlayingArea->getTop()) / (2 * Prm.HalfPitchHeight / Prm.NumRegionsVertical);
 	int m = (position.x - mPlayingArea->getLeft()) / (2 * Prm.HalfPitchWidth / Prm.NumRegionsHorizontal);
-	return getRegionByIndex(n * Prm.NumRegionsHorizontal + m);
+	return n * Prm.NumRegionsHorizontal + m;
 }
 
 Region* Pitch::getPlayingArea() const
