@@ -5,6 +5,7 @@
 #include "CoolingTimeComponent.h"
 
 #include <Scene/Node.hpp>
+#include <Graphics/MeshComponent.hpp>
 
 #include <vector>
 
@@ -46,12 +47,16 @@ public:
 	
 	virtual void determineBestSupportSpot();
 
+	void setShowFlag(bool flag);
+
 protected:
 
 	std::vector<SupportSpot> mSpots;                     //!< Spots
 	SupportSpot* mBestSupportSpot;                       //!< Best spot to support
 	Team* mTeam;                                         //!< Team belongs to
 	std::shared_ptr<CoolingTimeComponent> mCoolingTime;  //!< We should not calculate every single frame, so...
+	std::shared_ptr<dt::Node> mSpotFlag;                 //!< Flag so we can see the spot
+	std::shared_ptr<dt::MeshComponent> mSpotFlagMesh;    //!< Mesh component of spot flag
 };
 
 #endif

@@ -18,7 +18,7 @@ void Waiting::enter(FieldPlayer*)
 void Waiting::execute(FieldPlayer* player)
 {
 	// Pushed out of target 
-	if (!player->atTarget())
+	if (!player->isAtTarget())
 	{
 		player->getSteering()->setArriveOn();
 		//return;

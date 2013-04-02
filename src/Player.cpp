@@ -5,6 +5,7 @@
 #include "Region.h"
 #include "Goal.h"
 #include "SteeringBehaviors.h"
+#include "MessageDispatcher.h"
 #include "ParamLoader.h"
 #include "Utils.h"
 
@@ -94,7 +95,7 @@ Ball* Player::getBall() const
 
 Region* Player::getAssignedRegion() const 
 {
-	return getPitch()->getRegionFromIndex(mAssignedRegion);
+	return getPitch()->getRegionByIndex(mAssignedRegion);
 }
 
 bool Player::isBallWithinControlRange() const 
@@ -119,7 +120,7 @@ Ogre::Vector3 Player::getPositionWithRegion(bool random /* = false */)
 	if (random)
 	{
 		// Return a random position
-		return Ogre::Vector3::ZERO;
+		return region->getRandomPosition();
 	}
 	else 
 	{
@@ -151,7 +152,12 @@ void Player::setTarget(Ogre::Vector3 target)
 	mSteeringBehaviors->setTarget(target);
 }
 
-bool Player::atTarget() const
+Ogre::Vector3 Player::getTarget() const 
+{
+	return mSteeringBehaviors->getTarget();
+}
+
+bool Player::isAtTarget() const
 {
 	//return (getPosition()).squaredDistance(getSteering()->getTarget()) < mDistSqAtTarget;
 	return Vector3To2(getPosition() - getSteering()->getTarget()).length() < 0.5;
@@ -240,4 +246,44 @@ bool Player::isAheadOfController() const
 bool Player::isClosestPlayerOnPitchToBall() const 
 {
 	return isClosestTeamMemberToBall() && (getDistToBall() < mTeam->getOpponent()->getClosestDistToBall());
+}
+
+void Player::findSupport() 
+{
+	if (getTeam()->getSupportingPlayer() == nullptr)
+	{
+		Player* supporting_player = getTeam()->determineBestSupportingPlayer();
+		getTeam()->setSupportingPlayer(supporting_player);
+		MessageDispatcher::get().dispatchMessage(
+			0,
+			this, 
+			supporting_player, 
+			MSG_SUPPORT_ATTACKER,
+			nullptr
+			);
+	}
+
+	Player* supporting_player = getTeam()->determineBestSupportingPlayer();
+
+	if (supporting_player && supporting_player != getTeam()->getSupportingPlayer())
+	{
+		// Player start positioning
+		MessageDispatcher::get().dispatchMessage(
+			0, 
+			this, 
+			getTeam()->getSupportingPlayer(),
+			MSG_POSITIONING,
+			nullptr
+			);
+
+		getTeam()->setSupportingPlayer(supporting_player);
+
+		MessageDispatcher::get().dispatchMessage(
+			0,
+			this, 
+			getTeam()->getSupportingPlayer(),
+			MSG_SUPPORT_ATTACKER,
+			nullptr
+			);
+	}
 }

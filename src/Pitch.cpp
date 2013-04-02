@@ -7,13 +7,16 @@
 #include "Utils.h"
 
 #include <Utils/Random.hpp>
-
+#include <Scene/Scene.hpp>
 #include <Physics/PhysicsBodyComponent.hpp>
 
 #include <OgreProcedural.h>
+#include <OgreManualObject.h>
 
 Pitch::Pitch(const QString name /* = "Pitch" */)
 	: dt::Node(name) {}
+
+Ogre::ManualObject* circle;
 
 void Pitch::onUpdate(double time_diff) 
 {
@@ -29,6 +32,8 @@ void Pitch::onUpdate(double time_diff)
 	}
 	mBall->testTimeSpentByInitialForce(3, 4);
 #endif
+
+	_updateDrawerComponent();
 
 	// Test if the ball is scored!!!
 	// Set team to kick off and send players back to origin region
@@ -60,7 +65,7 @@ void Pitch::onInitialize()
 	// Create regions
 	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight, -1, Prm.PitchMargin);	
 	mRegions.resize(Prm.NumRegionsHorizontal * Prm.NumRegionsVertical);
-	createRegions(Prm.HalfPitchWidth * 2 / Prm.NumRegionsHorizontal, Prm.HalfPitchHeight * 2 / Prm.NumRegionsVertical);
+	_createRegions(Prm.HalfPitchWidth * 2 / Prm.NumRegionsHorizontal, Prm.HalfPitchHeight * 2 / Prm.NumRegionsVertical);
 
 	// Realize a ball
 	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
@@ -109,6 +114,11 @@ void Pitch::onInitialize()
 	// Start the game
 	mGameOn = true;
 	mGoalKeeperHasBall = false;
+
+	mSceneNode =  getScene()->getSceneManager()->getRootSceneNode()->createChildSceneNode("ObjectDrawer");
+
+	mPlayerRangeDrawer = addComponent(new CircleDrawerComponent("PlayerRange", (Prm.PlayerRangeMateiral).toStdString(), 
+		Prm.PlayerThreatenedRange, Prm.PlayerRangeThickness, mSceneNode));
 }
 
 void Pitch::onDeinitialize() 
@@ -127,9 +137,16 @@ Ball* Pitch::getBall() const
 	return mBall;
 }
 
-Region* Pitch::getRegionFromIndex(int index)
+Region* Pitch::getRegionByIndex(int index)
 {
 	return mRegions[index];
+}
+
+int Pitch::getRegionIndexByPosition(const Ogre::Vector3& position)
+{
+	int n = (position.z - mPlayingArea->getTop()) / (2 * Prm.HalfPitchHeight / Prm.NumRegionsVertical);
+	int m = (position.x - mPlayingArea->getLeft()) / (2 * Prm.HalfPitchWidth / Prm.NumRegionsHorizontal);
+	return n * Prm.NumRegionsHorizontal + m;
 }
 
 Region* Pitch::getPlayingArea() const
@@ -137,7 +154,7 @@ Region* Pitch::getPlayingArea() const
 	return mPlayingArea;
 }
 
-void Pitch::createRegions(float width, float height)
+void Pitch::_createRegions(float width, float height)
 {
 	int idx = 0;
 
@@ -149,6 +166,22 @@ void Pitch::createRegions(float width, float height)
 				                       mPlayingArea->getLeft() + j * width + width, mPlayingArea->getTop() + i * height + height, idx);
 			++idx;
 		}
+	}
+}
+
+void Pitch::_updateDrawerComponent()
+{
+	if (mRedTeam->isInControl())
+	{
+		mPlayerRangeDrawer->setPos(mRedTeam->getControllingPlayer()->getPosition());
+	}
+	else if (mBlueTeam->isInControl())
+	{
+		mPlayerRangeDrawer->setPos(mBlueTeam->getControllingPlayer()->getPosition());
+	}
+	else 
+	{
+		mPlayerRangeDrawer->setPos(mBall->getPosition());
 	}
 }
 

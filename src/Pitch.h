@@ -3,9 +3,12 @@
 
 #include "Ball.h"
 #include "Region.h"
+#include "CircleDrawerComponent.h"
 
 #include <Scene/Node.hpp>
 #include <Graphics/MeshComponent.hpp>
+
+#include <OgreSceneNode.h>
 
 #include <vector>
 
@@ -25,8 +28,10 @@ public:
 
 	void onUpdate(double time_diff);
 
-	Region* getRegionFromIndex(int index);
+	Region* getRegionByIndex(int index);
+	int getRegionIndexByPosition(const Ogre::Vector3& position);
 	Region* getPlayingArea() const;
+
 
 	Ball* getBall() const;
 
@@ -61,7 +66,12 @@ private:
 	  * @width Width of each region
 	  * @height Height of each region
 	  */
-	void createRegions(float width, float height);
+	void _createRegions(float width, float height);
+
+	/** 
+	  * Update drawer component
+	  */
+	void _updateDrawerComponent();
 
 
 private:
@@ -78,6 +88,9 @@ private:
 	bool mGameOn;                   //!< If game is on
 	bool mGoalKeeperHasBall;        //!< If the goal keeper has captured the ball
 	Team* mTeamToKickOff;           //!< Team to kick of the ball at the very beginning
+
+	Ogre::SceneNode* mSceneNode;    //!< Scene Node
+	std::shared_ptr<CircleDrawerComponent> mPlayerRangeDrawer; //!< Circle Drawer of player range
 };
 
 

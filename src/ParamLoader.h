@@ -73,6 +73,10 @@ public:
 		PlayerShootingRange = mParamTables["PlayerShootingRange"].toFloat();
 		PlayerShootingTryNum = mParamTables["PlayerShootingTryNum"].toFloat();
 
+		PlayerRangeRadius = mParamTables["PlayerRangeRadius"].toFloat();
+		PlayerRangeThickness = mParamTables["PlayerRangeThickness"].toFloat();
+		PlayerRangeMateiral = mParamTables["PlayerRangeMateiral"];
+
 		GoalKeeperInterceptRange = mParamTables["GoalKeeperInterceptRange"].toFloat();
 		GoalKeeperControlRange = mParamTables["GoalKeeperControlRange"].toFloat();
 
@@ -125,7 +129,7 @@ public:
 	float CameraSpeed;
 	float MouseSensitivity;
 
-	// Motion Aider 
+	// SteeringBehaviors 
 	float VelocityToForceCoefficient;
 	float DecelerationTweaker;
 	float VisibleRange;
@@ -147,6 +151,11 @@ public:
 	float PlayerThreatenedRange;
 	float PlayerShootingRange;
 	float PlayerShootingTryNum;
+	
+	// PlayerRange
+	float PlayerRangeRadius;
+	float PlayerRangeThickness;
+	QString PlayerRangeMateiral;
 
 	// GoalKeeper
 	float GoalKeeperInterceptRange;

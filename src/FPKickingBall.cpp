@@ -1,5 +1,6 @@
 #include "FieldPlayerState.h"
 #include "Team.h"
+#include "Goal.h"
 #include "MessageDispatcher.h"
 #include "Utils.h"
 #include "ParamLoader.h"
@@ -28,19 +29,24 @@ void KickingBall::execute(FieldPlayer* player)
 	float dot = player->getHeading().dotProduct(player->getBall()->getPosition() - player->getPosition());
 	Ogre::Vector3 target;
 
-	if (dot < 0)
+	// Cannot kick the ball
+	// This player is behind the ball
+	if (dot < 0 ||
+		player->getTeam()->getReceivingPlayer() == nullptr ||
+		player->getPitch()->isGoalKeeperHasBall() )
 	{
-		// This player is behind the ball
 		player->getStateMachine()->changeState(ChasingBall::get());
 	}
 
-	// Cannot kick the ball
-
 	// Can shoot
 	float shooting_foce = Prm.PlayerMaxShootingForce * dot;
-	if (player->getTeam()->canShoot(player, target, shooting_foce))
+	
+	// Must face to the goal
+	float dot_to_goal = player->getHeading().dotProduct(player->getTeam()->getGoal()->getFacing());
+
+	if (dot_to_goal > 0 && player->getTeam()->canShoot(ball->getPosition(), target, shooting_foce))
 	{
-		target = AddNoiseToTarget(ball->getPosition(), target);
+		target = AddNoiseToKick(ball->getPosition(), target);
 		ball->kick(target - ball->getPosition(), shooting_foce);
 		player->getStateMachine()->changeState(ChasingBall::get());
 

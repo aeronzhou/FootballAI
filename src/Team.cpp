@@ -10,6 +10,7 @@
 #include "TeamState.h"
 #include "FieldPlayerState.h"
 #include "ParamLoader.h"
+#include "SupportSpotCalculator.h"
 #include "MessageDispatcher.h"
 #include "GeometryHelper.h"
 #include "Utils.h"
@@ -18,7 +19,7 @@
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
 	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()),
-	  mIsControllingBall(false), mSupportingPlayer(nullptr), mReceivingPlayer(nullptr) {}
+	  mSupportingPlayer(nullptr), mReceivingPlayer(nullptr) {}
 
 
 void Team::onInitialize() 
@@ -36,6 +37,9 @@ void Team::onInitialize()
 	//}
 
 	_findPlayerClosestToBall();
+
+	// Add support spot calculator
+	mSupportSpotCalculator = (SupportSpotCalculator*)addChildNode(new SupportSpotCalculator("BestSupportSpotCalc", this)).get();
 }
 
 void Team::onDeinitialize()
@@ -64,11 +68,11 @@ void Team::_createPlayers()
 	{
 		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(0), 
 			this, FieldPlayer::FORWARD, vec_pos[0])).get());
-		for (int i = 1; i < 3; ++i)
-		{
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
-		}
+		//for (int i = 1; i < 3; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		//}
 		for (int i = 3; i < 6; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
@@ -86,15 +90,15 @@ void Team::_createPlayers()
 	{
 		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
 			this, FieldPlayer::FORWARD, vec_pos[7])).get());
-		for (int i = 8; i < 10; ++i)
-		{
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
-		}
+		//for (int i = 8; i < 10; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		//}
 		for (int i = 10; i < 13; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+				this, FieldPlayer::BACK, vec_pos[i])).get());
 		}
 		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
 			this, FieldPlayer::MIDFIELD, vec_pos[13])).get());
@@ -222,7 +226,7 @@ float Team::getClosestDistToBall() const
 
 bool Team::isInControl() const 
 {
-	return mIsControllingBall;
+	return mControllingPlayer != nullptr;
 }
 
 Player* Team::getControllingPlayer() const 
@@ -232,8 +236,6 @@ Player* Team::getControllingPlayer() const
 
 void Team::setControllingPlayer(Player* player)
 {
-	mIsControllingBall = (player != nullptr);
-
 	mControllingPlayer = player;
 }
 
@@ -279,17 +281,11 @@ bool Team::canPass(Player* passer, Player*& receiver, Ogre::Vector3& proper_targ
 	return (receiver != nullptr);
 }
 
-bool Team::canShoot(Player* player, Ogre::Vector3& proper_target, float shooting_force)
+bool Team::canShoot(const Ogre::Vector3& from, Ogre::Vector3& proper_target, float shooting_force)
 {
 	Goal* goal = getOpponent()->getGoal();
 
-	// You cannot shoot when your back is facing to the goal
-	if (player->getHeading().dotProduct(mGoal->getFacing()) < 0)
-	{
-		return false;
-	}
-
-	float dist_to_goal = Vector3To2(player->getPosition()).distance(goal->getCenter());
+	float dist_to_goal = Vector3To2(from).distance(goal->getCenter());
 
 	// If too far from goal, it may be not a good chance to shoot
 	if (dist_to_goal > Prm.PlayerShootingRange)
@@ -298,7 +294,7 @@ bool Team::canShoot(Player* player, Ogre::Vector3& proper_target, float shooting
 	}
 
 	// If shooting angle is too narrow, drop it
-	float theta = fabs(player->getPosition().x - goal->getCenter().x) / dist_to_goal;
+	float theta = fabs(from.x - goal->getCenter().x) / dist_to_goal;
 	if (asin(theta) < PI / 6)
 	{
 		return false;
@@ -421,12 +417,12 @@ float Team::_getBestSpotOfReceiving(Player* receiver, float passing_force, Ogre:
 void Team::requestPass(Player* player, double delay_time /* = 0 */)
 {
 	// With a possibility to execute
-	if (WithPossibility(0.3))
+	if (WithPossibility(0.2))
 	{
 		if (isSafeGoingThroughAllOpponents(
 			getControllingPlayer()->getPosition(), 
 			player->getPosition(), 
-			Prm.PlayerMaxPassingForce))
+			Prm.PlayerMaxPassingForce) )
 		{
 			MessageDispatcher::get().dispatchMessage(
 				0,
@@ -454,4 +450,29 @@ void Team::updateTargetsOfWaitingPlayers()
 			}
 		}
 	}
+}
+
+Ogre::Vector3 Team::getBestSupportSpot() const 
+{
+	return mSupportSpotCalculator->getBestSupportSpot();
+}
+
+Player* Team::determineBestSupportingPlayer() const
+{
+	float min_dist = MAX_VALUE;
+	Player* best_supporting_player = nullptr;
+	Ogre::Vector3 best_spot = mSupportSpotCalculator->getBestSupportSpot();
+
+	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
+	{
+		float dist = (*it)->getPosition().distance(best_spot);
+
+		if (dist < min_dist)
+		{
+			min_dist = dist;
+			best_supporting_player = *it;
+		}
+	}
+
+	return best_supporting_player;
 }
