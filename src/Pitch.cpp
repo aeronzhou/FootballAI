@@ -118,7 +118,7 @@ void Pitch::onInitialize()
 	mSceneNode =  getScene()->getSceneManager()->getRootSceneNode()->createChildSceneNode("ObjectDrawer");
 
 	mPlayerRangeDrawer = addComponent(new CircleDrawerComponent("PlayerRange", (Prm.PlayerRangeMateiral).toStdString(), 
-		Prm.PlayerRangeRadius, Prm.PlayerRangeThickness, mSceneNode));
+		Prm.PlayerThreatenedRange, Prm.PlayerRangeThickness, mSceneNode));
 }
 
 void Pitch::onDeinitialize() 
@@ -137,9 +137,16 @@ Ball* Pitch::getBall() const
 	return mBall;
 }
 
-Region* Pitch::getRegionFromIndex(int index)
+Region* Pitch::getRegionByIndex(int index)
 {
 	return mRegions[index];
+}
+
+Region* Pitch::getRegionByPosition(const Ogre::Vector3& position)
+{
+	int n = (position.z - mPlayingArea->getTop()) / (2 * Prm.HalfPitchHeight / Prm.NumRegionsVertical);
+	int m = (position.x - mPlayingArea->getLeft()) / (2 * Prm.HalfPitchWidth / Prm.NumRegionsHorizontal);
+	return getRegionByIndex(n * Prm.NumRegionsHorizontal + m);
 }
 
 Region* Pitch::getPlayingArea() const

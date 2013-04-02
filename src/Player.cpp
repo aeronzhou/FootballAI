@@ -95,7 +95,7 @@ Ball* Player::getBall() const
 
 Region* Player::getAssignedRegion() const 
 {
-	return getPitch()->getRegionFromIndex(mAssignedRegion);
+	return getPitch()->getRegionByIndex(mAssignedRegion);
 }
 
 bool Player::isBallWithinControlRange() const 

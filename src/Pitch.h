@@ -28,8 +28,10 @@ public:
 
 	void onUpdate(double time_diff);
 
-	Region* getRegionFromIndex(int index);
+	Region* getRegionByIndex(int index);
+	Region* getRegionByPosition(const Ogre::Vector3& position);
 	Region* getPlayingArea() const;
+
 
 	Ball* getBall() const;
 
