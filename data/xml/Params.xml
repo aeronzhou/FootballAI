@@ -21,8 +21,8 @@
 	<HalfGoalHeight>1.0</HalfGoalHeight>	
 
 	<CameraPosX>0.0</CameraPosX>
-	<CameraPosY>5</CameraPosY>
-	<CameraPosZ>9</CameraPosZ>
+	<CameraPosY>8</CameraPosY>
+	<CameraPosZ>14</CameraPosZ>
 	<CameraSpeed>0.2</CameraSpeed>
 	<MouseSensitivity>0.5</MouseSensitivity>
 
@@ -42,7 +42,7 @@
 	<PlayerDribblingForce>2.0</PlayerDribblingForce>
 	<PlayerTurnAroundForce>1.5</PlayerTurnAroundForce>
 	<PlayerMaxShootingForce>20</PlayerMaxShootingForce>
-	<PlayerThreatenedRange>3</PlayerThreatenedRange>
+	<PlayerThreatenedRange>4</PlayerThreatenedRange>
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>10</PlayerShootingTryNum>
 	<PlayerReceivingRange>5</PlayerReceivingRange>
