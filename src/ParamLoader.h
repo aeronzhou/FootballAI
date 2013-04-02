@@ -86,6 +86,15 @@ public:
 
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
+
+		GAGeneration = mParamTables["GAGeneration"].toInt();
+		GACrossCostPerRgn = mParamTables["GACrossCostPerRgn"].toInt();
+		GAPlayerKeepBallValue = mParamTables["GAPlayerKeepBallValue"].toInt();
+		GAPlayerChaseBallValue = mParamTables["GAPlayerChaseBallValue"].toInt();
+		GAPlayerDefendValue = mParamTables["GAPlayerDefendValue"].toInt();
+		GAPlayerAttackValue = mParamTables["GAPlayerAttackValue"].toInt();
+		GAColonySize = mParamTables["GAColonySize"].toInt();
+
 	}
 
 private:
@@ -165,8 +174,17 @@ public:
 
 	// Others
 	int PhysicsShowDebug;
-	int ShowDebugText;                       
-	
+	int ShowDebugText;   
+
+	//GA
+	int GAGeneration;
+	int GACrossCostPerRgn;
+	int GAPlayerKeepBallValue;
+	int GAPlayerChaseBallValue;
+	int GAPlayerDefendValue;
+	int GAPlayerAttackValue;
+	int GAColonySize;
+
 };
 
 #endif
