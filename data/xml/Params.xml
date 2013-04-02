@@ -46,9 +46,11 @@
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>10</PlayerShootingTryNum>
 
-	<CircleDrawerRadius>1.2</CircleDrawerRadius>
-	<CircleDrawerThickness>0.2</CircleDrawerThickness>
-	<CircleDrawerMateiral>PlayerFlagRed</CircleDrawerMateiral>
+	<PlayerRangeRadius>1.2</PlayerRangeRadius>
+	<PlayerRangeThickness>0.1</PlayerRangeThickness>
+	<PlayerRangeMateiral>BaseWhiteNoLighting</PlayerRangeMateiral>
+	<ShowPlayerRange>1</ShowPlayerRange>
+	<ShowSupportSpot>1</ShowSupportSpot>
 
 	<GoalKeeperInterceptRange>12</GoalKeeperInterceptRange>
 	<GoalKeeperControlRange>0.8</GoalKeeperControlRange>

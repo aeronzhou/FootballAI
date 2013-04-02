@@ -73,9 +73,9 @@ public:
 		PlayerShootingRange = mParamTables["PlayerShootingRange"].toFloat();
 		PlayerShootingTryNum = mParamTables["PlayerShootingTryNum"].toFloat();
 
-		CircleDrawerRadius = mParamTables["CircleDrawerRadius"].toFloat();
-		CircleDrawerThickness = mParamTables["CircleDrawerThickness"].toFloat();
-		CircleDrawerMateiral = mParamTables["CircleDrawerMateiral"];
+		PlayerRangeRadius = mParamTables["PlayerRangeRadius"].toFloat();
+		PlayerRangeThickness = mParamTables["PlayerRangeThickness"].toFloat();
+		PlayerRangeMateiral = mParamTables["PlayerRangeMateiral"];
 
 		GoalKeeperInterceptRange = mParamTables["GoalKeeperInterceptRange"].toFloat();
 		GoalKeeperControlRange = mParamTables["GoalKeeperControlRange"].toFloat();
@@ -148,10 +148,10 @@ public:
 	float PlayerShootingRange;
 	float PlayerShootingTryNum;
 	
-	// CircleDrawer
-	float CircleDrawerRadius;
-	float CircleDrawerThickness;
-	QString CircleDrawerMateiral;
+	// PlayerRange
+	float PlayerRangeRadius;
+	float PlayerRangeThickness;
+	QString PlayerRangeMateiral;
 
 	// GoalKeeper
 	float GoalKeeperInterceptRange;

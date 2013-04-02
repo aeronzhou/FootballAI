@@ -88,7 +88,7 @@ private:
 	Team* mTeamToKickOff;           //!< Team to kick of the ball at the very beginning
 
 	Ogre::SceneNode* mSceneNode;    //!< Scene Node
-	std::shared_ptr<CircleDrawerComponent> mCircleDrawer;
+	std::shared_ptr<CircleDrawerComponent> mPlayerRangeDrawer; //!< Circle Drawer of player range
 };
 
 

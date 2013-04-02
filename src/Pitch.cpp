@@ -117,8 +117,8 @@ void Pitch::onInitialize()
 
 	mSceneNode =  getScene()->getSceneManager()->getRootSceneNode()->createChildSceneNode("ObjectDrawer");
 
-	mCircleDrawer = addComponent(new CircleDrawerComponent("PlayerRange", (Prm.CircleDrawerMateiral).toStdString(), 
-		Prm.CircleDrawerRadius, Prm.CircleDrawerThickness, mSceneNode));
+	mPlayerRangeDrawer = addComponent(new CircleDrawerComponent("PlayerRange", (Prm.PlayerRangeMateiral).toStdString(), 
+		Prm.PlayerRangeRadius, Prm.PlayerRangeThickness, mSceneNode));
 }
 
 void Pitch::onDeinitialize() 
@@ -166,15 +166,15 @@ void Pitch::_updateDrawerComponent()
 {
 	if (mRedTeam->isInControl())
 	{
-		mCircleDrawer->setPos(mRedTeam->getControllingPlayer()->getPosition());
+		mPlayerRangeDrawer->setPos(mRedTeam->getControllingPlayer()->getPosition());
 	}
 	else if (mBlueTeam->isInControl())
 	{
-		mCircleDrawer->setPos(mBlueTeam->getControllingPlayer()->getPosition());
+		mPlayerRangeDrawer->setPos(mBlueTeam->getControllingPlayer()->getPosition());
 	}
 	else 
 	{
-		mCircleDrawer->setPos(mBall->getPosition());
+		mPlayerRangeDrawer->setPos(mBall->getPosition());
 	}
 }
 
