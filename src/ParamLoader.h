@@ -87,7 +87,12 @@ public:
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
 
 		GAGeneration = mParamTables["GAGeneration"].toInt();
-		GACrossCostPerRgn = mParamTables["GACrossCostPerRgn"].toFloat();
+		GACrossCostPerRgn = mParamTables["GACrossCostPerRgn"].toInt();
+		GAPlayerKeepBallValue = mParamTables["GAPlayerKeepBallValue"].toInt();
+		GAPlayerChaseBallValue = mParamTables["GAPlayerChaseBallValue"].toInt();
+		GAPlayerDefendValue = mParamTables["GAPlayerDefendValue"].toInt();
+		GAPlayerAttackValue = mParamTables["GAPlayerAttackValue"].toInt();
+		GAColonySize = mParamTables["GAColonySize"].toInt();
 
 	}
 
@@ -171,7 +176,13 @@ public:
 
 	//GA
 	int GAGeneration;
-	float GACrossCostPerRgn;
+	int GACrossCostPerRgn;
+	int GAPlayerKeepBallValue;
+	int GAPlayerChaseBallValue;
+	int GAPlayerDefendValue;
+	int GAPlayerAttackValue;
+	int GAColonySize;
+
 };
 
 #endif

@@ -63,6 +63,12 @@
 	<ShowDebugText>1</ShowDebugText>
 	
 	<GAGeneration>20</GAGeneration>
-	<GACrossCostPerRgn>0.001</GACrossCostPerRgn>
+	<GACrossCostPerRgn>10</GACrossCostPerRgn>
+	<GAPlayerKeepBallValue>10</GAPlayerKeepBallValue>
+	<GAPlayerChaseBallValue>10</GAPlayerChaseBallValue>
+	<GAPlayerDefendValue>10</GAPlayerDefendValue>
+	<GAPlayerAttackValue>10</GAPlayerDefendValue>
+	<GAColonySize>100</GAColonySize>
+	
 
 </Params>
