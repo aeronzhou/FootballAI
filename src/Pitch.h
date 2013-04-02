@@ -69,28 +69,36 @@ private:
 	void _createRegions(float width, float height);
 
 	/** 
-	  * Update drawer component
+	  * Update player range drawer
 	  */
-	void _updateDrawerComponent();
+	void _updatePlayerRangeDrawer();
+
+	/** 
+	  * Drawer to show player's target
+	  */
+	void _updatePlayerTargetDrawer();
+
+
 
 
 private:
 
-	Ball* mBall;                    //!< Pointer to the ball
-	Team* mRedTeam;                 //!< Team at the left side
-	Team* mBlueTeam;                //!< Team at the right side
-	Goal* mRedGoal;                 //!< Goal of red team
-	Goal* mBlueGoal;                //!< Goal of blue team
+	Ball* mBall;                                                     //!< Pointer to the ball
+	Team* mRedTeam;                                                  //!< Team at the left side
+	Team* mBlueTeam;                                                 //!< Team at the right side
+	Goal* mRedGoal;                                                  //!< Goal of red team
+	Goal* mBlueGoal;                                                 //!< Goal of blue team
 
-	std::vector<Region*> mRegions;  //!< Regions
-	Region* mPlayingArea;           //!< Play ground area
+	std::vector<Region*> mRegions;                                   //!< Regions
+	Region* mPlayingArea;                                            //!< Play ground area
 
-	bool mGameOn;                   //!< If game is on
-	bool mGoalKeeperHasBall;        //!< If the goal keeper has captured the ball
-	Team* mTeamToKickOff;           //!< Team to kick of the ball at the very beginning
+	bool mGameOn;                                                    //!< If game is on
+	bool mGoalKeeperHasBall;                                         //!< If the goal keeper has captured the ball
+	Team* mTeamToKickOff;                                            //!< Team to kick of the ball at the very beginning
 
-	Ogre::SceneNode* mSceneNode;    //!< Scene Node
-	std::shared_ptr<CircleDrawerComponent> mPlayerRangeDrawer; //!< Circle Drawer of player range
+	Ogre::SceneNode* mSceneNode;                                     //!< Scene Node
+	std::shared_ptr<CircleDrawerComponent> mPlayerRangeDrawer;       //!< Circle Drawer of player range
+	std::shared_ptr<CircleDrawerComponent> mPlayerTargetDrawer;      //!< Circle Drawer of player target
 };
 
 

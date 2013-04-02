@@ -60,6 +60,7 @@ void KickingBall::execute(FieldPlayer* player)
 	if (player->isThreatened() && 
 		player->getTeam()->canPass(player, receiver, target, dot))
 	{
+		//std::cout << "Can Pass" << std::endl;
 		MessageDispatcher::get().dispatchMessage(
 			0,
 			player, 
@@ -70,7 +71,6 @@ void KickingBall::execute(FieldPlayer* player)
 
 		// Apply a force
 		ball->kick(receiver->getPosition() - ball->getPosition(), passing_force);
-
 
 		// After passing, the player should change to wait
 		player->getStateMachine()->changeState(Waiting::get());

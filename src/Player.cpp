@@ -163,7 +163,7 @@ bool Player::isAtTarget() const
 	return Vector3To2(getPosition() - getSteering()->getTarget()).length() < 0.5;
 }
 
-bool Player::withinAssignedRegion() const 
+bool Player::isWithinAssignedRegion() const 
 {
 	if (mPlayerRole == GOAL_KEEPER)
 	{
@@ -171,6 +171,11 @@ bool Player::withinAssignedRegion() const
 	}
 
 	return getAssignedRegion()->inside(getPosition(), Region::HALF_SIZE);
+}
+
+bool Player::isWithinReceivingRange() const 
+{
+	return getDistToBall() < Prm.PlayerReceivingRange;
 }
 
 float Player::getDistToBall() const 

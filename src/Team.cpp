@@ -156,7 +156,7 @@ bool Team::allPlayersInAssignedRegions() const
 {
 	for (auto player = mPlayers.begin(); player != mPlayers.end(); ++player)
 	{
-		if (!(*player)->withinAssignedRegion())
+		if (!(*player)->isWithinAssignedRegion())
 		{
 			return false;
 		}

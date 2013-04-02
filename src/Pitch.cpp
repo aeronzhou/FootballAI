@@ -33,7 +33,8 @@ void Pitch::onUpdate(double time_diff)
 	mBall->testTimeSpentByInitialForce(3, 4);
 #endif
 
-	_updateDrawerComponent();
+	_updatePlayerRangeDrawer();
+	_updatePlayerTargetDrawer();
 
 	// Test if the ball is scored!!!
 	// Set team to kick off and send players back to origin region
@@ -46,7 +47,7 @@ void AddPitchWall(dt::Node* parent, QString name, QString mesh_handle, Ogre::Vec
 	dt::Node* wall = parent->addChildNode(new dt::Node(name)).get();
 	wall->setPosition(position);
 	wall->setRotation(GetRotationThroughHeading(heading));
-	wall->addComponent(new dt::MeshComponent(mesh_handle, "", MESH_COMPONENT));
+	wall->addComponent(new dt::MeshComponent(mesh_handle, "PitchWall", MESH_COMPONENT));
 	wall->addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, dt::PhysicsBodyComponent::BOX, 0.0f));
 }
 
@@ -119,6 +120,7 @@ void Pitch::onInitialize()
 
 	mPlayerRangeDrawer = addComponent(new CircleDrawerComponent("PlayerRange", (Prm.PlayerRangeMateiral).toStdString(), 
 		Prm.PlayerThreatenedRange, Prm.PlayerRangeThickness, mSceneNode));
+	mPlayerTargetDrawer = addComponent(new CircleDrawerComponent("PlayerTarget", "PlayerTarget", 0.7f, 0.25f, mSceneNode));
 }
 
 void Pitch::onDeinitialize() 
@@ -169,7 +171,7 @@ void Pitch::_createRegions(float width, float height)
 	}
 }
 
-void Pitch::_updateDrawerComponent()
+void Pitch::_updatePlayerRangeDrawer()
 {
 	if (mRedTeam->isInControl())
 	{
@@ -182,6 +184,22 @@ void Pitch::_updateDrawerComponent()
 	else 
 	{
 		mPlayerRangeDrawer->setPos(mBall->getPosition());
+	}
+}
+
+void Pitch::_updatePlayerTargetDrawer()
+{
+	if (mRedTeam->isInControl())
+	{
+		mPlayerTargetDrawer->setPos(mRedTeam->getControllingPlayer()->getTarget());
+	}
+	else if (mBlueTeam->isInControl())
+	{
+		mPlayerTargetDrawer->setPos(mBlueTeam->getControllingPlayer()->getTarget());
+	}
+	else 
+	{
+		mPlayerTargetDrawer->setPos(mBall->getPosition());
 	}
 }
 

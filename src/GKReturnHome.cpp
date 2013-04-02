@@ -20,7 +20,7 @@ void ReturnHomeState::enter(GoalKeeper* keeper)
 void ReturnHomeState::execute(GoalKeeper* keeper)
 {
 	keeper->getSteering()->setTarget(keeper->getAssignedRegion()->getCenter());
-	if(keeper->withinAssignedRegion() || !keeper->getTeam()->isInControl())
+	if(keeper->isWithinAssignedRegion() || !keeper->getTeam()->isInControl())
 	{
 		keeper->getStateMachine()->changeState(TendGoal::get());
 	}

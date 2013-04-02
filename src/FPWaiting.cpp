@@ -21,7 +21,6 @@ void Waiting::execute(FieldPlayer* player)
 	if (!player->isAtTarget())
 	{
 		player->getSteering()->setArriveOn();
-		//return;
 	}
 	else 
 	{

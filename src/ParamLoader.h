@@ -72,6 +72,7 @@ public:
 		PlayerThreatenedRange = mParamTables["PlayerThreatenedRange"].toFloat();
 		PlayerShootingRange = mParamTables["PlayerShootingRange"].toFloat();
 		PlayerShootingTryNum = mParamTables["PlayerShootingTryNum"].toFloat();
+		PlayerReceivingRange = mParamTables["PlayerReceivingRange"].toFloat();
 
 		PlayerRangeRadius = mParamTables["PlayerRangeRadius"].toFloat();
 		PlayerRangeThickness = mParamTables["PlayerRangeThickness"].toFloat();
@@ -156,6 +157,7 @@ public:
 	float PlayerThreatenedRange;
 	float PlayerShootingRange;
 	float PlayerShootingTryNum;
+	float PlayerReceivingRange;
 	
 	// PlayerRange
 	float PlayerRangeRadius;
