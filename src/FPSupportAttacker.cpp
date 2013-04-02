@@ -32,7 +32,7 @@ void SupportAttacker::execute(FieldPlayer* player)
 	}
 
 	// If the player can shot 
-	if (player->getTeam()->canShoot(player, Ogre::Vector3(), Prm.PlayerMaxShootingForce))
+	if (player->getTeam()->canShoot(player->getPosition(), Ogre::Vector3(), Prm.PlayerMaxShootingForce))
 	{
 		player->getTeam()->requestPass(player);
 	}
@@ -43,6 +43,7 @@ void SupportAttacker::execute(FieldPlayer* player)
 		player->turnAroundToBall();
 		player->setVelocity(Ogre::Vector3::ZERO);
 
+		// If this is not threatened, request pass
 		if (!player->isThreatened())
 		{
 			player->getTeam()->requestPass(player);

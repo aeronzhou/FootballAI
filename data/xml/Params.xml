@@ -13,8 +13,8 @@
 	<NumRegionsHorizontal>9</NumRegionsHorizontal>
 	<NumRegionsVertical>5</NumRegionsVertical>
 
-	<HalfPitchWidth>30</HalfPitchWidth>
-	<HalfPitchHeight>19.4</HalfPitchHeight>
+	<HalfPitchWidth>25</HalfPitchWidth>
+	<HalfPitchHeight>16.19</HalfPitchHeight>
 	<PitchMargin>6.0</PitchMargin>
 
 	<HalfGoalWidth>2.0</HalfGoalWidth>
@@ -45,6 +45,10 @@
 	<PlayerThreatenedRange>5</PlayerThreatenedRange>
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>10</PlayerShootingTryNum>
+
+	<CircleDrawerRadius>1.2</CircleDrawerRadius>
+	<CircleDrawerThickness>0.2</CircleDrawerThickness>
+	<CircleDrawerMateiral>PlayerFlagRed</CircleDrawerMateiral>
 
 	<GoalKeeperInterceptRange>12</GoalKeeperInterceptRange>
 	<GoalKeeperControlRange>0.8</GoalKeeperControlRange>

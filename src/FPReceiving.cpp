@@ -28,7 +28,7 @@ void Receiving::execute(FieldPlayer* player)
 	}
 
 	// Player arrive there
-	if (player->atTarget())
+	if (player->isAtTarget())
 	{
 		// Wait there and face to the ball
 		player->getSteering()->setArriveOff();

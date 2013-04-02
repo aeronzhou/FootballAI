@@ -19,6 +19,7 @@ bool FieldPlayerGlobalState::onMessage(FieldPlayer* player, const Message& msg)
 	case MSG_BACK_TO_ORIGIN:
 		{
 			player->getStateMachine()->changeState(BackToOrigin::get());
+
 			return true;
 		}
 
@@ -27,6 +28,8 @@ bool FieldPlayerGlobalState::onMessage(FieldPlayer* player, const Message& msg)
 			Ogre::Vector3 target = *((Ogre::Vector3*)(msg.data));
 			player->setTarget(target);
 			player->getStateMachine()->changeState(Receiving::get());
+
+			return true;
 		}
 
 	case MSG_REQUEST_PASS:
@@ -55,6 +58,35 @@ bool FieldPlayerGlobalState::onMessage(FieldPlayer* player, const Message& msg)
 			player->getStateMachine()->changeState(Waiting::get());
 
 			player->findSupport();
+
+			return true;
+		}
+
+	case MSG_SUPPORT_ATTACKER:
+		{
+			// Already in this state
+			if (player->getStateMachine()->isInState(*SupportAttacker::get()))
+			{
+				return true;
+			}
+
+			player->setTarget(player->getTeam()->getBestSupportSpot());
+
+			player->getStateMachine()->changeState(SupportAttacker::get());
+
+			return true;
+		}
+
+	case MSG_POSITIONING:
+		{
+			player->getStateMachine()->changeState(Positioning::get());
+
+			return true;
+		}
+
+	case MSG_WAIT:
+		{
+			player->getStateMachine()->changeState(Waiting::get());
 
 			return true;
 		}

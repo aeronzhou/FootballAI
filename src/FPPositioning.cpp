@@ -25,7 +25,7 @@ void Positioning::execute(FieldPlayer* player)
 	// Update proper spot
 
 	// If the player arrive the place, change to wait
-	if (player->atTarget())
+	if (player->isAtTarget())
 	{
 		player->getStateMachine()->changeState(Waiting::get());
 	}

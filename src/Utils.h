@@ -95,7 +95,7 @@ inline Ogre::Vector3 AddNoiseToPoint(const Ogre::Vector3& point, float radius = 
   * @param degree Degree noise range
   * @returns Result target
   */
-inline Ogre::Vector3 AddNoiseToTarget(const Ogre::Vector3& from, const Ogre::Vector3& to, float degree = 30.f)
+inline Ogre::Vector3 AddNoiseToKick(const Ogre::Vector3& from, const Ogre::Vector3& to, float degree = 30.f)
 {
 	Ogre::Radian angle(dt::Random::get(-degree / 360, degree / 360));
 	Ogre::Vector3 to_target = Vector3To2(to - from);

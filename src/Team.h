@@ -101,12 +101,12 @@ public:
 
 	/** 
 	  * Return true if the player is able to shoot
-	  * @param player The shooter
+	  * @param from From position
 	  * @param proper_target Proper target
 	  * @param max_force Max shooting force
 	  * @returns If the player can shoot now
 	  */
-	bool canShoot(Player* player, Ogre::Vector3& proper_target, float shooting_force);
+	bool canShoot(const Ogre::Vector3& from, Ogre::Vector3& proper_target, float shooting_force);
 
 	/**  
 	  * Test if the ball can go through all opponents from a place to another
@@ -133,6 +133,12 @@ public:
 	  * @returns the best support spot
 	  */
 	Ogre::Vector3 getBestSupportSpot() const;
+
+	/** 
+	  * Determine the best supporting player
+	  * @returns the best supporting player
+	  */
+	Player* determineBestSupportingPlayer() const;
 
 private:
 
@@ -177,8 +183,6 @@ private:
 	TeamColor mColor;                                 //!< Team color, RED or BLUE
 	Team* mOpponent;                                  //!< The opponent team of this
 	std::vector<Player*> mPlayers;                    //!< Pointers of players this team hold
-
-	bool mIsControllingBall;                          //!< If the team is controlling the ball
 
 	Player* mControllingPlayer;                       //!< Pointer to the player which is controlling the ball 
 	Player* mPlayerClosestToBall;                     //!< Pointer to the player which is closest to the ball

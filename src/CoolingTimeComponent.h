@@ -31,8 +31,6 @@ protected:
 
 	double mCoolingTime;
 	double mCurTime;
-
-	static const double EPS;           
 };
 
 #endif
