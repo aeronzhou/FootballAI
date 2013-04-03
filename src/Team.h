@@ -140,6 +140,14 @@ public:
 	  */
 	Player* determineBestSupportingPlayer() const;
 
+	/** 
+	  * for GA
+	  * @returns the regionids of player in runtime
+	  */
+	std::vector<int>& Team::getAssignedRegionIDs();
+
+
+
 private:
 
 	/** 
@@ -189,6 +197,7 @@ private:
 	Player* mSupportingPlayer;                        //!< Pointer to supporting player
 	Player* mReceivingPlayer;                         //!< Pointer to receiving player
 	SupportSpotCalculator* mSupportSpotCalculator;    //!< Calculator of best support spot
+	std::vector<int> mAssignedRegionIDs;			  //!< calculate the regionids of player in runtime
 
 };
 
