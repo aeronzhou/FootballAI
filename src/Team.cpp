@@ -19,7 +19,7 @@
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
 	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()),
-	  mSupportingPlayer(nullptr), mReceivingPlayer(nullptr) {}
+	  mSupportingPlayer(nullptr), mReceivingPlayer(nullptr), mAssignedRegionIDs(std::vector<int>()) {}
 
 
 void Team::onInitialize() 
@@ -29,7 +29,10 @@ void Team::onInitialize()
 	mStateMachine->setCurrentState(WaitingForKickOff::get());	
 
 	// Initialize players
-	_createPlayers();
+	_createPlayers(); 
+
+	//Initialize regionID size
+	mAssignedRegionIDs.resize(mPlayers.size());
 
 	//for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	//{
@@ -475,4 +478,16 @@ Player* Team::determineBestSupportingPlayer() const
 	}
 
 	return best_supporting_player;
+}
+
+
+std::vector<int>& Team::getAssignedRegionIDs()
+{
+	unsigned int size = mPlayers.size();
+	for(unsigned int i = 0; i < size; ++i)
+	{
+		mAssignedRegionIDs[i] = mPitch->getRegionIndexByPosition(mPlayers[i]->getPosition());
+	}
+
+	return mAssignedRegionIDs;
 }

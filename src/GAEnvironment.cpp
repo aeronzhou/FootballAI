@@ -13,6 +13,8 @@ Environment::Environment(const QString& name, Team* team, Pitch* pitch)
 void Environment::onInitialize()
 {
 	mCoolingTime = addComponent(new CoolingTimeComponent(1.0f));
+	mPopulatin;
+	mOppGeneme;
 }
 
 void Environment::onDeinitialize()
@@ -24,7 +26,8 @@ void Environment::onUpdate(double time_diff)
 {
 	if(mCoolingTime->ready())
 	{
-
+		mOppGeneme;
+		getBestGeneme();
 	}
 }
 
