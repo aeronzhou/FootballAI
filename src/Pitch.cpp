@@ -30,14 +30,16 @@ void Pitch::onUpdate(double time_diff)
 	if (test_ball)
 	{
 		test_ball = false;
-		std::cout << "Ball cover time = " << mBall->getTimeToGoThroughDistance(3, 4) << std::endl;		
+		std::cout << "Ball force = " << mBall->getProperForceToKick(22.03) << std::endl;
 	}
-	mBall->testTimeSpentByInitialForce(15, 10);
+	mBall->testTimeSpentByInitialForce(1, Prm.RandomTestNum);
 #endif
 
 	_updatePlayerThreatenedRangeDrawer();
 	_updatePlayerTargetDrawer();
 	_updatePlayerPassSafeRange();
+
+	_testBallCollisionWithWalls();
 
 	// Test if the ball is scored!!!
 	// Set team to kick off and send players back to origin region
@@ -92,23 +94,23 @@ void Pitch::onInitialize()
 	// Realize a ball
 	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
 	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "PlayerFlagBlue")).get();
-	mBall->setPosition(Prm.BallPosX, 1, Prm.BallPosZ);
+	mBall->setPosition(Prm.BallPosX, Prm.BallRadius + 0.2f, Prm.BallPosZ);
 	mBall->resetPhysicsBody();
 
 	// Create goals
-	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(0.5, 2, 5)).realizeMesh("Goal");
+	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(0.2, 2, 5)).realizeMesh("Goal");
 	mRedGoal = (Goal*)addChildNode(new Goal("RedGoal", 
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, -Prm.HalfGoalWidth), 
 											Ogre::Vector3(-Prm.HalfPitchWidth, 0, Prm.HalfGoalWidth), 
 											Ogre::Vector3(1.f, 0.f, 0.f), mBall)).get();
-	mRedGoal->setPosition(-Prm.HalfPitchWidth, 0.5, 0);
+	mRedGoal->setPosition(-Prm.HalfPitchWidth - 0.08f, 0.5, 0);
 	mRedGoal->resetPhysicsBody();
 
 	mBlueGoal = (Goal*)addChildNode(new Goal("BlueGoal",
 											 Ogre::Vector3(Prm.HalfPitchWidth, 0, Prm.HalfGoalWidth), 
 											 Ogre::Vector3(Prm.HalfPitchWidth, 0, -Prm.HalfGoalWidth), 
 											 Ogre::Vector3(-1.f, 0.f, 0.f), mBall)).get();
-	mBlueGoal->setPosition(Prm.HalfPitchWidth, 0.5, 0);
+	mBlueGoal->setPosition(Prm.HalfPitchWidth + 0.08f, 0.5, 0);
 	mBlueGoal->resetPhysicsBody();
 
 	// CreatPlayerFlag
@@ -123,12 +125,12 @@ void Pitch::onInitialize()
 
 	// Create evil walls... -_-|||
 	// That is because we don't let foul-ball exists..
-	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(Prm.HalfPitchWidth * 2, 1, 0.2)).realizeMesh("Wall_Horizonal");
-	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(Prm.HalfPitchHeight * 2, 1, 0.2)).realizeMesh("Wall_Vertical");
-	AddPitchWall(this, "Wall_Up", "Wall_Horizonal", Ogre::Vector3(0, 0, -Prm.HalfPitchHeight), Ogre::Vector3(0, 0, 1));
-	AddPitchWall(this, "Wall_Down", "Wall_Horizonal", Ogre::Vector3(0, 0, Prm.HalfPitchHeight), Ogre::Vector3(0, 0, -1));
-	AddPitchWall(this, "Wall_Left", "Wall_Vertical", Ogre::Vector3(-Prm.HalfPitchWidth, 0, 0), Ogre::Vector3(1, 0, 0));
-	AddPitchWall(this, "Wall_Right", "Wall_Vertical", Ogre::Vector3(Prm.HalfPitchWidth, 0, 0), Ogre::Vector3(-1, 0, 0));
+	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(Prm.HalfPitchWidth * 2, 1, 0.2f)).realizeMesh("Wall_Horizonal");
+	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(Prm.HalfPitchHeight * 2, 1, 0.2f)).realizeMesh("Wall_Vertical");
+	AddPitchWall(this, "Wall_Up", "Wall_Horizonal", Ogre::Vector3(0, 0, -Prm.HalfPitchHeight - 0.1f), Ogre::Vector3(0, 0, 1));
+	AddPitchWall(this, "Wall_Down", "Wall_Horizonal", Ogre::Vector3(0, 0, Prm.HalfPitchHeight + 0.1f), Ogre::Vector3(0, 0, -1));
+	AddPitchWall(this, "Wall_Left", "Wall_Vertical", Ogre::Vector3(-Prm.HalfPitchWidth - 0.1f, 0, 0), Ogre::Vector3(1, 0, 0));
+	AddPitchWall(this, "Wall_Right", "Wall_Vertical", Ogre::Vector3(Prm.HalfPitchWidth + 0.1f, 0, 0), Ogre::Vector3(-1, 0, 0));
 
 	// Initialize Random Value
 	dt::Random::initialize();
@@ -295,4 +297,22 @@ Ogre::SceneNode* Pitch::getSceneNode() const
 const std::vector<Ogre::Vector3>& Pitch::getPassSafePolygon()
 {
 	return mPassSafePolygon;
+}
+
+void Pitch::_testBallCollisionWithWalls()
+{
+	Ogre::Vector3 future_pos = mBall->getFuturePosition(0.02f);
+	Ogre::Vector3 velocity = mBall->getVelocity();
+
+	if (future_pos.x - Prm.BallRadius < mPlayingArea->getLeft() || future_pos.x + Prm.BallRadius > mPlayingArea->getRight())
+	{
+		velocity.x = velocity.x * (-0.8);
+		mBall->setVelocity(velocity);
+	}
+
+	if (future_pos.z - Prm.BallRadius < mPlayingArea->getTop() || future_pos.z + Prm.BallRadius > mPlayingArea->getBottom())
+	{
+		velocity.z = velocity.z * (-0.8);
+		mBall->setVelocity(velocity);
+	}
 }

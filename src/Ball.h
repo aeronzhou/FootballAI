@@ -30,9 +30,11 @@ public:
 	  */
 	float getProperForceToKick(float distance);
 
+	Ogre::Vector3 getFuturePosition(float time);
+
 	/** 
 	  * Function to test time spent when applying the ball
-	  * a exact force. Compare with the getTimeToGoThroughDistance
+	  * a exact force. Compare with the getTimeToCoverDistance
 	  * !!!!!!!Called only in onUpdate function!!!!!!!
 	  * @length Distance to go through
 	  * @force Force to apply to the ball
@@ -44,7 +46,7 @@ public:
 	  * @param length Length of distance
 	  * @param force Force to kick the ball
 	  */
-	float getTimeToGoThroughDistance(float length, float force);
+	float getTimeToCoverDistance(float length, float force);
 
 	/** 
 	  * Stop the ball, set the ball's velocity to be zero

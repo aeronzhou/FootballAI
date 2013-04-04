@@ -94,18 +94,16 @@ void Team::_createPlayers()
 	}
 	else 
 	{
-		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
-		//	this, FieldPlayer::FORWARD, vec_pos[7])).get());
-		//for (int i = 7; i < 10; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-		//		this, FieldPlayer::ATTACKER, vec_pos[i])).get());
-		//}
-		for (int i = 10; i < 12 /*13*/; ++i)
+		for (int i = 7; i < 10; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::DEFENDER, vec_pos[i])).get());
+				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
 		}
+		//for (int i = 10; i < 13; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+		//		this, FieldPlayer::DEFENDER, vec_pos[i])).get());
+		//}
 		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
 		//	this, FieldPlayer::DEFENDER, vec_pos[13])).get());
 
@@ -399,7 +397,7 @@ bool Team::isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vec
 	{
 		float oppo_to_intersect = oppo_pos.distance(intersect_point);
 		float ball_to_intersect = from.distance(intersect_point);
-		float time = mBall->getTimeToGoThroughDistance(ball_to_intersect, force);
+		float time = mBall->getTimeToCoverDistance(ball_to_intersect, force);
 		if (time <= 0 || oppo_to_intersect / opponent->getMaxSpeed() < time)
 		{
 			return false;
@@ -423,7 +421,7 @@ float Team::_getBestSpotOfReceiving(Player* receiver, float passing_force, Ogre:
 	Ogre::Vector3 ball_pos = mBall->getPosition();
 	Ogre::Vector3 to_reciver = Vector3To2(receiver->getPosition() - ball_pos);
 	float dist_to_receiver = to_reciver.length();
-	float length = receiver->getMaxSpeed() * mBall->getTimeToGoThroughDistance(dist_to_receiver, passing_force) * 0.8;
+	float length = receiver->getMaxSpeed() * mBall->getTimeToCoverDistance(dist_to_receiver, passing_force) * 0.8;
 	float theta = asin(length / dist_to_receiver);
 	int try_pass_times = 4;
 
@@ -450,9 +448,14 @@ float Team::_getBestSpotOfReceiving(Player* receiver, float passing_force, Ogre:
 void Team::requestPass(Player* player, double delay_time /* = 0 */)
 {
 	// With a possibility to execute
-	if (WithPossibility(0.2))
+	if (WithPossibility(0.8))
 	{
-		if (isSafeGoingThroughAllOpponents(
+		float dot = mControllingPlayer->getHeading().dotProduct(
+			(player->getPosition() - mControllingPlayer->getPosition()).normalisedCopy());
+
+		// Not behind the controlling player
+		if (dot > 0 &&
+			isSafeGoingThroughAllOpponents(
 			getControllingPlayer()->getPosition(), 
 			player->getPosition(), 
 			Prm.PlayerMaxPassingForce) )

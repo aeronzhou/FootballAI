@@ -1,8 +1,8 @@
 <Params>
 	<BallMaxSpeed>2.0</BallMaxSpeed>
 	<BallMass>0.9</BallMass>
-	<BallFriction>0.2</BallFriction>
-	<BallDeceleration>4</BallDeceleration>
+	<BallFriction>0</BallFriction>
+	<BallDeceleration>0.015</BallDeceleration>
 	<BallResistance>0.1</BallResistance>
 	<BallResistanceInterval>0.04</BallResistanceInterval>
 	<BallRealTimeSpentFactor>1.2</BallRealTimeSpentFactor>
@@ -38,19 +38,19 @@
 	<PlayerScale>0.1</PlayerScale>
 	<PlayerInitPositionY>0.5</PlayerInitPositionY>
 	<PlayerKickCoolingTime>0.3</PlayerKickCoolingTime>
-	<PlayerMaxPassingForce>9</PlayerMaxPassingForce>
-	<PlayerDribblingForce>2.0</PlayerDribblingForce>
+	<PlayerMaxPassingForce>8</PlayerMaxPassingForce>
+	<PlayerDribblingForce>2.2</PlayerDribblingForce>
 	<PlayerTurnAroundForce>1.5</PlayerTurnAroundForce>
-	<PlayerMaxShootingForce>20</PlayerMaxShootingForce>
+	<PlayerMaxShootingForce>12</PlayerMaxShootingForce>
 	<PlayerThreatenedRange>3</PlayerThreatenedRange>
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>10</PlayerShootingTryNum>
-	<PlayerReceivingRange>5</PlayerReceivingRange>
-	<PlayerPassSafeRangeLength>11</PlayerPassSafeRangeLength>
+	<PlayerReceivingRange>3</PlayerReceivingRange>
+	<PlayerPassSafeRangeLength>12</PlayerPassSafeRangeLength>
 	<PlayerPassSafeRangeWidth>3</PlayerPassSafeRangeWidth>
 
 	<ShowPassSafeDetectRange>1</ShowPassSafeDetectRange>
-	<ShowPlayerThreatenedRange>0</ShowPlayerThreatenedRange>
+	<ShowPlayerThreatenedRange>1</ShowPlayerThreatenedRange>
 	<ShowPlayerTarget>0</ShowPlayerTarget>
 	 	
 	<GoalKeeperInterceptRange>12</GoalKeeperInterceptRange>
@@ -59,7 +59,7 @@
 	<SpotPassSafeScore>2</SpotPassSafeScore>
 	<SpotCanShootScore>1</SpotCanShootScore>
 	<SpotDistFromCtrlPlayerScore>2</SpotDistFromCtrlPlayerScore>
-	<SpotOptimalDistance>7</SpotOptimalDistance>
+	<SpotOptimalDistance>8</SpotOptimalDistance>
 	<SpotClosenessToSupportingPlayerScore>0</SpotClosenessToSupportingPlayerScore>
 	<SpotAheadOfAttackerScore>0</SpotAheadOfAttackerScore>
 	<NumSupportSpotX>6</NumSupportSpotX>
@@ -69,5 +69,6 @@
 
 	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
+	<RandomTestNum>7</RandomTestNum>
 
 </Params>

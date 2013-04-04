@@ -91,6 +91,8 @@ private:
 	  */
 	void _updatePlayerPassSafeRange();
 
+	void _testBallCollisionWithWalls();
+
 
 
 private:

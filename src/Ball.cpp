@@ -5,6 +5,7 @@
 #include <Graphics/MeshComponent.hpp>
 #include <Physics/PhysicsBodyComponent.hpp>
 
+#include <algorithm>
 #include <math.h>
 
 Ball::Ball(QString name, QString mesh_handle, QString material_handle)
@@ -29,13 +30,11 @@ void Ball::onUpdate(double time_diff)
 	// Update every frame
 
 	Ogre::Vector3 velocity = getVelocity();
-	Ogre::Vector3 vground = Vector3To2(velocity);
+	float length = velocity.length();
 
-	// 模拟一个阻力
-	if (!vground.isZeroLength() && mResistanceCoolTime->ready())
-	{
-		kick(-vground.normalisedCopy(), Prm.BallResistance);
-	}
+	length = std::max(0.f, length - Prm.BallDeceleration);
+
+	setVelocity(velocity.normalisedCopy() * length);
 
 	MovingEntity::onUpdate(time_diff);
 }
@@ -43,18 +42,31 @@ void Ball::onUpdate(double time_diff)
 void Ball::kick(Ogre::Vector3 direction, float force)
 {
 	direction = Vector3To2Normalise(direction) * force;
-	
+
 	// Give it a momentary force
-	mPhysicsBody->applyCentralImpulse(BtOgre::Convert::toBullet(direction));
+	setVelocity(direction / mMass);
 }
 
 float Ball::getProperForceToKick(float distance)
 {
-	static const float KICK_REAL_FACTOR = 1.0f;
-
-	float force = sqrt(double(2 * Prm.BallDeceleration * distance)) * mMass;
+	static const float KICK_REAL_ADDER = 0.05f;
+	static const float FORCE_TO_DIST_FATCTOR = 0.272;
+	// y = k * (x * x);
 	
-	return std::min(Prm.PlayerMaxPassingForce, force * KICK_REAL_FACTOR);
+	float force = sqrt(double(distance / FORCE_TO_DIST_FATCTOR));
+
+	return std::min(Prm.PlayerMaxPassingForce, (float)force + KICK_REAL_ADDER);
+}
+
+Ogre::Vector3 Ball::getFuturePosition(float time)
+{
+	static const float BALL_REAL_DECEL = -2.5f;
+
+	Ogre::Vector3 velocity = getVelocity();
+
+	Ogre::Vector3 ut = velocity * time;
+	Ogre::Vector3 half_a_t_squared = velocity.normalisedCopy() * (0.5 * BALL_REAL_DECEL * time * time);
+	return getPosition() + ut + half_a_t_squared;
 }
 
 Ogre::Vector3 Ball::getVelocity() const
@@ -72,12 +84,13 @@ Ogre::Vector3 Ball::getHeading() const
 	return getVelocity().normalisedCopy();
 }
 
-float Ball::getTimeToGoThroughDistance(float length, float force)
+float Ball::getTimeToCoverDistance(float length, float force)
 {
 	float u = force / mMass;
+	float decel = -2.5;
 
 	// v^2 - u^2 = 2 * a * s
-	float g = 2 * (-Prm.BallDeceleration) * length + u * u;
+	float g = 2 * (decel) * length + u * u;
 
 	if (g < 0)
 	{
@@ -85,7 +98,7 @@ float Ball::getTimeToGoThroughDistance(float length, float force)
 	}	
 	float v = sqrt(double(g));
 
-	return (v - u) / (-Prm.BallDeceleration);
+	return (v - u) / (decel);
 }
 
 /************************************************************************/

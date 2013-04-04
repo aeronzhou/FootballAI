@@ -39,7 +39,7 @@ void KickingBall::execute(FieldPlayer* player)
 	}
 
 	// Can shoot
-	float shooting_foce = Prm.PlayerMaxShootingForce * dot;
+	float shooting_foce = Prm.PlayerMaxShootingForce;
 	
 	// Must face to the goal
 	float dot_to_goal = player->getHeading().dotProduct(player->getTeam()->getGoal()->getFacing());
