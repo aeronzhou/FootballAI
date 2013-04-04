@@ -76,10 +76,8 @@ public:
 		PlayerPassSafeRangeLength = mParamTables["PlayerPassSafeRangeLength"].toFloat();
 		PlayerPassSafeRangeWidth = mParamTables["PlayerPassSafeRangeWidth"].toFloat();
 
-		PlayerRangeRadius = mParamTables["PlayerRangeRadius"].toFloat();
-		ShowPlayerRange = mParamTables["ShowPlayerRange"].toInt();
+		ShowPlayerThreatenedRange = mParamTables["ShowPlayerThreatenedRange"].toInt();
 		ShowPlayerTarget = mParamTables["ShowPlayerTarget"].toInt();
-		ShowSupportSpot = mParamTables["ShowSupportSpot"].toInt();
 		ShowPassSafeDetectRange = mParamTables["ShowPassSafeDetectRange"].toInt();
 
 		GoalKeeperInterceptRange = mParamTables["GoalKeeperInterceptRange"].toFloat();
@@ -89,6 +87,11 @@ public:
 		SpotCanShootScore = mParamTables["SpotCanShootScore"].toFloat();
 		SpotDistFromCtrlPlayerScore = mParamTables["SpotDistFromCtrlPlayerScore"].toFloat();
 		SpotOptimalDistance = mParamTables["SpotOptimalDistance"].toFloat();
+		SpotClosenessToSupportingPlayerScore = mParamTables["SpotClosenessToSupportingPlayerScore"].toFloat();
+		SpotAheadOfAttackerScore = mParamTables["SpotAheadOfAttackerScore"].toFloat();
+		ShowSupportSpot = mParamTables["ShowSupportSpot"].toInt();
+		NumSupportSpotX = mParamTables["NumSupportSpotX"].toInt();
+		NumSupportSpotY = mParamTables["NumSupportSpotX"].toInt();
 
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
@@ -168,10 +171,8 @@ public:
 	float PlayerPassSafeRangeWidth;
 	
 	// Flag drawer
-	float PlayerRangeRadius;
-	int ShowPlayerRange;
+	int ShowPlayerThreatenedRange;
 	int ShowPlayerTarget;
-	int ShowSupportSpot;
 	int ShowPassSafeDetectRange;
 
 	// GoalKeeper
@@ -183,6 +184,11 @@ public:
 	float SpotCanShootScore;
 	float SpotDistFromCtrlPlayerScore;
 	float SpotOptimalDistance;
+	float SpotClosenessToSupportingPlayerScore;
+	float SpotAheadOfAttackerScore;
+	int NumSupportSpotX;
+	int NumSupportSpotY;
+	int ShowSupportSpot;
 
 	// Others
 	int PhysicsShowDebug;

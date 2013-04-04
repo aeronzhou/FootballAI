@@ -3,8 +3,8 @@
 
 #include "Ball.h"
 #include "Region.h"
-#include "CircleDrawerComponent.h"
-#include "PolygonDrawerComponent.h"
+#include "CircleDrawer.h"
+#include "PolygonDrawer.h"
 
 #include <Scene/Node.hpp>
 #include <Graphics/MeshComponent.hpp>
@@ -79,7 +79,7 @@ private:
 	/** 
 	  * Update player range drawer
 	  */
-	void _updatePlayerRangeDrawer();
+	void _updatePlayerThreatenedRangeDrawer();
 
 	/** 
 	  * Drawer to show player's target
@@ -109,9 +109,9 @@ private:
 	Team* mTeamToKickOff;                                            //!< Team to kick of the ball at the very beginning
 
 	Ogre::SceneNode* mSceneNode;                                     //!< Scene Node
-	std::shared_ptr<CircleDrawerComponent> mPlayerRangeDrawer;       //!< Circle Drawer of player range
-	std::shared_ptr<CircleDrawerComponent> mPlayerTargetDrawer;      //!< Circle Drawer of player target
-	std::shared_ptr<PolygonDrawerComponent> mPlayerPassSafeDrawer;   //!< PolygonDrawer of pass safe range
+	std::shared_ptr<CircleDrawer> mPlayerThreatenedRangeDrawer;      //!< Circle Drawer of player range
+	std::shared_ptr<CircleDrawer> mPlayerTargetDrawer;               //!< Circle Drawer of player target
+	std::shared_ptr<PolygonDrawer> mPlayerPassSafeDrawer;            //!< PolygonDrawer of pass safe range
 
 	std::vector<Ogre::Vector3> mPassSafePolygon;                     //!< Polygon to indicate pass safe range
 };

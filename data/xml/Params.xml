@@ -21,8 +21,8 @@
 	<HalfGoalHeight>1.0</HalfGoalHeight>	
 
 	<CameraPosX>0.0</CameraPosX>
-	<CameraPosY>7</CameraPosY>
-	<CameraPosZ>14</CameraPosZ>
+	<CameraPosY>30</CameraPosY>
+	<CameraPosZ>20</CameraPosZ>
 	<CameraSpeed>0.2</CameraSpeed>
 	<MouseSensitivity>0.5</MouseSensitivity>
 
@@ -46,14 +46,12 @@
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>10</PlayerShootingTryNum>
 	<PlayerReceivingRange>5</PlayerReceivingRange>
-	<PlayerPassSafeRangeLength>7</PlayerPassSafeRangeLength>
+	<PlayerPassSafeRangeLength>11</PlayerPassSafeRangeLength>
 	<PlayerPassSafeRangeWidth>3</PlayerPassSafeRangeWidth>
 
-	<PlayerRangeRadius>1.2</PlayerRangeRadius>
 	<ShowPassSafeDetectRange>1</ShowPassSafeDetectRange>
-	<ShowPlayerRange>1</ShowPlayerRange>
+	<ShowPlayerThreatenedRange>0</ShowPlayerThreatenedRange>
 	<ShowPlayerTarget>0</ShowPlayerTarget>
-	<ShowSupportSpot>1</ShowSupportSpot>
 	 	
 	<GoalKeeperInterceptRange>12</GoalKeeperInterceptRange>
 	<GoalKeeperControlRange>0.8</GoalKeeperControlRange>
@@ -64,6 +62,10 @@
 	<SpotOptimalDistance>7</SpotOptimalDistance>
 	<SpotClosenessToSupportingPlayerScore>0</SpotClosenessToSupportingPlayerScore>
 	<SpotAheadOfAttackerScore>0</SpotAheadOfAttackerScore>
+	<NumSupportSpotX>6</NumSupportSpotX>
+	<NumSupportSpotY>6</NumSupportSpotY>
+	<ShowSupportSpot>1</ShowSupportSpot>
+
 
 	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>

@@ -35,7 +35,7 @@ void Pitch::onUpdate(double time_diff)
 	mBall->testTimeSpentByInitialForce(15, 10);
 #endif
 
-	_updatePlayerRangeDrawer();
+	_updatePlayerThreatenedRangeDrawer();
 	_updatePlayerTargetDrawer();
 	_updatePlayerPassSafeRange();
 
@@ -68,9 +68,11 @@ void Pitch::onInitialize()
 
 	// Create Drawer
 	mSceneNode =  getScene()->getSceneManager()->getRootSceneNode()->createChildSceneNode("ObjectDrawer");
-	mPlayerRangeDrawer = addComponent(new CircleDrawerComponent("PlayerRange", "BaseWhite",
-		Prm.PlayerThreatenedRange, 0.1, mSceneNode));
-	mPlayerTargetDrawer = addComponent(new CircleDrawerComponent("PlayerTarget", "PlayerTarget", 0.7f, 0.25f, mSceneNode));
+
+	mPlayerThreatenedRangeDrawer = std::shared_ptr<CircleDrawer>(new CircleDrawer("PlayerThreatenedRangeDrawer", mSceneNode,
+		0.1f, "BaseWhite"));
+	mPlayerTargetDrawer = std::shared_ptr<CircleDrawer>(new CircleDrawer("PlayerTargetDrawer", mSceneNode,
+		0.1f, "PlayerTarget"));
 	
 	// Array of pass safe range
 	Ogre::Vector3 pass_safe_array[4] = {
@@ -80,14 +82,7 @@ void Pitch::onInitialize()
 		Ogre::Vector3(0.6, 0, 0)
 	};
 	mPassSafePolygon = std::vector<Ogre::Vector3>(pass_safe_array, pass_safe_array + 4);
-	mPlayerPassSafeDrawer = addComponent(new PolygonDrawerComponent("PassSafe", mPassSafePolygon, 0.08f, "PlayerTarget", mSceneNode));
-
-	if (!Prm.ShowPlayerRange)
-		mPlayerRangeDrawer->disable();
-	if (!Prm.ShowPlayerTarget)
-		mPlayerTargetDrawer->disable();
-	if (!Prm.ShowPassSafeDetectRange)
-		mPlayerPassSafeDrawer->disable();
+	mPlayerPassSafeDrawer = std::shared_ptr<PolygonDrawer>(new PolygonDrawer("PassSafe", mPassSafePolygon, 0.08f, "PlayerTarget", mSceneNode));
 
 	// Create regions
 	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight, -1, Prm.PitchMargin);	
@@ -191,53 +186,68 @@ void Pitch::_createRegions(float width, float height)
 	}
 }
 
-void Pitch::_updatePlayerRangeDrawer()
+void Pitch::_updatePlayerThreatenedRangeDrawer()
 {
-	if (mRedTeam->isInControl())
+	if (Prm.ShowPlayerThreatenedRange)
 	{
-		mPlayerRangeDrawer->setPos(mRedTeam->getControllingPlayer()->getPosition());
-	}
-	else if (mBlueTeam->isInControl())
-	{
-		mPlayerRangeDrawer->setPos(mBlueTeam->getControllingPlayer()->getPosition());
-	}
-	else 
-	{
-		mPlayerRangeDrawer->setPos(mBall->getPosition());
+		if (mRedTeam->isInControl())
+		{
+			mPlayerThreatenedRangeDrawer->setPos(mRedTeam->getControllingPlayer()->getPosition());
+			mPlayerThreatenedRangeDrawer->draw(Prm.PlayerThreatenedRange);
+		}
+		else if (mBlueTeam->isInControl())
+		{
+			mPlayerThreatenedRangeDrawer->setPos(mBlueTeam->getControllingPlayer()->getPosition());
+			mPlayerThreatenedRangeDrawer->draw(Prm.PlayerThreatenedRange);
+		}
+		else
+		{
+			mPlayerThreatenedRangeDrawer->clear();
+		}
 	}
 }
 
 void Pitch::_updatePlayerTargetDrawer()
 {
-	if (mRedTeam->isInControl())
+	if (Prm.ShowPlayerTarget)
 	{
-		mPlayerTargetDrawer->setPos(mRedTeam->getControllingPlayer()->getTarget());
-	}
-	else if (mBlueTeam->isInControl())
-	{
-		mPlayerTargetDrawer->setPos(mBlueTeam->getControllingPlayer()->getTarget());
-	}
-	else 
-	{
-		mPlayerTargetDrawer->setPos(mBall->getPosition());
+		if (mRedTeam->isInControl())
+		{
+			mPlayerTargetDrawer->setPos(mRedTeam->getControllingPlayer()->getTarget());
+			mPlayerTargetDrawer->draw(0.6f);
+		}
+		else if (mBlueTeam->isInControl())
+		{
+			mPlayerTargetDrawer->setPos(mBlueTeam->getControllingPlayer()->getTarget());
+			mPlayerTargetDrawer->draw(0.6f);
+		}
+		else
+		{
+			mPlayerTargetDrawer->clear();
+		}
 	}
 }
 
 void Pitch::_updatePlayerPassSafeRange()
 {
-	if (mRedTeam->isInControl())
+	if (Prm.ShowPassSafeDetectRange)
 	{
-		mPlayerPassSafeDrawer->setPos(mRedTeam->getControllingPlayer()->getPosition());
-		mPlayerPassSafeDrawer->setRotation(mRedTeam->getControllingPlayer()->getRotation());
-	}
-	else if (mBlueTeam->isInControl())
-	{
-		mPlayerPassSafeDrawer->setPos(mBlueTeam->getControllingPlayer()->getPosition());
-		mPlayerPassSafeDrawer->setRotation(mBlueTeam->getControllingPlayer()->getRotation());
-	}
-	else 
-	{
-		mPlayerPassSafeDrawer->setPos(Ogre::Vector3::ZERO);
+		if (mRedTeam->isInControl())
+		{
+			mPlayerPassSafeDrawer->setPos(mRedTeam->getControllingPlayer()->getPosition());
+			mPlayerPassSafeDrawer->setRotation(mRedTeam->getControllingPlayer()->getRotation());
+			mPlayerPassSafeDrawer->draw();
+		}
+		else if (mBlueTeam->isInControl())
+		{
+			mPlayerPassSafeDrawer->setPos(mBlueTeam->getControllingPlayer()->getPosition());
+			mPlayerPassSafeDrawer->setRotation(mBlueTeam->getControllingPlayer()->getRotation());
+			mPlayerPassSafeDrawer->draw();
+		}
+		else 
+		{
+			mPlayerPassSafeDrawer->clear();
+		}
 	}
 }
 

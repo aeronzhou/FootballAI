@@ -1,30 +1,26 @@
-#ifndef FOOTBALL_AI_POLYGON_DRAWER_COMPONENT
-#define FOOTBALL_AI_POLYGON_DRAWER_COMPONENT
+#ifndef FOOTBALL_AI_POLYGON_DRAWER
+#define FOOTBALL_AI_POLYGON_DRAWER
 
-#include <Scene/Component.hpp>
+#include <QString>
 
 #include <OgreSceneNode.h>
 #include <OgreManualObject.h>
 
 #include <vector>
 
-class PolygonDrawer : public dt::Component
+class PolygonDrawer 
 {
 public:
 	PolygonDrawer(QString name, const std::vector<Ogre::Vector3>& path, float thickness, 
 		Ogre::String material_name, Ogre::SceneNode* scene_node);
 
-	void onInitialize();
+	void draw();
 
-	void onDeinitialize();
-
-	void onUpdate(double time_diff);
+	void clear();
 
 	void setPos(const Ogre::Vector3& pos);
 
 	void setRotation(const Ogre::Quaternion& rotation);
-
-	std::vector<Ogre::Vector3>& getPolygonPoints();
 
 private:
 

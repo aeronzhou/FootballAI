@@ -1,21 +1,17 @@
-#include "PolygonDrawerComponent.h"
+#include "PolygonDrawer.h"
 
-PolygonDrawerComponent::PolygonDrawerComponent(QString name, const std::vector<Ogre::Vector3>& path, float thikness,
-	Ogre::String material_name, Ogre::SceneNode* scene_node) : dt::Component(name), mPath(path), mRotation(Ogre::Quaternion::ZERO),
-	mSceneNode(scene_node), mPos(Ogre::Vector3::ZERO), mMaterialName(material_name), mThickness(thikness) {} 
-
-void PolygonDrawerComponent::onInitialize() 
+PolygonDrawer::PolygonDrawer(QString name, const std::vector<Ogre::Vector3>& path, float thikness,
+	Ogre::String material_name, Ogre::SceneNode* scene_node) : mPath(path), mRotation(Ogre::Quaternion::ZERO),
+	mSceneNode(scene_node), mPos(Ogre::Vector3::ZERO), mMaterialName(material_name), mThickness(thikness) 
 {
 	mPoints.resize(mPath.size());
-	mObject = std::shared_ptr<Ogre::ManualObject>(new Ogre::ManualObject(getName().toStdString() + "Drawer"));
+	mObject = std::shared_ptr<Ogre::ManualObject>(new Ogre::ManualObject(name.toStdString() + "Drawer"));
 	mSceneNode->attachObject(mObject.get());
 }
 
-void PolygonDrawerComponent::onDeinitialize() {}
-
 const float accuracy = 20;
 
-void PolygonDrawerComponent::onUpdate(double time_diff)
+void PolygonDrawer::draw()
 {
 	_updateRealPoints();
 
@@ -47,25 +43,25 @@ void PolygonDrawerComponent::onUpdate(double time_diff)
 	mObject->end();	
 }
 
-void PolygonDrawerComponent::setPos(const Ogre::Vector3& pos)
+void PolygonDrawer::clear()
+{
+	mObject->clear();
+}
+
+void PolygonDrawer::setPos(const Ogre::Vector3& pos)
 {
 	mPos = pos;
 }
 
-void PolygonDrawerComponent::setRotation(const Ogre::Quaternion& rotation)
+void PolygonDrawer::setRotation(const Ogre::Quaternion& rotation)
 {
 	mRotation = rotation;
 }
 
-void PolygonDrawerComponent::_updateRealPoints()
+void PolygonDrawer::_updateRealPoints()
 {
 	for (int i = mPath.size() - 1; i >= 0; --i)
 	{
 		mPoints[i] = mRotation * mPath[i] + mPos;
 	}
-}
-
-std::vector<Ogre::Vector3>& PolygonDrawerComponent::getPolygonPoints()
-{
-	return mPoints;
 }
