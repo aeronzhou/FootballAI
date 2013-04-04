@@ -3,6 +3,7 @@
 
 #include "Region.h"
 #include "CoolingTimeComponent.h"
+#include "CircleDrawerComponent.h"
 
 #include <Scene/Node.hpp>
 #include <Graphics/MeshComponent.hpp>
@@ -51,12 +52,11 @@ public:
 
 protected:
 
-	std::vector<SupportSpot> mSpots;                     //!< Spots
-	SupportSpot* mBestSupportSpot;                       //!< Best spot to support
-	Team* mTeam;                                         //!< Team belongs to
-	std::shared_ptr<CoolingTimeComponent> mCoolingTime;  //!< We should not calculate every single frame, so...
-	std::shared_ptr<dt::Node> mSpotFlag;                 //!< Flag so we can see the spot
-	std::shared_ptr<dt::MeshComponent> mSpotFlagMesh;    //!< Mesh component of spot flag
+	std::vector<SupportSpot> mSpots;                       //!< Spots
+	SupportSpot* mBestSupportSpot;                         //!< Best spot to support
+	Team* mTeam;                                           //!< Team belongs to
+	std::shared_ptr<CoolingTimeComponent> mCoolingTime;    //!< We should not calculate every single frame, so...
+	std::shared_ptr<CircleDrawerComponent> mSpotFlagDrawer;//!< Circle drawer component of spot flag
 };
 
 #endif

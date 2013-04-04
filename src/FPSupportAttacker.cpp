@@ -11,6 +11,7 @@ SupportAttacker* SupportAttacker::get()
 
 void SupportAttacker::enter(FieldPlayer* player)
 {
+	//std::cout << "SupportAttacker " << std::endl;
 	player->getSteering()->setArriveOn();
 	player->setTarget(player->getTeam()->getBestSupportSpot());
 }

@@ -50,17 +50,19 @@ void KickingBall::execute(FieldPlayer* player)
 		ball->kick(target - ball->getPosition(), shooting_foce);
 		player->getStateMachine()->changeState(ChasingBall::get());
 
+		// Decide to shoot
+		// Find supporter
+		player->findSupport();
+
 		return;
 	}
 
 	// Can pass
 	Player* receiver = nullptr;
-	float passing_force = Prm.PlayerMaxPassingForce;
 
 	if (player->isThreatened() && 
 		player->getTeam()->canPass(player, receiver, target, dot))
 	{
-		//std::cout << "Can Pass" << std::endl;
 		MessageDispatcher::get().dispatchMessage(
 			0,
 			player, 
@@ -69,16 +71,26 @@ void KickingBall::execute(FieldPlayer* player)
 			&target	
 			);
 
+		// Adjust passing force
+		float passing_force = ball->getProperForceToKick(Vector3To2(receiver->getPosition() - ball->getPosition()).length());
+
 		// Apply a force
 		ball->kick(receiver->getPosition() - ball->getPosition(), passing_force);
 
 		// After passing, the player should change to wait
 		player->getStateMachine()->changeState(Waiting::get());
 
+		// Decide to pass
+		// Find support
+		player->findSupport();
+
 		return;
 	}
 
 	// Should dribble
+	// Ask for help
+	player->findSupport();
+
 	player->getStateMachine()->changeState(Dribbling::get());
 }
 

@@ -48,6 +48,15 @@ void Ball::kick(Ogre::Vector3 direction, float force)
 	mPhysicsBody->applyCentralImpulse(BtOgre::Convert::toBullet(direction));
 }
 
+float Ball::getProperForceToKick(float distance)
+{
+	static const float KICK_REAL_FACTOR = 1.0f;
+
+	float force = sqrt(double(2 * Prm.BallDeceleration * distance)) * mMass;
+	
+	return std::min(Prm.PlayerMaxPassingForce, force * KICK_REAL_FACTOR);
+}
+
 Ogre::Vector3 Ball::getVelocity() const
 {
 	return BtOgre::Convert::toOgre(mPhysicsBody->getRigidBody()->getLinearVelocity());

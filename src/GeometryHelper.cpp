@@ -57,3 +57,18 @@ bool GeometryHelper::lineSegmentIntersect(const Ogre::Vector3& u1, const Ogre::V
 
 	return true;
 }
+
+bool GeometryHelper::isInPolygon(const Ogre::Vector3& p, std::vector<Ogre::Vector3>& polygon)
+{
+	int sz = polygon.size();
+
+	for (int i = 0; i < sz; ++i)
+	{
+		if (_xmult(p, polygon[(i + 1) % sz], polygon[i]) < 0)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}

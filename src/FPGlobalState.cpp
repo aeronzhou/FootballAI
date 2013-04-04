@@ -37,8 +37,8 @@ bool FieldPlayerGlobalState::onMessage(FieldPlayer* player, const Message& msg)
 			FieldPlayer* receiver = static_cast<FieldPlayer*>(msg.data);
 
 			// Cannot pass the ball
-			if (receiver->getTeam()->getReceivingPlayer() != nullptr ||
-				!receiver->isBallWithinControlRange())
+			if (player->getTeam()->getReceivingPlayer() != nullptr ||
+				!player->isBallWithinControlRange())
 			{
 				return true;
 			}

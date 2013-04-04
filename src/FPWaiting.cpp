@@ -1,6 +1,7 @@
 #include "FieldPlayerState.h"
 #include "FieldPlayer.h"
 #include "Team.h"
+#include "Goal.h"
 #include "MessageDispatcher.h"
 #include "Constant.h"
 

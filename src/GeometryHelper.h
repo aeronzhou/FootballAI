@@ -3,6 +3,8 @@
 
 #include <OgreVector3.h>
 
+#include <vector>
+
 /** 
   * Class to solve geometry problem
   */
@@ -22,6 +24,14 @@ public:
 	  */
 	bool lineSegmentIntersect(const Ogre::Vector3& u1, const Ogre::Vector3& u2, 
 		const Ogre::Vector3& v1, const Ogre::Vector3& v2, Ogre::Vector3 &ret);
+
+	/** 
+	  * Return true if point p is in polygon
+	  * @param p Point
+	  * @param polygon Polygon
+	  * @returns True if point p is in polygon
+	  */
+	bool isInPolygon(const Ogre::Vector3& p, std::vector<Ogre::Vector3>& polygon);
 
 private:
 

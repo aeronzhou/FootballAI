@@ -7,7 +7,7 @@
 	<BallResistanceInterval>0.04</BallResistanceInterval>
 	<BallRealTimeSpentFactor>1.2</BallRealTimeSpentFactor>
 	<BallRadius>0.10</BallRadius>
-	<BallPosX>3</BallPosX>
+	<BallPosX>0</BallPosX>
 	<BallPosZ>0</BallPosZ>
 
 	<NumRegionsHorizontal>9</NumRegionsHorizontal>
@@ -21,7 +21,7 @@
 	<HalfGoalHeight>1.0</HalfGoalHeight>	
 
 	<CameraPosX>0.0</CameraPosX>
-	<CameraPosY>8</CameraPosY>
+	<CameraPosY>7</CameraPosY>
 	<CameraPosZ>14</CameraPosZ>
 	<CameraSpeed>0.2</CameraSpeed>
 	<MouseSensitivity>0.5</MouseSensitivity>
@@ -29,7 +29,7 @@
 	<VelocityToForceCoefficient>1.0</VelocityToForceCoefficient>
 	<DecelerationTweaker>0.3</DecelerationTweaker>
 	<VisibleRange>4</VisibleRange>
-	<SeperationCoefficient>1</SeperationCoefficient>
+	<SeperationCoefficient>0.3</SeperationCoefficient>
 	<DistAtTarget>0.5</DistAtTarget>
 
 	<TotalGameTime>5</TotalGameTime>
@@ -38,39 +38,34 @@
 	<PlayerScale>0.1</PlayerScale>
 	<PlayerInitPositionY>0.5</PlayerInitPositionY>
 	<PlayerKickCoolingTime>0.3</PlayerKickCoolingTime>
-	<PlayerMaxPassingForce>7</PlayerMaxPassingForce>
+	<PlayerMaxPassingForce>9</PlayerMaxPassingForce>
 	<PlayerDribblingForce>2.0</PlayerDribblingForce>
 	<PlayerTurnAroundForce>1.5</PlayerTurnAroundForce>
 	<PlayerMaxShootingForce>20</PlayerMaxShootingForce>
-	<PlayerThreatenedRange>4</PlayerThreatenedRange>
+	<PlayerThreatenedRange>3</PlayerThreatenedRange>
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>10</PlayerShootingTryNum>
 	<PlayerReceivingRange>5</PlayerReceivingRange>
+	<PlayerPassSafeRangeLength>7</PlayerPassSafeRangeLength>
+	<PlayerPassSafeRangeWidth>3</PlayerPassSafeRangeWidth>
 
 	<PlayerRangeRadius>1.2</PlayerRangeRadius>
-	<PlayerRangeThickness>0.1</PlayerRangeThickness>
-	<PlayerRangeMateiral>BaseWhite</PlayerRangeMateiral>
+	<ShowPassSafeDetectRange>1</ShowPassSafeDetectRange>
 	<ShowPlayerRange>1</ShowPlayerRange>
-	<ShowPlayerTarget>1</ShowPlayerTarget>
+	<ShowPlayerTarget>0</ShowPlayerTarget>
 	<ShowSupportSpot>1</ShowSupportSpot>
 	 	
 	<GoalKeeperInterceptRange>12</GoalKeeperInterceptRange>
 	<GoalKeeperControlRange>0.8</GoalKeeperControlRange>
 
-	<SpotPassSafeScore>10</SpotPassSafeScore>
-	<SpotCanShootScore>20</SpotCanShootScore>
-	<SpotDistFromControllingPlayerScore>25</SpotDistFromControllingPlayerScore>
+	<SpotPassSafeScore>2</SpotPassSafeScore>
+	<SpotCanShootScore>1</SpotCanShootScore>
+	<SpotDistFromCtrlPlayerScore>2</SpotDistFromCtrlPlayerScore>
+	<SpotOptimalDistance>7</SpotOptimalDistance>
+	<SpotClosenessToSupportingPlayerScore>0</SpotClosenessToSupportingPlayerScore>
+	<SpotAheadOfAttackerScore>0</SpotAheadOfAttackerScore>
 
 	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
-	
-	<GAGeneration>20</GAGeneration>
-	<GACrossCostPerRgn>10</GACrossCostPerRgn>
-	<GAPlayerKeepBallValue>10</GAPlayerKeepBallValue>
-	<GAPlayerChaseBallValue>10</GAPlayerChaseBallValue>
-	<GAPlayerDefendValue>10</GAPlayerDefendValue>
-	<GAPlayerAttackValue>10</GAPlayerAttackValue>
-	<GAColonySize>100</GAColonySize>
-	
 
 </Params>

@@ -3,6 +3,7 @@
 
 #include "Pitch.h"
 #include "StateMachine.h"
+#include "CoolingTimeComponent.h"
 
 #include <Scene/Node.hpp>
 
@@ -198,7 +199,9 @@ private:
 	Player* mReceivingPlayer;                         //!< Pointer to receiving player
 	SupportSpotCalculator* mSupportSpotCalculator;    //!< Calculator of best support spot
 	std::vector<int> mAssignedRegionIDs;			  //!< calculate the regionids of player in runtime
+	std::vector<Ogre::Vector3> mPassSafePolygon;      //!< Polygon to indicate if pass safe
 
+	std::shared_ptr<CoolingTimeComponent> mCantWaitToReceiveBall;   //!< If the player wait to long, he should chase the ball	
 };
 
 #endif

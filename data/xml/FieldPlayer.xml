@@ -3,7 +3,7 @@
 	<MaxSpeed>2.0</MaxSpeed>
 	<MaxForce>20</MaxForce>
 	<Mass>70</Mass>
-	<TurnRate>0.03</TurnRate>
+	<TurnRate>0.08</TurnRate>
 	<RedMeshHandle>Sinbad.mesh</RedMeshHandle>
 	<BlueMeshHandle>Sinbad.mesh</BlueMeshHandle>
 	<MaterialHandle></MaterialHandle>

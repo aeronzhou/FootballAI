@@ -1,4 +1,5 @@
 #include "FieldPlayerState.h"
+#include "Pitch.h"
 #include "Team.h"
 
 Positioning* Positioning::get()
@@ -16,7 +17,8 @@ void Positioning::enter(FieldPlayer* player)
 void Positioning::execute(FieldPlayer* player)
 {
 	if (player->isClosestTeamMemberToBall() && 
-		player->getTeam()->getReceivingPlayer() == nullptr) // && !GoalKeeperHasBall()
+		player->getTeam()->getReceivingPlayer() == nullptr &&
+		!player->getPitch()->isGoalKeeperHasBall() ) // && !GoalKeeperHasBall()
 	{
 		player->getStateMachine()->changeState(ChasingBall::get());
 		return;

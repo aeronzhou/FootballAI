@@ -27,17 +27,13 @@ void Dribbling::execute(FieldPlayer* player)
 	{
 		Ogre::Radian angle = player->getHeading().getRotationTo(player->getTeam()->getGoal()->getFacing()).getYaw();
 
-		if (angle > Ogre::Radian(0) || fabs(angle.valueRadians()) < 1e-6)
+		if (angle > Ogre::Radian(0) || fabs(angle.valueRadians()) < 1e-3)
 		{
 			angle = PI / 3;
 		}
 		else 
 		{
 			angle = -PI / 3;
-		}
-		if (player->getPitch()->getPlayingArea()->onMargin(player->getPosition()))
-		{
-			angle = -angle;
 		}
 
 		Ogre::Vector3 direction = player->getRotation() * Ogre::Quaternion(angle, Ogre::Vector3(0, 1, 0)) * Ogre::Vector3(0, 0, 1);

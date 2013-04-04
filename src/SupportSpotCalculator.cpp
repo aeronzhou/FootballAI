@@ -7,6 +7,8 @@
 
 #include <Graphics/MeshComponent.hpp>
 
+#include <OgreSceneNode.h>
+
 SupportSpotCalculator::SupportSpotCalculator(const QString& name, Team* team)
 	: dt::Node(name), mTeam(team), mBestSupportSpot(nullptr) {}
 
@@ -21,11 +23,12 @@ void SupportSpotCalculator::onInitialize()
 		mSpots.push_back(SupportSpot(*it, 0.f));
 	}
 
-	mSpotFlag = addChildNode(new dt::Node(getName() + "Spot"));
+	Ogre::SceneNode* scene_node = mTeam->getPitch()->getSceneNode();
+
 	if (mTeam->getTeamColor() == Team::RED)
-		mSpotFlagMesh = mSpotFlag->addComponent(new dt::MeshComponent("PlayerFlag", "PlayerFlagRed", "SpotFlagRed"));
+		mSpotFlagDrawer = addComponent(new CircleDrawerComponent("RedSpot", "PlayerFlagRed", 1.2f, 0.3f, scene_node));
 	else 
-		mSpotFlagMesh = mSpotFlag->addComponent(new dt::MeshComponent("PlayerFlag", "PlayerFlagBlue", "SpotFlagBlue"));
+		mSpotFlagDrawer = addComponent(new CircleDrawerComponent("BlueSpot", "PlayerFlagBlue", 1.2f, 0.3f, scene_node));
 }
 
 void SupportSpotCalculator::onDeinitialize() 
@@ -66,6 +69,13 @@ void SupportSpotCalculator::determineBestSupportSpot()
 			it->score += Prm.SpotCanShootScore;
 		}
 
+		// Dist from controlling player
+		float dist = mTeam->getControllingPlayer()->getPosition().distance(it->region->getCenter());
+		if (dist < Prm.SpotOptimalDistance)
+		{
+			it->score += Prm.SpotDistFromCtrlPlayerScore * (dist / Prm.SpotOptimalDistance);
+		}
+
 		if (it->score > best_score)
 		{
 			mBestSupportSpot = &(*it);
@@ -73,7 +83,7 @@ void SupportSpotCalculator::determineBestSupportSpot()
 		}
 	}
 
-	mSpotFlag->setPosition(mBestSupportSpot->region->getCenter());
+	mSpotFlagDrawer->setPos(mBestSupportSpot->region->getCenter());
 }
 
 Ogre::Vector3 SupportSpotCalculator::getBestSupportSpot() 
@@ -89,10 +99,10 @@ void SupportSpotCalculator::setShowFlag(bool flag)
 {
 	if (flag)
 	{
-		mSpotFlagMesh->enable();
+		mSpotFlagDrawer->enable();
 	}
 	else 
 	{
-		mSpotFlagMesh->disable();
+		mSpotFlagDrawer->disable();
 	}
 }

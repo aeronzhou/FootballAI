@@ -6,6 +6,8 @@
 #include "ParamLoader.h"
 #include "Utils.h"
 
+#include "GeometryHelper.h"
+
 #include <Utils/Random.hpp>
 #include <Scene/Scene.hpp>
 #include <Physics/PhysicsBodyComponent.hpp>
@@ -22,7 +24,7 @@ void Pitch::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
-#define TEST_BALL_TIME_SPENT 0
+#define TEST_BALL_TIME_SPENT 0 
 #if	TEST_BALL_TIME_SPENT
 	static bool test_ball = true; 
 	if (test_ball)
@@ -30,11 +32,12 @@ void Pitch::onUpdate(double time_diff)
 		test_ball = false;
 		std::cout << "Ball cover time = " << mBall->getTimeToGoThroughDistance(3, 4) << std::endl;		
 	}
-	mBall->testTimeSpentByInitialForce(3, 4);
+	mBall->testTimeSpentByInitialForce(15, 10);
 #endif
 
 	_updatePlayerRangeDrawer();
 	_updatePlayerTargetDrawer();
+	_updatePlayerPassSafeRange();
 
 	// Test if the ball is scored!!!
 	// Set team to kick off and send players back to origin region
@@ -62,6 +65,29 @@ void Pitch::onInitialize()
 	play_ground_node->addComponent(new dt::MeshComponent("PlayGround", "PrimitivesTest/Pebbles", "PlayGroundMesh"));
 	play_ground_node->addComponent(new dt::PhysicsBodyComponent("PlayGroundMesh", "PlayGroundBody",
 		dt::PhysicsBodyComponent::BOX, 0.0f));
+
+	// Create Drawer
+	mSceneNode =  getScene()->getSceneManager()->getRootSceneNode()->createChildSceneNode("ObjectDrawer");
+	mPlayerRangeDrawer = addComponent(new CircleDrawerComponent("PlayerRange", "BaseWhite",
+		Prm.PlayerThreatenedRange, 0.1, mSceneNode));
+	mPlayerTargetDrawer = addComponent(new CircleDrawerComponent("PlayerTarget", "PlayerTarget", 0.7f, 0.25f, mSceneNode));
+	
+	// Array of pass safe range
+	Ogre::Vector3 pass_safe_array[4] = {
+		Ogre::Vector3(-0.6, 0, 0), 
+		Ogre::Vector3(-Prm.PlayerPassSafeRangeWidth, 0, Prm.PlayerPassSafeRangeLength),
+		Ogre::Vector3(Prm.PlayerPassSafeRangeWidth, 0, Prm.PlayerPassSafeRangeLength), 
+		Ogre::Vector3(0.6, 0, 0)
+	};
+	mPassSafePolygon = std::vector<Ogre::Vector3>(pass_safe_array, pass_safe_array + 4);
+	mPlayerPassSafeDrawer = addComponent(new PolygonDrawerComponent("PassSafe", mPassSafePolygon, 0.08f, "PlayerTarget", mSceneNode));
+
+	if (!Prm.ShowPlayerRange)
+		mPlayerRangeDrawer->disable();
+	if (!Prm.ShowPlayerTarget)
+		mPlayerTargetDrawer->disable();
+	if (!Prm.ShowPassSafeDetectRange)
+		mPlayerPassSafeDrawer->disable();
 
 	// Create regions
 	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight, -1, Prm.PitchMargin);	
@@ -115,12 +141,6 @@ void Pitch::onInitialize()
 	// Start the game
 	mGameOn = true;
 	mGoalKeeperHasBall = false;
-
-	mSceneNode =  getScene()->getSceneManager()->getRootSceneNode()->createChildSceneNode("ObjectDrawer");
-
-	mPlayerRangeDrawer = addComponent(new CircleDrawerComponent("PlayerRange", (Prm.PlayerRangeMateiral).toStdString(), 
-		Prm.PlayerThreatenedRange, Prm.PlayerRangeThickness, mSceneNode));
-	mPlayerTargetDrawer = addComponent(new CircleDrawerComponent("PlayerTarget", "PlayerTarget", 0.7f, 0.25f, mSceneNode));
 }
 
 void Pitch::onDeinitialize() 
@@ -203,6 +223,24 @@ void Pitch::_updatePlayerTargetDrawer()
 	}
 }
 
+void Pitch::_updatePlayerPassSafeRange()
+{
+	if (mRedTeam->isInControl())
+	{
+		mPlayerPassSafeDrawer->setPos(mRedTeam->getControllingPlayer()->getPosition());
+		mPlayerPassSafeDrawer->setRotation(mRedTeam->getControllingPlayer()->getRotation());
+	}
+	else if (mBlueTeam->isInControl())
+	{
+		mPlayerPassSafeDrawer->setPos(mBlueTeam->getControllingPlayer()->getPosition());
+		mPlayerPassSafeDrawer->setRotation(mBlueTeam->getControllingPlayer()->getRotation());
+	}
+	else 
+	{
+		mPlayerPassSafeDrawer->setPos(Ogre::Vector3::ZERO);
+	}
+}
+
 
 const std::vector<Region*>& Pitch::getAllRegions() const 
 {
@@ -237,4 +275,14 @@ bool Pitch::isGoalKeeperHasBall() const
 void Pitch::setGoalKeeperHasBall(bool flag)
 {
 	mGoalKeeperHasBall = flag;
+}
+
+Ogre::SceneNode* Pitch::getSceneNode() const 
+{
+	return mSceneNode;
+}
+
+const std::vector<Ogre::Vector3>& Pitch::getPassSafePolygon()
+{
+	return mPassSafePolygon;
 }

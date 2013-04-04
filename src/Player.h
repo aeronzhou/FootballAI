@@ -21,8 +21,8 @@ public:
 	enum PlayerRole
 	{
 		GOAL_KEEPER,  
-		FORWARD,
-		MIDFIELD,
+		ATTACKER,
+		DEFENDER,
 		BACK
 	};
 

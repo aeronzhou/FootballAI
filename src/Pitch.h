@@ -4,6 +4,7 @@
 #include "Ball.h"
 #include "Region.h"
 #include "CircleDrawerComponent.h"
+#include "PolygonDrawerComponent.h"
 
 #include <Scene/Node.hpp>
 #include <Graphics/MeshComponent.hpp>
@@ -59,6 +60,13 @@ public:
 	  */
 	bool isGoingForKickingOff(Team* team);
 
+	/** 
+	  * Get scene node to drawer circle flag
+	  */
+	Ogre::SceneNode* getSceneNode() const;
+
+	const std::vector<Ogre::Vector3>& getPassSafePolygon();
+
 private:
 
 	/** 
@@ -78,6 +86,10 @@ private:
 	  */
 	void _updatePlayerTargetDrawer();
 
+	/** 
+	  * Drawer to show player's pass safe range
+	  */
+	void _updatePlayerPassSafeRange();
 
 
 
@@ -99,6 +111,9 @@ private:
 	Ogre::SceneNode* mSceneNode;                                     //!< Scene Node
 	std::shared_ptr<CircleDrawerComponent> mPlayerRangeDrawer;       //!< Circle Drawer of player range
 	std::shared_ptr<CircleDrawerComponent> mPlayerTargetDrawer;      //!< Circle Drawer of player target
+	std::shared_ptr<PolygonDrawerComponent> mPlayerPassSafeDrawer;   //!< PolygonDrawer of pass safe range
+
+	std::vector<Ogre::Vector3> mPassSafePolygon;                     //!< Polygon to indicate pass safe range
 };
 
 

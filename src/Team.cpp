@@ -34,15 +34,18 @@ void Team::onInitialize()
 	//Initialize regionID size
 	mAssignedRegionIDs.resize(mPlayers.size());
 
-	//for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
-	//{
-	//	(*it)->getSteering()->setSeparationOn();
-	//}
+	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
+	{
+		(*it)->getSteering()->setSeparationOn();
+	}
 
 	_findPlayerClosestToBall();
 
+	mPassSafePolygon.resize(mPitch->getPassSafePolygon().size());
+
 	// Add support spot calculator
 	mSupportSpotCalculator = (SupportSpotCalculator*)addChildNode(new SupportSpotCalculator("BestSupportSpotCalc", this)).get();
+	mCantWaitToReceiveBall = addComponent(new CoolingTimeComponent(1.f, "CantWaitToReceiveBall"));
 }
 
 void Team::onDeinitialize()
@@ -69,20 +72,20 @@ void Team::_createPlayers()
 	// Generate players with PlayerManager
 	if (getTeamColor() == RED)
 	{
-		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(0), 
-			this, FieldPlayer::FORWARD, vec_pos[0])).get());
-		//for (int i = 1; i < 3; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
-		//}
-		for (int i = 3; i < 6; ++i)
+		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(0), 
+		//	this, FieldPlayer::ATTACKER, vec_pos[0])).get());
+		for (int i = 0; i < 3; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-				this, FieldPlayer::BACK, vec_pos[i])).get());
+				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
 		}
+		//for (int i = 3; i < 6; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+		//		this, FieldPlayer::BACK, vec_pos[i])).get());
+		//}
 		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(6), 
-			this, FieldPlayer::BACK, vec_pos[6])).get());
+			this, FieldPlayer::DEFENDER, vec_pos[6])).get());
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
@@ -91,20 +94,20 @@ void Team::_createPlayers()
 	}
 	else 
 	{
-		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
-			this, FieldPlayer::FORWARD, vec_pos[7])).get());
-		//for (int i = 8; i < 10; ++i)
+		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(0), 
+		//	this, FieldPlayer::FORWARD, vec_pos[7])).get());
+		//for (int i = 7; i < 10; ++i)
 		//{
 		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-		//		this, FieldPlayer::MIDFIELD, vec_pos[i])).get());
+		//		this, FieldPlayer::ATTACKER, vec_pos[i])).get());
 		//}
-		for (int i = 10; i < 13; ++i)
+		for (int i = 10; i < 12 /*13*/; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::BACK, vec_pos[i])).get());
+				this, FieldPlayer::DEFENDER, vec_pos[i])).get());
 		}
-		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
-			this, FieldPlayer::MIDFIELD, vec_pos[13])).get());
+		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
+		//	this, FieldPlayer::DEFENDER, vec_pos[13])).get());
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
@@ -337,15 +340,36 @@ std::vector<Player*>& Team::getPlayers()
 bool Team::isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre::Vector3& target, float force)
 {
 	std::vector<Player*>& opponents = getOpponent()->getPlayers();
+	const std::vector<Ogre::Vector3>& points = mPitch->getPassSafePolygon();
 
+	for (int i = 0; i < points.size(); ++i)
+	{
+		mPassSafePolygon[i] = GetRotationThroughHeading(target - from) * points[i] + from; 
+	}
+
+	int num_in_polygon = 0;
 	for (auto it = opponents.begin(); it != opponents.end(); ++it)
 	{
-		if (!isSafeGoingThroughOpponent(from, target, force, *it))
+		// If Distance(opponent, from) > Distance(from, target), pass
+		if (from.distance((*it)->getPosition()) > from.distance(target))
 		{
-			return false;
+			continue;
+		}
+		
+		if (GeometryHelper::get().isInPolygon((*it)->getPosition(), mPassSafePolygon))
+		{
+			++num_in_polygon;
 		}
 	}
-	return true;
+
+	// No one in this region, pass is safe
+	if (!num_in_polygon)
+	{
+		return true;
+	}
+
+	// Enforce to pass the ball
+	return WithPossibility(0.1 / (num_in_polygon * num_in_polygon));
 }
 
 bool Team::isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vector3& target, float force, Player* opponent)
@@ -474,12 +498,15 @@ Player* Team::determineBestSupportingPlayer() const
 
 	for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	{
-		float dist = (*it)->getPosition().distance(best_spot);
-
-		if (dist < min_dist)
+		if (*it != mControllingPlayer) 
 		{
-			min_dist = dist;
-			best_supporting_player = *it;
+			float dist = (*it)->getPosition().distance(best_spot);
+
+			if (dist < min_dist)
+			{
+				min_dist = dist;
+				best_supporting_player = *it;
+			}
 		}
 	}
 

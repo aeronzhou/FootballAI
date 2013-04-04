@@ -24,6 +24,13 @@ public:
 	void kick(Ogre::Vector3 direction, float force);
 
 	/** 
+	  * Return the proper force to kick the ball, so as to run as long as given distance
+	  * @param distance Distance to go
+	  * @returns Proper force
+	  */
+	float getProperForceToKick(float distance);
+
+	/** 
 	  * Function to test time spent when applying the ball
 	  * a exact force. Compare with the getTimeToGoThroughDistance
 	  * !!!!!!!Called only in onUpdate function!!!!!!!

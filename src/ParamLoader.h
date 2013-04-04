@@ -73,16 +73,22 @@ public:
 		PlayerShootingRange = mParamTables["PlayerShootingRange"].toFloat();
 		PlayerShootingTryNum = mParamTables["PlayerShootingTryNum"].toFloat();
 		PlayerReceivingRange = mParamTables["PlayerReceivingRange"].toFloat();
+		PlayerPassSafeRangeLength = mParamTables["PlayerPassSafeRangeLength"].toFloat();
+		PlayerPassSafeRangeWidth = mParamTables["PlayerPassSafeRangeWidth"].toFloat();
 
 		PlayerRangeRadius = mParamTables["PlayerRangeRadius"].toFloat();
-		PlayerRangeThickness = mParamTables["PlayerRangeThickness"].toFloat();
-		PlayerRangeMateiral = mParamTables["PlayerRangeMateiral"];
+		ShowPlayerRange = mParamTables["ShowPlayerRange"].toInt();
+		ShowPlayerTarget = mParamTables["ShowPlayerTarget"].toInt();
+		ShowSupportSpot = mParamTables["ShowSupportSpot"].toInt();
+		ShowPassSafeDetectRange = mParamTables["ShowPassSafeDetectRange"].toInt();
 
 		GoalKeeperInterceptRange = mParamTables["GoalKeeperInterceptRange"].toFloat();
 		GoalKeeperControlRange = mParamTables["GoalKeeperControlRange"].toFloat();
 
 		SpotPassSafeScore = mParamTables["SpotPassSafeScore"].toFloat();
 		SpotCanShootScore = mParamTables["SpotCanShootScore"].toFloat();
+		SpotDistFromCtrlPlayerScore = mParamTables["SpotDistFromCtrlPlayerScore"].toFloat();
+		SpotOptimalDistance = mParamTables["SpotOptimalDistance"].toFloat();
 
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
@@ -158,11 +164,15 @@ public:
 	float PlayerShootingRange;
 	float PlayerShootingTryNum;
 	float PlayerReceivingRange;
+	float PlayerPassSafeRangeLength;
+	float PlayerPassSafeRangeWidth;
 	
-	// PlayerRange
+	// Flag drawer
 	float PlayerRangeRadius;
-	float PlayerRangeThickness;
-	QString PlayerRangeMateiral;
+	int ShowPlayerRange;
+	int ShowPlayerTarget;
+	int ShowSupportSpot;
+	int ShowPassSafeDetectRange;
 
 	// GoalKeeper
 	float GoalKeeperInterceptRange;
@@ -171,6 +181,8 @@ public:
 	// Spot
 	float SpotPassSafeScore;
 	float SpotCanShootScore;
+	float SpotDistFromCtrlPlayerScore;
+	float SpotOptimalDistance;
 
 	// Others
 	int PhysicsShowDebug;
