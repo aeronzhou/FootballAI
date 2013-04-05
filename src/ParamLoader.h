@@ -75,6 +75,10 @@ public:
 		PlayerReceivingRange = mParamTables["PlayerReceivingRange"].toFloat();
 		PlayerPassSafeRangeLength = mParamTables["PlayerPassSafeRangeLength"].toFloat();
 		PlayerPassSafeRangeWidth = mParamTables["PlayerPassSafeRangeWidth"].toFloat();
+		RequestPassPosibility = mParamTables["RequestPassPosibility"].toFloat();
+		ChanceOfUsingArriveToReceiveBall = mParamTables["ChanceOfUsingArriveToReceiveBall"].toFloat();
+		PlayerAtTargetRange = mParamTables["PlayerAtTargetRange"].toFloat();
+		PassThreatRadius = mParamTables["PassThreatRadius"].toFloat();
 
 		ShowPlayerThreatenedRange = mParamTables["ShowPlayerThreatenedRange"].toInt();
 		ShowPlayerTarget = mParamTables["ShowPlayerTarget"].toInt();
@@ -170,6 +174,10 @@ public:
 	float PlayerReceivingRange;
 	float PlayerPassSafeRangeLength;
 	float PlayerPassSafeRangeWidth;
+	float ChanceOfUsingArriveToReceiveBall;
+	float RequestPassPosibility;
+	float PlayerAtTargetRange;
+	float PassThreatRadius;
 	
 	// Flag drawer
 	int ShowPlayerThreatenedRange;

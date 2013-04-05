@@ -27,7 +27,7 @@ void Waiting::execute(FieldPlayer* player)
 	{
 		// Face to the ball
 		player->getSteering()->setArriveOff();		
-		player->setVelocity(Ogre::Vector3::ZERO);
+		player->slowDown();
 		player->turnAroundToBall();
 	}
 

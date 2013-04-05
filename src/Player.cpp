@@ -17,7 +17,7 @@
 Player::Player(const QString name, float control_range, float max_speed, float max_force,
 	float mass, float turn_rate, QString mesh_handle, QString material_handle, Team* team, int assigned_region, PlayerRole role)
 	: MovingEntity(name, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
-	mTeam(team), mAssignedRegion(assigned_region), mPlayerRole(role), mDistSqAtTarget(Prm.DistAtTarget * Prm.DistAtTarget),
+	mTeam(team), mAssignedRegion(assigned_region), mPlayerRole(role), 
 	mControlRange(control_range), mIsTurnningAroundAtTarget(0) {}
 
 // Add a flag to distinguish RED and BLUE
@@ -159,8 +159,7 @@ Ogre::Vector3 Player::getTarget() const
 
 bool Player::isAtTarget() const
 {
-	//return (getPosition()).squaredDistance(getSteering()->getTarget()) < mDistSqAtTarget;
-	return Vector3To2(getPosition() - getSteering()->getTarget()).length() < 0.5;
+	return Vector3To2(getPosition() - getSteering()->getTarget()).length() < Prm.PlayerAtTargetRange;
 }
 
 bool Player::isWithinAssignedRegion() const 
@@ -290,5 +289,13 @@ void Player::findSupport()
 			MSG_SUPPORT_ATTACKER,
 			nullptr
 			);
+	}
+}
+
+void Player::slowDown()
+{
+	if (Vector3To2(getPosition() - getTarget()).length() < Prm.PlayerAtTargetRange * 0.5)
+	{
+		setVelocity(Ogre::Vector3::ZERO);
 	}
 }

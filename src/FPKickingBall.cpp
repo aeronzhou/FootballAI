@@ -77,6 +77,8 @@ void KickingBall::execute(FieldPlayer* player)
 		// Apply a force
 		ball->kick(receiver->getPosition() - ball->getPosition(), passing_force);
 
+		//std::cout << "Can Pass!!!!!!" << std::endl;
+
 		// After passing, the player should change to wait
 		player->getStateMachine()->changeState(Waiting::get());
 

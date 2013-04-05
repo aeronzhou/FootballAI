@@ -12,6 +12,7 @@ Receiving* Receiving::get()
 void Receiving::enter(FieldPlayer* player)
 {
 	player->getSteering()->setArriveOn();	
+	//player->getSteering()->setPursuitOn();
 	player->getTeam()->setReceivingPlayer(player);	
 
 	// The player is also the controlling player
@@ -27,18 +28,29 @@ void Receiving::execute(FieldPlayer* player)
 		player->getStateMachine()->changeState(ChasingBall::get());
 	}
 
+	if (player->getSteering()->isPersuitOn())
+	{
+		std::cout << "IsPursuitOn" << std::endl;
+		player->setTarget(player->getBall()->getPosition());
+	}
+
+	Ogre::Vector3 target = player->getTarget();
+	Ogre::Vector3 position = player->getPosition();
+
 	// Player arrive there
 	if (player->isAtTarget())
 	{
 		// Wait there and face to the ball
 		player->getSteering()->setArriveOff();
+		player->getSteering()->setPursuitOff();
+		player->slowDown();
 		player->turnAroundToBall();
-		player->setVelocity(Ogre::Vector3::ZERO);
 	}
 }
 
 void Receiving::exit(FieldPlayer* player)
 {
+	player->getSteering()->setPursuitOff();
 	player->getSteering()->setArriveOff();
 	player->getTeam()->setReceivingPlayer(nullptr);
 }

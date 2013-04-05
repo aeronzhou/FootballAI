@@ -7,6 +7,7 @@
 #include <Utils/Random.hpp>
 
 #include <ostream>
+#include <cstdlib>
 
 // Global functions
 

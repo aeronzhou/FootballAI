@@ -366,8 +366,10 @@ bool Team::isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre:
 		return true;
 	}
 
+	//return false;
+
 	// Enforce to pass the ball
-	return WithPossibility(0.1 / (num_in_polygon * num_in_polygon));
+	return WithPossibility(0.01 / (num_in_polygon * num_in_polygon));
 }
 
 bool Team::isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vector3& target, float force, Player* opponent)
@@ -448,13 +450,13 @@ float Team::_getBestSpotOfReceiving(Player* receiver, float passing_force, Ogre:
 void Team::requestPass(Player* player, double delay_time /* = 0 */)
 {
 	// With a possibility to execute
-	if (WithPossibility(0.8))
+	if (WithPossibility(1.2))
 	{
 		float dot = mControllingPlayer->getHeading().dotProduct(
 			(player->getPosition() - mControllingPlayer->getPosition()).normalisedCopy());
 
 		// Not behind the controlling player
-		if (dot > 0 &&
+		if (dot > -0.1 && 
 			isSafeGoingThroughAllOpponents(
 			getControllingPlayer()->getPosition(), 
 			player->getPosition(), 

@@ -45,6 +45,8 @@ void Ball::kick(Ogre::Vector3 direction, float force)
 
 	// Give it a momentary force
 	setVelocity(direction / mMass);
+
+	//std::cout << "Kick force = " << direction.length() << std::endl;
 }
 
 float Ball::getProperForceToKick(float distance)

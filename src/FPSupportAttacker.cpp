@@ -41,8 +41,8 @@ void SupportAttacker::execute(FieldPlayer* player)
 	if (player->isAtTarget())
 	{
 		player->getSteering()->setArriveOff();
+		player->slowDown();
 		player->turnAroundToBall();
-		player->setVelocity(Ogre::Vector3::ZERO);
 
 		// If this is not threatened, request pass
 		if (!player->isThreatened())

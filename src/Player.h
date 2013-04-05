@@ -132,6 +132,12 @@ public:
 	  */
 	void findSupport();
 
+	/** 
+	  * If the player reach the target, slow down and prepare to stop
+	  * so as to face the ball or some target
+	  */
+	void slowDown();
+
 
 protected:
 
@@ -153,7 +159,6 @@ protected:
 	Team* mTeam;                                     //!< The team this player belongs to
 	int mAssignedRegion;                             //!< Indicate which home region this player assigned to
 	float mDistSqToBall;                             //!< Distance square from the ball
-	float mDistSqAtTarget;                           //!< Distance square to be at target
 
 	SteeringBehaviors* mSteeringBehaviors;           //!< Motion aider
 
