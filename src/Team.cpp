@@ -450,7 +450,7 @@ float Team::_getBestSpotOfReceiving(Player* receiver, float passing_force, Ogre:
 void Team::requestPass(Player* player, double delay_time /* = 0 */)
 {
 	// With a possibility to execute
-	if (WithPossibility(1.2))
+	if (WithPossibility(0.3))
 	{
 		float dot = mControllingPlayer->getHeading().dotProduct(
 			(player->getPosition() - mControllingPlayer->getPosition()).normalisedCopy());
