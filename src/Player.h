@@ -95,6 +95,19 @@ public:
 
 	void setTarget(Ogre::Vector3 target);
 
+	/** 
+	  * Return true if this player is in hot region(have advantage in attack)
+	  * @returns True if this player is in hot region(have advantage in attack) 
+	  */
+	bool isInHotRegion() const;
+
+	/** 
+	  * Test if there's any opponent within given range around the position
+	  * @param radius Range
+	  * @returns If there's any opponent within given range around the position
+	  */
+	bool isOpponentWithinRange(float radius);
+
 	bool isWithinAssignedRegion() const;
 
 	/** 

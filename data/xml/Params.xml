@@ -48,9 +48,9 @@
 	<PlayerPassSafeRangeLength>12</PlayerPassSafeRangeLength>
 	<PlayerPassSafeRangeWidth>3</PlayerPassSafeRangeWidth>
 	<RequestPassPosibility>0.8</RequestPassPosibility>
-	<ChanceOfUsingArriveToReceiveBall>0.5</ChanceOfUsingArriveToReceiveBall>
+	<ChanceOfUsingArriveToReceiveBall>0.6</ChanceOfUsingArriveToReceiveBall>
 	<PlayerAtTargetRange>0.5</PlayerAtTargetRange>
-	<PassThreatRadius>7</PassThreatRadius>
+	<PassThreatRadius>3</PassThreatRadius>
 
 	<ShowPassSafeDetectRange>1</ShowPassSafeDetectRange>
 	<ShowPlayerThreatenedRange>1</ShowPlayerThreatenedRange>

@@ -299,3 +299,24 @@ void Player::slowDown()
 		setVelocity(Ogre::Vector3::ZERO);
 	}
 }
+
+bool Player::isInHotRegion() const 
+{
+	return Vector3To2(getPosition() - mTeam->getOpponent()->getGoal()->getCenter()).length() < 
+		getPitch()->getPlayingArea()->getWidth() / 3;
+}
+
+bool Player::isOpponentWithinRange(float radius)
+{
+	std::vector<Player*>& opponents = mTeam->getOpponent()->getPlayers();
+
+	for (auto it = opponents.begin(); it != opponents.end(); ++it)
+	{
+		if (Vector3To2((*it)->getPosition() - getPosition()).length() < radius)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}

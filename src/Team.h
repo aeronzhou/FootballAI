@@ -142,12 +142,10 @@ public:
 	Player* determineBestSupportingPlayer() const;
 
 	/** 
-	  * for GA
+	  * For GA
 	  * @returns the regionids of player in runtime
 	  */
 	std::vector<int>& Team::getAssignedRegionIDs();
-
-
 
 private:
 

@@ -1,6 +1,8 @@
 #include "FieldPlayerState.h"
 #include "FieldPlayer.h"
 #include "SteeringBehaviors.h"
+#include "ParamLoader.h"
+#include "Utils.h"
 #include "Team.h"
 
 Receiving* Receiving::get()
@@ -11,9 +13,20 @@ Receiving* Receiving::get()
 
 void Receiving::enter(FieldPlayer* player)
 {
-	player->getSteering()->setArriveOn();	
+	//player->getSteering()->setArriveOn();	
 	//player->getSteering()->setPursuitOn();
 	player->getTeam()->setReceivingPlayer(player);	
+
+	if ( (player->isInHotRegion() ||
+		WithPossibility(Prm.ChanceOfUsingArriveToReceiveBall) ) && 
+		!player->isOpponentWithinRange(Prm.PassThreatRadius) )
+	{
+		player->getSteering()->setArriveOn();
+	}
+	else 
+	{
+		player->getSteering()->setPursuitOn();
+	}
 
 	// The player is also the controlling player
 	player->getTeam()->setControllingPlayer(player);
@@ -30,7 +43,7 @@ void Receiving::execute(FieldPlayer* player)
 
 	if (player->getSteering()->isPersuitOn())
 	{
-		std::cout << "IsPursuitOn" << std::endl;
+		//std::cout << "IsPursuitOn" << std::endl;
 		player->setTarget(player->getBall()->getPosition());
 	}
 
