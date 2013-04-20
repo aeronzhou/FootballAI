@@ -3,6 +3,7 @@
 
 #include "Pitch.h"
 #include "StateMachine.h"
+#include "CoolingTimeComponent.h"
 
 #include <Scene/Node.hpp>
 
@@ -142,12 +143,10 @@ public:
 	Player* determineBestSupportingPlayer() const;
 
 	/** 
-	  * for GA
+	  * For GA
 	  * @returns the regionids of player in runtime
 	  */
 	const std::vector<int>& Team::getAssignedRegionIDs();
-
-
 
 private:
 
@@ -200,7 +199,8 @@ private:
 	SupportSpotCalculator* mSupportSpotCalculator;    //!< Calculator of best support spot
 	std::vector<int> mAssignedRegionIDs;			  //!< calculate the regionids of player in runtime
 	Environment* mGAEnvironment;
-
+	std::vector<Ogre::Vector3> mPassSafePolygon;      //!< Polygon to indicate if pass safe
+	std::shared_ptr<CoolingTimeComponent> mCantWaitToReceiveBall;   //!< If the player wait to long, he should chase the ball	
 };
 
 #endif
