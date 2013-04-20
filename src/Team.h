@@ -13,6 +13,7 @@ class Pitch;
 class Player;
 class Goal;
 class SupportSpotCalculator;
+class Environment;
 
 class Team : public dt::Node
 {
@@ -144,7 +145,7 @@ public:
 	  * for GA
 	  * @returns the regionids of player in runtime
 	  */
-	std::vector<int>& Team::getAssignedRegionIDs();
+	const std::vector<int>& Team::getAssignedRegionIDs();
 
 
 
@@ -198,6 +199,7 @@ private:
 	Player* mReceivingPlayer;                         //!< Pointer to receiving player
 	SupportSpotCalculator* mSupportSpotCalculator;    //!< Calculator of best support spot
 	std::vector<int> mAssignedRegionIDs;			  //!< calculate the regionids of player in runtime
+	Environment* mGAEnvironment;
 
 };
 

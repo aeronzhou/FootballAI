@@ -12,6 +12,7 @@
 
 #include <OgreProcedural.h>
 #include <OgreManualObject.h>
+#include <iostream>
 
 Pitch::Pitch(const QString name /* = "Pitch" */)
 	: dt::Node(name) {}
@@ -144,7 +145,7 @@ Region* Pitch::getRegionByIndex(int index)
 	return mRegions[index];
 }
 
-int Pitch::getRegionIndexByPosition(const Ogre::Vector3& position)
+int Pitch::getRegionIndexByPosition( const Ogre::Vector3& position )
 {
 	int n = (position.z - mPlayingArea->getTop()) / (2 * Prm.HalfPitchHeight / Prm.NumRegionsVertical);
 	int m = (position.x - mPlayingArea->getLeft()) / (2 * Prm.HalfPitchWidth / Prm.NumRegionsHorizontal);

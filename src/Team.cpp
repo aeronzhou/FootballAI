@@ -15,11 +15,14 @@
 #include "GeometryHelper.h"
 #include "Utils.h"
 #include "Constant.h"
+#include "GAEnvironment.h"
+#include <iostream>
+
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
 	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()),
-	  mSupportingPlayer(nullptr), mReceivingPlayer(nullptr), mAssignedRegionIDs(std::vector<int>()) {}
+	  mSupportingPlayer(nullptr), mReceivingPlayer(nullptr) {}
 
 
 void Team::onInitialize() 
@@ -34,6 +37,8 @@ void Team::onInitialize()
 	//Initialize regionID size
 	mAssignedRegionIDs.resize(mPlayers.size());
 
+
+
 	//for (auto it = mPlayers.begin(); it != mPlayers.end(); ++it)
 	//{
 	//	(*it)->getSteering()->setSeparationOn();
@@ -43,6 +48,8 @@ void Team::onInitialize()
 
 	// Add support spot calculator
 	mSupportSpotCalculator = (SupportSpotCalculator*)addChildNode(new SupportSpotCalculator("BestSupportSpotCalc", this)).get();
+
+	mGAEnvironment = (Environment*)addChildNode(new Environment("GAEnvironment",this, mPitch)).get();
 }
 
 void Team::onDeinitialize()
@@ -487,13 +494,13 @@ Player* Team::determineBestSupportingPlayer() const
 }
 
 
-std::vector<int>& Team::getAssignedRegionIDs()
+const std::vector<int>& Team::getAssignedRegionIDs()
 {
 	unsigned int size = mPlayers.size();
 	for(unsigned int i = 0; i < size; ++i)
 	{
 		mAssignedRegionIDs[i] = mPitch->getRegionIndexByPosition(mPlayers[i]->getPosition());
+		std::cout << "\n----IDS: " << mAssignedRegionIDs[i] <<"\n";
 	}
-
 	return mAssignedRegionIDs;
 }
