@@ -8,7 +8,7 @@
 	<BallRealTimeSpentFactor>1.2</BallRealTimeSpentFactor>
 	<BallRadius>0.10</BallRadius>
 	<BallPosX>0</BallPosX>
-	<BallPosZ>0</BallPosZ>
+	<BallPosZ>-16</BallPosZ>
 
 	<NumRegionsHorizontal>9</NumRegionsHorizontal>
 	<NumRegionsVertical>5</NumRegionsVertical>
@@ -47,10 +47,11 @@
 	<PlayerReceivingRange>2</PlayerReceivingRange>
 	<PlayerPassSafeRangeLength>12</PlayerPassSafeRangeLength>
 	<PlayerPassSafeRangeWidth>3</PlayerPassSafeRangeWidth>
-	<RequestPassPosibility>0.8</RequestPassPosibility>
+	<RequestPassPosibility>0.3</RequestPassPosibility>
 	<ChanceOfUsingArriveToReceiveBall>0.6</ChanceOfUsingArriveToReceiveBall>
 	<PlayerAtTargetRange>0.5</PlayerAtTargetRange>
 	<PassThreatRadius>3</PassThreatRadius>
+	<ReceiveBallDelayTime>1.3f</ReceiveBallDelayTime>
 
 	<ShowPassSafeDetectRange>1</ShowPassSafeDetectRange>
 	<ShowPlayerThreatenedRange>1</ShowPlayerThreatenedRange>
@@ -68,6 +69,7 @@
 	<NumSupportSpotX>6</NumSupportSpotX>
 	<NumSupportSpotY>6</NumSupportSpotY>
 	<ShowSupportSpot>1</ShowSupportSpot>
+	<SupportSpotUpdateCoolTime>1.0</SupportSpotUpdateCoolTime>
 
 
 	<PhysicsShowDebug>0</PhysicsShowDebug>

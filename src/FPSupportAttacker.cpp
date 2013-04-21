@@ -25,6 +25,15 @@ void SupportAttacker::execute(FieldPlayer* player)
 		return;
 	}
 
+	// If the controlling player lose control of ball, chase it
+	if (player->isClosestTeamMemberToBall() && 
+		player->getTeam()->getReceivingPlayer() == nullptr &&
+		!player->getPitch()->isGoalKeeperHasBall())
+	{
+		player->getStateMachine()->changeState(ChasingBall::get());
+		return;
+	}
+
 	// Update if the best support spot changed
 	if (player->getTeam()->getBestSupportSpot() != player->getTarget())
 	{

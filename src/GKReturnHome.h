@@ -5,11 +5,11 @@
 
 class GoalKeeper;
 
-// ReturnHomeState
-class ReturnHomeState: public State<GoalKeeper>
+// ReturnHome
+class ReturnHome: public State<GoalKeeper>
 {
 public:
-	static ReturnHomeState* get();
+	static ReturnHome* get();
 
 	void enter(GoalKeeper*);
 

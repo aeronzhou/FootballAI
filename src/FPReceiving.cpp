@@ -39,6 +39,14 @@ void Receiving::execute(FieldPlayer* player)
 		player->isWithinReceivingRange())
 	{
 		player->getStateMachine()->changeState(ChasingBall::get());
+		return;
+	}
+
+	// If the ball is almost still
+	if (player->getBall()->getVelocity().length() < 0.02f)
+	{
+		player->getStateMachine()->changeState(ChasingBall::get());
+		return;
 	}
 
 	if (player->getSteering()->isPersuitOn())

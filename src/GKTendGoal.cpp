@@ -20,6 +20,7 @@ void TendGoal::execute(GoalKeeper* keeper)
 {
 	keeper->setTarget(keeper->getRearInterposeTarget());
 
+
 	if (keeper->isBallWithinControlRange())
 	{
 		keeper->getBall()->stop();
@@ -29,7 +30,7 @@ void TendGoal::execute(GoalKeeper* keeper)
 	}
 
 	// If the ball is within intercept range, catch it
-	if (keeper->isBallWithInterceptRange())
+	if (keeper->isBallWithInterceptRange() && !keeper->getTeam()->isInControl())
 	{
 		keeper->getStateMachine()->changeState(InterceptBall::get());
 		return;
@@ -37,7 +38,7 @@ void TendGoal::execute(GoalKeeper* keeper)
 
 	if (keeper->isTooFarFromGoalMouth() && keeper->getTeam()->isInControl())
 	{
-		keeper->getStateMachine()->changeState(ReturnHomeState::get());
+		keeper->getStateMachine()->changeState(ReturnHome::get());
 	}
 }
 

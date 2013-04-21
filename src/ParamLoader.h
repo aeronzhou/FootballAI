@@ -79,6 +79,7 @@ public:
 		ChanceOfUsingArriveToReceiveBall = mParamTables["ChanceOfUsingArriveToReceiveBall"].toFloat();
 		PlayerAtTargetRange = mParamTables["PlayerAtTargetRange"].toFloat();
 		PassThreatRadius = mParamTables["PassThreatRadius"].toFloat();
+		ReceiveBallDelayTime = mParamTables["ReceiveBallDelayTime"].toFloat();	
 
 		ShowPlayerThreatenedRange = mParamTables["ShowPlayerThreatenedRange"].toInt();
 		ShowPlayerTarget = mParamTables["ShowPlayerTarget"].toInt();
@@ -96,6 +97,7 @@ public:
 		ShowSupportSpot = mParamTables["ShowSupportSpot"].toInt();
 		NumSupportSpotX = mParamTables["NumSupportSpotX"].toInt();
 		NumSupportSpotY = mParamTables["NumSupportSpotX"].toInt();
+		SupportSpotUpdateCoolTime = mParamTables["SupportSpotUpdateCoolTime"].toFloat();
 
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
@@ -178,6 +180,7 @@ public:
 	float RequestPassPosibility;
 	float PlayerAtTargetRange;
 	float PassThreatRadius;
+	float ReceiveBallDelayTime;
 	
 	// Flag drawer
 	int ShowPlayerThreatenedRange;
@@ -198,6 +201,7 @@ public:
 	int NumSupportSpotX;
 	int NumSupportSpotY;
 	int ShowSupportSpot;
+	float SupportSpotUpdateCoolTime;
 
 	// Others
 	int PhysicsShowDebug;

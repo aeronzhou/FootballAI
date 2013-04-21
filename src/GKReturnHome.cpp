@@ -5,19 +5,19 @@
 #include "Constant.h"
 
 
-// ReturnHomeState
-ReturnHomeState* ReturnHomeState::get()
+// ReturnHome
+ReturnHome* ReturnHome::get()
 {
-	static ReturnHomeState instance;
+	static ReturnHome instance;
 	return &instance;
 }
 
-void ReturnHomeState::enter(GoalKeeper* keeper)
+void ReturnHome::enter(GoalKeeper* keeper)
 {
 	keeper->getSteering()->setArriveOn();
 }
 
-void ReturnHomeState::execute(GoalKeeper* keeper)
+void ReturnHome::execute(GoalKeeper* keeper)
 {
 	keeper->getSteering()->setTarget(keeper->getAssignedRegion()->getCenter());
 	if(keeper->isWithinAssignedRegion() || !keeper->getTeam()->isInControl())
@@ -26,12 +26,12 @@ void ReturnHomeState::execute(GoalKeeper* keeper)
 	}
 }
 
-void ReturnHomeState::exit(GoalKeeper* keeper)
+void ReturnHome::exit(GoalKeeper* keeper)
 {
 	keeper->getSteering()->setArriveOff();
 }
 
-bool ReturnHomeState::onMessage(GoalKeeper*, const Message&)
+bool ReturnHome::onMessage(GoalKeeper*, const Message&)
 {
 	return false;
 }

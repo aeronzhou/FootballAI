@@ -210,6 +210,13 @@ void SteeringBehaviors::combineForce()
 		if (!accumulateForce(mSteeringForce, force))
 			return;
 	}
+
+	if (on(INTERPOSE))
+	{
+		force += interpose(mBall, mTarget, 2.f);
+		if (!accumulateForce(mSteeringForce, force))
+			return;
+	}
 }
 
 void SteeringBehaviors::regularizeForce()

@@ -45,7 +45,6 @@ void Team::onInitialize()
 
 	// Add support spot calculator
 	mSupportSpotCalculator = (SupportSpotCalculator*)addChildNode(new SupportSpotCalculator("BestSupportSpotCalc", this)).get();
-	mCantWaitToReceiveBall = addComponent(new CoolingTimeComponent(1.f, "CantWaitToReceiveBall"));
 }
 
 void Team::onDeinitialize()
@@ -94,18 +93,20 @@ void Team::_createPlayers()
 	}
 	else 
 	{
-		for (int i = 7; i < 10; ++i)
-		{
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
-		}
+		//for (int i = 7; i < 10; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+		//		this, FieldPlayer::ATTACKER, vec_pos[i])).get());
+		//}
 		//for (int i = 10; i < 13; ++i)
 		//{
 		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
 		//		this, FieldPlayer::DEFENDER, vec_pos[i])).get());
 		//}
-		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(6), 
-		//	this, FieldPlayer::DEFENDER, vec_pos[13])).get());
+		mPlayers.push_back((GoalKeeper*)addChildNode(PlayerManager::get().createGoalKeeper("Blue_" + dt::Utils::toString(6), 
+			this, vec_pos[13])).get());
+			/*createGoalKeeper("Blue_" + dt::Utils::toString(6), 
+			this, FieldPlayer::DEFENDER, vec_pos[13])).get()); */
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
@@ -450,7 +451,7 @@ float Team::_getBestSpotOfReceiving(Player* receiver, float passing_force, Ogre:
 void Team::requestPass(Player* player, double delay_time /* = 0 */)
 {
 	// With a possibility to execute
-	if (WithPossibility(0.3))
+	if (WithPossibility(Prm.RequestPassPosibility))
 	{
 		float dot = mControllingPlayer->getHeading().dotProduct(
 			(player->getPosition() - mControllingPlayer->getPosition()).normalisedCopy());
@@ -528,4 +529,21 @@ std::vector<int>& Team::getAssignedRegionIDs()
 	}
 
 	return mAssignedRegionIDs;
+}
+
+bool Team::isPassOrShootOverTime() 
+{
+	if (mPassedOrShootedFlag && mPassOrShootDelayTime->ready())
+	{
+		mPassedOrShootedFlag = false;
+		return true;
+	}
+
+	return false;
+}
+
+void Team::setHasPassedOrShooted()
+{
+	mPassedOrShootedFlag = true;
+	mPassOrShootDelayTime->reset();
 }

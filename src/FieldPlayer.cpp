@@ -37,8 +37,6 @@ void FieldPlayer::onDeinitialize()
 	Player::onDeinitialize();
 }
 
-DEBUG_MODE_SETUP
-
 void FieldPlayer::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
@@ -55,9 +53,7 @@ void FieldPlayer::onUpdate(double time_diff)
 
 	float velocity_magnitude = current_velocity.length();
 	Ogre::Vector3 driving_force = mSteeringBehaviors->getSteeringForce();
-	//QString current_state = mStateMachine->getNameOfCurrentState();
-	//std::cout << "driving_force = " << driving_force << std::endl;
-	//std::cout << "current_state = " << current_state.toStdString() << std::endl;
+
 
 	btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
 	btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();

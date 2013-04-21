@@ -18,7 +18,7 @@ void InterceptBall::execute(GoalKeeper* keeper)
 {
 	if (keeper->isTooFarFromGoalMouth() && !keeper->isClosestPlayerOnPitchToBall())
 	{
-		keeper->getStateMachine()->changeState(ReturnHomeState::get());
+		keeper->getStateMachine()->changeState(ReturnHome::get());
 		return;
 	}
 

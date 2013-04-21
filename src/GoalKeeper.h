@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "StateMachine.h"
+#include "CoolingTimeComponent.h"
 
 class GoalKeeper : public Player
 {
@@ -51,6 +52,8 @@ public:
 protected:
 
 	StateMachine<GoalKeeper>* mStateMachine;
+
+	std::shared_ptr<CoolingTimeComponent> mKickCoolingTime;   //!< Cooling time component
 
 
 };

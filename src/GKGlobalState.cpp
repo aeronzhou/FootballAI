@@ -31,13 +31,15 @@ bool GoalKeeperGlobalState::onMessage(GoalKeeper* keeper, const Message& msg)
 	{
 		case MSG_BACK_TO_ORIGIN:
 		{
-			keeper->getStateMachine()->changeState(ReturnHomeState::get());
+			keeper->getStateMachine()->changeState(ReturnHome::get());
+			return true;
 		}
 		break;
 
 		case MSG_RECEIVE_BALL:
 		{
 			keeper->getStateMachine()->changeState(InterceptBall::get());
+			return true;
 		}
 	}
 
