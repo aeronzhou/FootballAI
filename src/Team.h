@@ -131,6 +131,17 @@ public:
 	void updateTargetsOfWaitingPlayers();
 
 	/** 
+	  * Return true if too long after the controlling player has kick the ball
+	  * @returns True if too long after the controlling player has kick the ball
+	  */
+	bool isPassOrShootOverTime();
+
+	/** 
+	  * Set player has passed or shooted
+	  */
+	void setHasPassedOrShooted();
+
+	/** 
 	  * Return the best support spot
 	  * @returns the best support spot
 	  */
@@ -201,6 +212,8 @@ private:
 	Environment* mGAEnvironment;
 	std::vector<Ogre::Vector3> mPassSafePolygon;      //!< Polygon to indicate if pass safe
 	std::shared_ptr<CoolingTimeComponent> mCantWaitToReceiveBall;   //!< If the player wait to long, he should chase the ball	
+	std::shared_ptr<CoolingTimeComponent> mPassOrShootDelayTime;  //!< If the controlling player wait to long, he should chase the ball	
+	bool mPassedOrShootedFlag;                                    //!< If the controlling player wait to long
 };
 
-#endif
+#endif]
