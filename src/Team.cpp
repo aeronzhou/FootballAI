@@ -42,6 +42,7 @@ void Team::onInitialize()
 		(*it)->getSteering()->setSeparationOn();
 	}
 
+
 	_findPlayerClosestToBall();
 
 	mPassSafePolygon.resize(mPitch->getPassSafePolygon().size());

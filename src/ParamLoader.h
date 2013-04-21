@@ -73,19 +73,33 @@ public:
 		PlayerShootingRange = mParamTables["PlayerShootingRange"].toFloat();
 		PlayerShootingTryNum = mParamTables["PlayerShootingTryNum"].toFloat();
 		PlayerReceivingRange = mParamTables["PlayerReceivingRange"].toFloat();
+		PlayerPassSafeRangeLength = mParamTables["PlayerPassSafeRangeLength"].toFloat();
+		PlayerPassSafeRangeWidth = mParamTables["PlayerPassSafeRangeWidth"].toFloat();
+		RequestPassPosibility = mParamTables["RequestPassPosibility"].toFloat();
+		ChanceOfUsingArriveToReceiveBall = mParamTables["ChanceOfUsingArriveToReceiveBall"].toFloat();
+		PlayerAtTargetRange = mParamTables["PlayerAtTargetRange"].toFloat();
+		PassThreatRadius = mParamTables["PassThreatRadius"].toFloat();
 
-		PlayerRangeRadius = mParamTables["PlayerRangeRadius"].toFloat();
-		PlayerRangeThickness = mParamTables["PlayerRangeThickness"].toFloat();
-		PlayerRangeMateiral = mParamTables["PlayerRangeMateiral"];
+		ShowPlayerThreatenedRange = mParamTables["ShowPlayerThreatenedRange"].toInt();
+		ShowPlayerTarget = mParamTables["ShowPlayerTarget"].toInt();
+		ShowPassSafeDetectRange = mParamTables["ShowPassSafeDetectRange"].toInt();
 
 		GoalKeeperInterceptRange = mParamTables["GoalKeeperInterceptRange"].toFloat();
 		GoalKeeperControlRange = mParamTables["GoalKeeperControlRange"].toFloat();
 
 		SpotPassSafeScore = mParamTables["SpotPassSafeScore"].toFloat();
 		SpotCanShootScore = mParamTables["SpotCanShootScore"].toFloat();
+		SpotDistFromCtrlPlayerScore = mParamTables["SpotDistFromCtrlPlayerScore"].toFloat();
+		SpotOptimalDistance = mParamTables["SpotOptimalDistance"].toFloat();
+		SpotClosenessToSupportingPlayerScore = mParamTables["SpotClosenessToSupportingPlayerScore"].toFloat();
+		SpotAheadOfAttackerScore = mParamTables["SpotAheadOfAttackerScore"].toFloat();
+		ShowSupportSpot = mParamTables["ShowSupportSpot"].toInt();
+		NumSupportSpotX = mParamTables["NumSupportSpotX"].toInt();
+		NumSupportSpotY = mParamTables["NumSupportSpotX"].toInt();
 
 		PhysicsShowDebug = mParamTables["PhysicsShowDebug"].toInt();
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
+		RandomTestNum = mParamTables["RandomTestNum"].toFloat();
 
 		GAGeneration = mParamTables["GAGeneration"].toInt();
 		GACrossCostPerRgn = mParamTables["GACrossCostPerRgn"].toFloat();
@@ -161,11 +175,17 @@ public:
 	float PlayerShootingRange;
 	float PlayerShootingTryNum;
 	float PlayerReceivingRange;
+	float PlayerPassSafeRangeLength;
+	float PlayerPassSafeRangeWidth;
+	float ChanceOfUsingArriveToReceiveBall;
+	float RequestPassPosibility;
+	float PlayerAtTargetRange;
+	float PassThreatRadius;
 	
-	// PlayerRange
-	float PlayerRangeRadius;
-	float PlayerRangeThickness;
-	QString PlayerRangeMateiral;
+	// Flag drawer
+	int ShowPlayerThreatenedRange;
+	int ShowPlayerTarget;
+	int ShowPassSafeDetectRange;
 
 	// GoalKeeper
 	float GoalKeeperInterceptRange;
@@ -174,10 +194,18 @@ public:
 	// Spot
 	float SpotPassSafeScore;
 	float SpotCanShootScore;
+	float SpotDistFromCtrlPlayerScore;
+	float SpotOptimalDistance;
+	float SpotClosenessToSupportingPlayerScore;
+	float SpotAheadOfAttackerScore;
+	int NumSupportSpotX;
+	int NumSupportSpotY;
+	int ShowSupportSpot;
 
 	// Others
 	int PhysicsShowDebug;
 	int ShowDebugText;   
+	float RandomTestNum;
 
 	//GA
 	int GAGeneration;
