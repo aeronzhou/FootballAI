@@ -45,7 +45,7 @@ public:
 	  * @heading Heading direction of this entity
 	  * @scale Scale of this entity
 	  */
-	virtual void placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading, float scale = 1.0f);
+	void placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading, float scale = 1.0f);
 
 	virtual bool handleMessage(const Message& msg) const;
 

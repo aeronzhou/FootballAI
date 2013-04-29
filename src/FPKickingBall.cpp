@@ -29,12 +29,6 @@ void KickingBall::execute(FieldPlayer* player)
 	float dot = player->getHeading().dotProduct(player->getBall()->getPosition() - player->getPosition());
 	Ogre::Vector3 target;
 
-	//ball->kick(RED_TEAM_HEADING, 5.f);
-	//std::cout << "Velo = " << ball->getVelocity().length() << std::endl;
-	//player->getStateMachine()->changeState(ChasingBall::get());
-	//std::cout << "Velo = " << ball->getVelocity().length() << std::endl;
-	//return;
-
 	// Cannot kick the ball
 	// This player is behind the ball
 	if (dot < 0 ||

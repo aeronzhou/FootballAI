@@ -72,7 +72,7 @@
 	<SupportSpotUpdateCoolTime>1.0</SupportSpotUpdateCoolTime>
 
 
-	<PhysicsShowDebug>1</PhysicsShowDebug>
+	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
 	<RandomTestNum>7</RandomTestNum>
 	

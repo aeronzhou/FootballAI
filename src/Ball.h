@@ -64,8 +64,6 @@ private:
 
 	Ogre::Vector3 mOldPos;                                      //!< Previous position of the ball
 	std::shared_ptr<CoolingTimeComponent> mResistanceCoolTime;  //!< Cooling time component for resistance
-	bool mIsKick;
-	Ogre::Vector3 mKickForce;
 	
 };
 

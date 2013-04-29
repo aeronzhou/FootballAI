@@ -67,8 +67,6 @@ public:
 
 	bool isClosestPlayerOnPitchToBall() const;
 
-	 void placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading, float scale = 1.0f);
-
 	/** 
 	  * Return true if this player is controlling the ball
 	  * @returns True if this player is controlling the ball

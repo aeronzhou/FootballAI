@@ -71,23 +71,18 @@ void Team::_createPlayers()
 	// Generate players with PlayerManager
 	if (getTeamColor() == RED)
 	{
-		for (int i = 0; i < 2; ++i)
+		for (int i = 0; i < 3; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
 				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
 		}
-		//for (int i = 0; i < 3; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-		//		this, FieldPlayer::ATTACKER, vec_pos[i])).get());
-		//}
-		//for (int i = 3; i < 6; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-		//		this, FieldPlayer::DEFENDER, vec_pos[i])).get());
-		//}
-		//mPlayers.push_back((GoalKeeper*)addChildNode(PlayerManager::get().createGoalKeeper("Red_" + dt::Utils::toString(6), 
-		//	this, vec_pos[6])).get());
+		for (int i = 3; i < 6; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+				this, FieldPlayer::DEFENDER, vec_pos[i])).get());
+		}
+		mPlayers.push_back((GoalKeeper*)addChildNode(PlayerManager::get().createGoalKeeper("Red_" + dt::Utils::toString(6), 
+			this, vec_pos[6])).get());
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
@@ -96,18 +91,18 @@ void Team::_createPlayers()
 	}
 	else 
 	{
-		//for (int i = 7; i < 10; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-		//		this, FieldPlayer::ATTACKER, vec_pos[i])).get());
-		//}
-		//for (int i = 10; i < 13; ++i)
-		//{
-		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-		//		this, FieldPlayer::DEFENDER, vec_pos[i])).get());
-		//}
-		//mPlayers.push_back((GoalKeeper*)addChildNode(PlayerManager::get().createGoalKeeper("Blue_" + dt::Utils::toString(6), 
-		//	this, vec_pos[13])).get());
+		for (int i = 7; i < 10; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
+		}
+		for (int i = 10; i < 13; ++i)
+		{
+			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+				this, FieldPlayer::DEFENDER, vec_pos[i])).get());
+		}
+		mPlayers.push_back((GoalKeeper*)addChildNode(PlayerManager::get().createGoalKeeper("Blue_" + dt::Utils::toString(6), 
+			this, vec_pos[13])).get());
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{

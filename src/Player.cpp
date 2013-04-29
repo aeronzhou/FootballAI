@@ -53,12 +53,12 @@ void Player::onInitialize()
 	MovingEntity::onInitialize();
 
 	mMesh = addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
-	//mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
-	//	dt::PhysicsBodyComponent::CONVEX, mMass));
+	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
+		dt::PhysicsBodyComponent::CONVEX, mMass));
 
-	//// Become KinematicBody to save the world
-	//mPhysicsBody->getRigidBody()->setCollisionFlags(mPhysicsBody->getRigidBody()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
-	//mPhysicsBody->getRigidBody()->setActivationState(DISABLE_DEACTIVATION);
+	// Become KinematicBody to save the world
+	mPhysicsBody->getRigidBody()->setCollisionFlags(mPhysicsBody->getRigidBody()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+	mPhysicsBody->getRigidBody()->setActivationState(DISABLE_DEACTIVATION);
 
 	mSteeringBehaviors = new SteeringBehaviors(this, getBall());
 
@@ -66,6 +66,8 @@ void Player::onInitialize()
 
 	if (!Prm.ShowDebugText)
 		mDebugText->disable();
+
+	mPhysicsBody->getRigidBody()->setFriction(0.f);
 }
 
 void Player::onDeinitialize() 
@@ -337,13 +339,4 @@ Ogre::Vector3 Player::getAskedTurnAroundTarget() const
 void Player::setAskedTurnAroundTarget(const Ogre::Vector3& target)
 {
 	mAskedToTurnAroundTarget = target;
-}
-
-void Player::placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading, float scale)
-{
-	setPosition(position);
-	setScale(scale);
-	setRotation(GetRotationThroughHeading(heading));
-
-	//resetPhysicsBody();
 }

@@ -55,8 +55,8 @@ float MovingEntity::getMaxForce() const
 
 void MovingEntity::resetPhysicsBody()
 {
-	//mPhysicsBody->disable();
-	//mPhysicsBody->enable();
+	mPhysicsBody->disable();
+	mPhysicsBody->enable();
 }
 
 float MovingEntity::getMass() const
@@ -70,7 +70,7 @@ void MovingEntity::placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading
 	setScale(scale);
 	setRotation(GetRotationThroughHeading(heading));
 
-	//resetPhysicsBody();
+	resetPhysicsBody();
 }
 
 Ogre::Vector3 MovingEntity::getHeading() const 

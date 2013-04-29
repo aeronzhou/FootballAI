@@ -43,6 +43,7 @@ void Pitch::onUpdate(double time_diff)
 
 	// Test if the ball is scored!!!
 	// Set team to kick off and send players back to origin region
+
 	Node::onUpdate(time_diff);
 }
 
@@ -94,6 +95,7 @@ void Pitch::onInitialize()
 	OgreProcedural::SphereGenerator().setRadius(Prm.BallRadius).setUTile(.8f).realizeMesh("Football");
 	mBall = (Ball*)addChildNode(new Ball("Football", "Football", "PlayerFlagBlue")).get();
 	mBall->setPosition(Prm.BallPosX, Prm.BallRadius, Prm.BallPosZ);
+	//mBall->resetPhysicsBody();
 
 	// Create goals
 	OgreProcedural::BoxGenerator().setSize(Ogre::Vector3(0.2, 2, 5)).realizeMesh("Goal");
