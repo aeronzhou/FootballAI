@@ -64,6 +64,24 @@ void Pitch::onInitialize()
 	play_ground_node->addComponent(new dt::PhysicsBodyComponent("PlayGroundMesh", "PlayGroundBody",
 		dt::PhysicsBodyComponent::BOX, 0.0f));
 
+	// Create Drawer
+	mSceneNode =  getScene()->getSceneManager()->getRootSceneNode()->createChildSceneNode("ObjectDrawer");
+
+	mPlayerThreatenedRangeDrawer = std::shared_ptr<CircleDrawer>(new CircleDrawer("PlayerThreatenedRangeDrawer", mSceneNode,
+		0.1f, "BaseWhite"));
+	mPlayerTargetDrawer = std::shared_ptr<CircleDrawer>(new CircleDrawer("PlayerTargetDrawer", mSceneNode,
+		0.1f, "PlayerTarget"));
+	
+	// Array of pass safe range
+	Ogre::Vector3 pass_safe_array[4] = {
+		Ogre::Vector3(-1.0, 0, 0), 
+		Ogre::Vector3(-Prm.PlayerPassSafeRangeWidth, 0, Prm.PlayerPassSafeRangeLength),
+		Ogre::Vector3(Prm.PlayerPassSafeRangeWidth, 0, Prm.PlayerPassSafeRangeLength), 
+		Ogre::Vector3(1.0, 0, 0)
+	};
+	mPassSafePolygon = std::vector<Ogre::Vector3>(pass_safe_array, pass_safe_array + 4);
+	mPlayerPassSafeDrawer = std::shared_ptr<PolygonDrawer>(new PolygonDrawer("PassSafe", mPassSafePolygon, 0.08f, "PlayerTarget", mSceneNode));
+
 	// Create regions
 	mPlayingArea = new Region(-Prm.HalfPitchWidth, -Prm.HalfPitchHeight, Prm.HalfPitchWidth, Prm.HalfPitchHeight, -1, Prm.PitchMargin);	
 	mRegions.resize(Prm.NumRegionsHorizontal * Prm.NumRegionsVertical);

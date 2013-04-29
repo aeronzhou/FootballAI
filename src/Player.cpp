@@ -17,8 +17,8 @@
 Player::Player(const QString name, float control_range, float max_speed, float max_force,
 	float mass, float turn_rate, QString mesh_handle, QString material_handle, Team* team, int assigned_region, PlayerRole role)
 	: MovingEntity(name, max_speed,  max_force, mass, turn_rate, mesh_handle, material_handle),
-	mTeam(team), mAssignedRegion(assigned_region), mPlayerRole(role), mDistSqAtTarget(Prm.DistAtTarget * Prm.DistAtTarget),
-	mControlRange(control_range), mIsTurnningAroundAtTarget(0) {}
+	mTeam(team), mAssignedRegion(assigned_region), mPlayerRole(role), 
+	mControlRange(control_range), mIsTurnningAroundAtTarget(0), mIsAskedToTurnAround(false) {}
 
 // Add a flag to distinguish RED and BLUE
 dt::Node* CreatePlayerFlag(dt::Node* parent, const QString& material)
@@ -291,4 +291,53 @@ void Player::findSupport()
 			nullptr
 			);
 	}
+}
+
+void Player::slowDown()
+{
+	if (Vector3To2(getPosition() - getTarget()).length() < Prm.PlayerAtTargetRange * 0.5)
+	{
+		setVelocity(Ogre::Vector3::ZERO);
+	}
+}
+
+bool Player::isInHotRegion() const 
+{
+	return Vector3To2(getPosition() - mTeam->getOpponent()->getGoal()->getCenter()).length() < 
+		getPitch()->getPlayingArea()->getWidth() / 3;
+}
+
+bool Player::isOpponentWithinRange(float radius)
+{
+	std::vector<Player*>& opponents = mTeam->getOpponent()->getPlayers();
+
+	for (auto it = opponents.begin(); it != opponents.end(); ++it)
+	{
+		if (Vector3To2((*it)->getPosition() - getPosition()).length() < radius)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void Player::setIsAskedToTurnAround(bool flag)
+{
+	mIsAskedToTurnAround = flag;
+}
+
+bool Player::isAskedToTurnAround() const 
+{
+	return mIsAskedToTurnAround;
+}
+
+Ogre::Vector3 Player::getAskedTurnAroundTarget() const 
+{
+	return mAskedToTurnAroundTarget;
+}
+
+void Player::setAskedTurnAroundTarget(const Ogre::Vector3& target)
+{
+	mAskedToTurnAroundTarget = target;
 }
