@@ -14,7 +14,8 @@ enum MessageType
 	MSG_BACK_TO_ORIGIN,
 	MSG_POSITIONING,
 	MSG_SUPPORT_ATTACKER,
-	MSG_WAIT	
+	MSG_WAIT,
+	MSG_TURN_AROUND                 
 };
 
 struct Message

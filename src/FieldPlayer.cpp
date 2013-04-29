@@ -55,8 +55,8 @@ void FieldPlayer::onUpdate(double time_diff)
 	Ogre::Vector3 driving_force = mSteeringBehaviors->getSteeringForce();
 
 
-	btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
-	btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();
+	//btTransform trans = mPhysicsBody->getRigidBody()->getWorldTransform();
+	//btMotionState* motion = mPhysicsBody->getRigidBody()->getMotionState();
 
 	if (driving_force.length() > EPS)
 	{
@@ -76,7 +76,7 @@ void FieldPlayer::onUpdate(double time_diff)
 
         rotation = rotation * Ogre::Quaternion(angle, Ogre::Vector3(0, 1, 0));
 
-		trans.setRotation(BtOgre::Convert::toBullet(rotation));
+		//trans.setRotation(BtOgre::Convert::toBullet(rotation));
 
 		velocity_magnitude += accumulate_force;
 		
@@ -92,7 +92,7 @@ void FieldPlayer::onUpdate(double time_diff)
 	if (mIsTurnningAroundAtTarget != Ogre::Radian(0))
 	{
 		rotation = rotation * Ogre::Quaternion(mIsTurnningAroundAtTarget, Ogre::Vector3(0, 1, 0));
-		trans.setRotation(BtOgre::Convert::toBullet(rotation));
+		//trans.setRotation(BtOgre::Convert::toBullet(rotation));
 	}
 
 	if (velocity_magnitude > mMaxSpeed)
@@ -107,16 +107,14 @@ void FieldPlayer::onUpdate(double time_diff)
 	// Set velocity 
 	mVelocity = rotation * Ogre::Vector3(0, 0, velocity_magnitude);
 
-	trans.setOrigin(trans.getOrigin() + BtOgre::Convert::toBullet(mVelocity) * 0.02);
-	motion->setWorldTransform(trans);
+	//trans.setOrigin(trans.getOrigin() + BtOgre::Convert::toBullet(mVelocity) * 0.02);
+	//motion->setWorldTransform(trans);
+	this->setRotation(rotation);
+	this->setPosition(this->getPosition() + mVelocity * 0.02);
 
 	mIsTurnningAroundAtTarget = Ogre::Radian(0);
 
 	setDebugText(getStateMachine()->getNameOfCurrentState());
-	//setDebugText(dt::Utils::toString(getSteering()->getTarget()));
-	//DEBUG_MODE_BEGIN
-	//setDebugText(dt::Utils::toString(getSteering()->getSteeringForce()));
-	//DEBUG_MODE_END
 
 	dt::Node::onUpdate(time_diff);
 }

@@ -53,6 +53,12 @@ public:
 	Region* getAssignedRegion() const;
 	void setAssignedRegion(int assigned_region);
 
+	bool isAskedToTurnAround() const;
+	void setIsAskedToTurnAround(bool flag);
+
+	Ogre::Vector3 getAskedTurnAroundTarget() const;
+	void setAskedTurnAroundTarget(const Ogre::Vector3& target);
+
 	float getControlRange() const;
 
 	void setDebugText(QString debug_text);
@@ -60,6 +66,8 @@ public:
 	bool isClosestTeamMemberToBall() const;
 
 	bool isClosestPlayerOnPitchToBall() const;
+
+	 void placeAtPosition(Ogre::Vector3 position, Ogre::Vector3 heading, float scale = 1.0f);
 
 	/** 
 	  * Return true if this player is controlling the ball
@@ -166,6 +174,8 @@ protected:
 	float mControlRange;                             //!< Within this region, player can kick the ball
 	float mReceivingRange;                           //!< Within this region, player can receive the ball
 	Ogre::Radian mIsTurnningAroundAtTarget;          //!< Angle turnning around after the player arrive the target
+	bool mIsAskedToTurnAround;                       //!< Is asked to turn around
+	Ogre::Vector3 mAskedToTurnAroundTarget;          //!< Target to kick around
 
 	PlayerRole mPlayerRole;                          //!< The player's role in this team
 

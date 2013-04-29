@@ -16,7 +16,7 @@ void ChasingBall::enter(FieldPlayer* player)
 
 void ChasingBall::execute(FieldPlayer* player)
 {
-	player->getSteering()->setTarget(player->getBall()->getPosition());
+	//player->getSteering()->setTarget(player->getBall()->getPosition());
 
 	// If the ball within kicking range
 	if (player->getDistToBall() < player->getControlRange())
@@ -25,14 +25,13 @@ void ChasingBall::execute(FieldPlayer* player)
 		return;
 	}
 
-	// If the team has controlled the ball, find right place
-	if (player->getTeam()->isInControl() && player->getTeam()->getControllingPlayer() != player)
+	if (player->isClosestTeamMemberToBall())
 	{
-		player->getStateMachine()->changeState(Positioning::get());
-	}
+		player->setTarget(player->getBall()->getPosition());
+		return;
+	} 
 
-	// If the team hasn't controlled the ball, but not proper to chase the ball
-
+	player->getStateMachine()->changeState(Positioning::get());
 }
 
 void ChasingBall::exit(FieldPlayer* player)

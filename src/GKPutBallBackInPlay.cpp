@@ -15,8 +15,10 @@ PutBallBackInPlayState* PutBallBackInPlayState::get()
 void PutBallBackInPlayState::enter(GoalKeeper* keeper)
 {
 	keeper->getTeam()->setControllingPlayer(keeper);
-	keeper->getTeam()->getOpponent()->allPlayersInAssignedRegions();
-	keeper->getTeam()->allPlayersInAssignedRegions();
+	//keeper->getTeam()->getOpponent()->allPlayersInAssignedRegions();
+	//keeper->getTeam()->allPlayersInAssignedRegions();
+	keeper->getTeam()->sendPlayersToAssignedRegion();
+	keeper->getTeam()->getOpponent()->sendPlayersToAssignedRegion();
 }
 
 void PutBallBackInPlayState::execute(GoalKeeper* keeper)
@@ -24,12 +26,12 @@ void PutBallBackInPlayState::execute(GoalKeeper* keeper)
 	Player* receiver = NULL;
 	Ogre::Vector3 ballTarget;
 
-	if(keeper->getTeam()->canPass(keeper,
+	if (keeper->getTeam()->canPass(keeper,
 								  receiver,
 								  ballTarget,
 								  Prm.PlayerMaxPassingForce))
 	{
-		keeper->getBall()->kick(ballTarget - keeper->getBall()->getPosition().normalisedCopy(),
+		keeper->getBall()->kick((ballTarget - keeper->getBall()->getPosition()).normalisedCopy(),
 			Prm.PlayerMaxPassingForce);
 		keeper->getPitch()->setGoalKeeperHasBall(false);
 		MessageDispatcher::get().dispatchMessage(DELIVER_IMMEDIATELY,

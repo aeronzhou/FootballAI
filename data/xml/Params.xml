@@ -8,13 +8,13 @@
 	<BallRealTimeSpentFactor>1.2</BallRealTimeSpentFactor>
 	<BallRadius>0.10</BallRadius>
 	<BallPosX>0</BallPosX>
-	<BallPosZ>-16</BallPosZ>
+	<BallPosZ>-3</BallPosZ>
 
 	<NumRegionsHorizontal>9</NumRegionsHorizontal>
 	<NumRegionsVertical>5</NumRegionsVertical>
 
-	<HalfPitchWidth>25</HalfPitchWidth>
-	<HalfPitchHeight>16.19</HalfPitchHeight>
+	<HalfPitchWidth>20</HalfPitchWidth>
+	<HalfPitchHeight>12.95</HalfPitchHeight>
 	<PitchMargin>6.0</PitchMargin>
 
 	<HalfGoalWidth>2.0</HalfGoalWidth>
@@ -72,7 +72,7 @@
 	<SupportSpotUpdateCoolTime>1.0</SupportSpotUpdateCoolTime>
 
 
-	<PhysicsShowDebug>0</PhysicsShowDebug>
+	<PhysicsShowDebug>1</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
 	<RandomTestNum>7</RandomTestNum>
 
