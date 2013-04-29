@@ -15,11 +15,14 @@
 #include "GeometryHelper.h"
 #include "Utils.h"
 #include "Constant.h"
+#include "GAEnvironment.h"
+#include <iostream>
+
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
 	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()),
-	  mSupportingPlayer(nullptr), mReceivingPlayer(nullptr), mAssignedRegionIDs(std::vector<int>()) {}
+	  mSupportingPlayer(nullptr), mReceivingPlayer(nullptr) {}
 
 
 void Team::onInitialize() 
@@ -39,12 +42,17 @@ void Team::onInitialize()
 		(*it)->getSteering()->setSeparationOn();
 	}
 
+
 	_findPlayerClosestToBall();
 
 	mPassSafePolygon.resize(mPitch->getPassSafePolygon().size());
 
 	// Add support spot calculator
 	mSupportSpotCalculator = (SupportSpotCalculator*)addChildNode(new SupportSpotCalculator("BestSupportSpotCalc", this)).get();
+	mCantWaitToReceiveBall = addComponent(new CoolingTimeComponent(1.f, "CantWaitToReceiveBall"));
+
+	mGAEnvironment = (Environment*)addChildNode(new Environment("GAEnvironment",this, mPitch)).get();
+
 }
 
 void Team::onDeinitialize()
@@ -71,18 +79,20 @@ void Team::_createPlayers()
 	// Generate players with PlayerManager
 	if (getTeamColor() == RED)
 	{
+		//mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(0), 
+		//	this, FieldPlayer::ATTACKER, vec_pos[0])).get());
 		for (int i = 0; i < 3; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
 				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
 		}
-		for (int i = 3; i < 6; ++i)
-		{
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
-				this, FieldPlayer::DEFENDER, vec_pos[i])).get());
-		}
-		mPlayers.push_back((GoalKeeper*)addChildNode(PlayerManager::get().createGoalKeeper("Red_" + dt::Utils::toString(6), 
-			this, vec_pos[6])).get());
+		//for (int i = 3; i < 6; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+		//		this, FieldPlayer::BACK, vec_pos[i])).get());
+		//}
+		mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(6), 
+			this, FieldPlayer::DEFENDER, vec_pos[6])).get());
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
@@ -96,13 +106,15 @@ void Team::_createPlayers()
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
 				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
 		}
-		for (int i = 10; i < 13; ++i)
-		{
-			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
-				this, FieldPlayer::DEFENDER, vec_pos[i])).get());
-		}
+		//for (int i = 10; i < 13; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
+		//		this, FieldPlayer::DEFENDER, vec_pos[i])).get());
+		//}
 		mPlayers.push_back((GoalKeeper*)addChildNode(PlayerManager::get().createGoalKeeper("Blue_" + dt::Utils::toString(6), 
 			this, vec_pos[13])).get());
+			/*createGoalKeeper("Blue_" + dt::Utils::toString(6), 
+			this, FieldPlayer::DEFENDER, vec_pos[13])).get()); */
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
@@ -516,14 +528,14 @@ Player* Team::determineBestSupportingPlayer() const
 }
 
 
-std::vector<int>& Team::getAssignedRegionIDs()
+const std::vector<int>& Team::getAssignedRegionIDs()
 {
 	unsigned int size = mPlayers.size();
 	for(unsigned int i = 0; i < size; ++i)
 	{
 		mAssignedRegionIDs[i] = mPitch->getRegionIndexByPosition(mPlayers[i]->getPosition());
+		std::cout << "\n----IDS: " << mAssignedRegionIDs[i] <<"\n";
 	}
-
 	return mAssignedRegionIDs;
 }
 

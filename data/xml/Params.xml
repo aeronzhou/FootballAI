@@ -75,5 +75,16 @@
 	<PhysicsShowDebug>0</PhysicsShowDebug>
 	<ShowDebugText>1</ShowDebugText>
 	<RandomTestNum>7</RandomTestNum>
+	
+	<GAGeneration>2</GAGeneration>
+	<GACrossCostPerRgn>2</GACrossCostPerRgn>
+	<GAPlayerKeepBallValue>50</GAPlayerKeepBallValue>
+	<GAPlayerChaseBallValue>50</GAPlayerChaseBallValue>
+	<GAPlayerDefendValue>30</GAPlayerDefendValue>
+	<GAPlayerAttackValue>50</GAPlayerAttackValue>
+	<GAColonySize>100</GAColonySize>
+	<GAIntercrossRate>0.3</GAIntercrossRate>
+	<GAAgamogenesisRate>0.05</GAAgamogenesisRate>
+	<GAMutantRate>0.02</GAMutantRate>
 
 </Params>

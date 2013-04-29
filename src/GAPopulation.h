@@ -8,14 +8,14 @@
 class Population
 {
 public:
-	Population() {};
+	Population() {}
 
-	Population(	unsigned int colone_size,
-				double intercross_rate,
-				double agamogenesis_rate,
-				double mutant_rate);
-	
+	~Population();
+
 	void release();
+
+	void Initial(unsigned int colone_size, double intercross_rate, 
+		double agamogenesis_rate, double mutant_rate);
 
 	void nextGeneration();
 
