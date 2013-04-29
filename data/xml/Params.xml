@@ -8,7 +8,7 @@
 	<BallRealTimeSpentFactor>1.2</BallRealTimeSpentFactor>
 	<BallRadius>0.10</BallRadius>
 	<BallPosX>0</BallPosX>
-	<BallPosZ>-16</BallPosZ>
+	<BallPosZ>-3</BallPosZ>
 
 	<NumRegionsHorizontal>9</NumRegionsHorizontal>
 	<NumRegionsVertical>5</NumRegionsVertical>

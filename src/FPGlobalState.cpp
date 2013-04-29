@@ -90,6 +90,14 @@ bool FieldPlayerGlobalState::onMessage(FieldPlayer* player, const Message& msg)
 
 			return true;
 		}
+
+	case MSG_TURN_AROUND:
+		{
+			player->setIsAskedToTurnAround(true);
+			player->setAskedTurnAroundTarget(msg.sender->getPosition());
+
+			return true;	
+		}
 	}
 	return false;
 }

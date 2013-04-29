@@ -22,6 +22,24 @@ void Dribbling::execute(FieldPlayer* player)
 {
 	float dot = player->getHeading().dotProduct(player->getTeam()->getGoal()->getFacing());
 
+	// 如果这个时候球员背对着控球者，那么
+	if (player->isAskedToTurnAround())
+	{
+		player->setIsAskedToTurnAround(false);
+		Ogre::Vector3 target = player->getAskedTurnAroundTarget();
+		// 踢一个角度
+		Player* ctrPly = player->getTeam()->getControllingPlayer();
+		Ogre::Radian angle = player->getHeading().getRotationTo(target - player->getPosition()).getYaw();
+		if (angle > Ogre::Radian(0) || fabs(angle.valueRadians()) < 1e-3)
+		{
+			angle = std::min(PI / 3, angle.valueRadians());
+		}
+		else 
+		{
+			angle = std::min(-PI / 3, angle.valueRadians());
+		}
+	}
+
 	// If the goal is behind this player
 	if (dot < 0)
 	{

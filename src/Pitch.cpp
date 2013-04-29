@@ -78,10 +78,10 @@ void Pitch::onInitialize()
 	
 	// Array of pass safe range
 	Ogre::Vector3 pass_safe_array[4] = {
-		Ogre::Vector3(-0.6, 0, 0), 
+		Ogre::Vector3(-1.0, 0, 0), 
 		Ogre::Vector3(-Prm.PlayerPassSafeRangeWidth, 0, Prm.PlayerPassSafeRangeLength),
 		Ogre::Vector3(Prm.PlayerPassSafeRangeWidth, 0, Prm.PlayerPassSafeRangeLength), 
-		Ogre::Vector3(0.6, 0, 0)
+		Ogre::Vector3(1.0, 0, 0)
 	};
 	mPassSafePolygon = std::vector<Ogre::Vector3>(pass_safe_array, pass_safe_array + 4);
 	mPlayerPassSafeDrawer = std::shared_ptr<PolygonDrawer>(new PolygonDrawer("PassSafe", mPassSafePolygon, 0.08f, "PlayerTarget", mSceneNode));
