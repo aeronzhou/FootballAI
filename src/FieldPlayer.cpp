@@ -41,6 +41,7 @@ void FieldPlayer::onUpdate(double time_diff)
 {
 	this->mIsUpdatingAfterChange = (time_diff == 0);
 
+
 	mStateMachine->onUpdate();
 
 	// Update here

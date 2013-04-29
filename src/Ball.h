@@ -55,8 +55,8 @@ public:
 
 	Ogre::Vector3 getOldPos() const;
 
-	Ogre::Vector3 getVelocity() const;
-	void setVelocity(Ogre::Vector3 velocity);
+	//Ogre::Vector3 getVelocity() const;
+	//void setVelocity(Ogre::Vector3 velocity);
 
 	Ogre::Vector3 getHeading() const;
 
@@ -64,6 +64,8 @@ private:
 
 	Ogre::Vector3 mOldPos;                                      //!< Previous position of the ball
 	std::shared_ptr<CoolingTimeComponent> mResistanceCoolTime;  //!< Cooling time component for resistance
+	bool mIsKick;
+	Ogre::Vector3 mKickForce;
 	
 };
 

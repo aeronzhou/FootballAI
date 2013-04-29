@@ -63,7 +63,6 @@ void Dribbling::execute(FieldPlayer* player)
 		// Detect if player in dangerous situation
 		Ogre::Vector3 towards_goal = player->getTeam()->getOpponent()->getGoal()->getCenter() - player->getPosition();
 		player->getBall()->kick(towards_goal, Prm.PlayerDribblingForce);
-
 	}
 
 	player->getStateMachine()->changeState(ChasingBall::get());

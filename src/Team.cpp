@@ -71,11 +71,16 @@ void Team::_createPlayers()
 	// Generate players with PlayerManager
 	if (getTeamColor() == RED)
 	{
-		for (int i = 0; i < 3; ++i)
+		for (int i = 0; i < 2; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
 				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
 		}
+		//for (int i = 0; i < 3; ++i)
+		//{
+		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
+		//		this, FieldPlayer::ATTACKER, vec_pos[i])).get());
+		//}
 		//for (int i = 3; i < 6; ++i)
 		//{
 		//	mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 

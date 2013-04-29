@@ -16,11 +16,6 @@ void Ball::onInitialize()
 	MovingEntity::onInitialize();
 
 	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
-	mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
-		dt::PhysicsBodyComponent::CONVEX, mMass));
-	mPhysicsBody->getRigidBody()->setFriction(Prm.BallFriction);
-
-	mResistanceCoolTime = addComponent(new CoolingTimeComponent(Prm.BallResistanceInterval));
 }
 
 void Ball::onUpdate(double time_diff)
@@ -31,10 +26,11 @@ void Ball::onUpdate(double time_diff)
 
 	Ogre::Vector3 velocity = getVelocity();
 	float length = velocity.length();
-
 	length = std::max(0.f, length - Prm.BallDeceleration);
+	velocity = velocity.normalisedCopy() * length;
 
-	setVelocity(velocity.normalisedCopy() * length);
+	setVelocity(velocity);
+	setPosition(getPosition() + velocity * 0.02);
 
 	MovingEntity::onUpdate(time_diff);
 }
@@ -45,8 +41,6 @@ void Ball::kick(Ogre::Vector3 direction, float force)
 
 	// Give it a momentary force
 	setVelocity(direction / mMass);
-
-	//std::cout << "Kick force = " << direction.length() << std::endl;
 }
 
 float Ball::getProperForceToKick(float distance)
@@ -54,7 +48,7 @@ float Ball::getProperForceToKick(float distance)
 	static const float KICK_REAL_ADDER = 0.05f;
 	static const float FORCE_TO_DIST_FATCTOR = 0.272;
 	// y = k * (x * x);
-	
+
 	float force = sqrt(double(distance / FORCE_TO_DIST_FATCTOR));
 
 	return std::min(Prm.PlayerMaxPassingForce, (float)force + KICK_REAL_ADDER);
@@ -69,16 +63,6 @@ Ogre::Vector3 Ball::getFuturePosition(float time)
 	Ogre::Vector3 ut = velocity * time;
 	Ogre::Vector3 half_a_t_squared = velocity.normalisedCopy() * (0.5 * BALL_REAL_DECEL * time * time);
 	return getPosition() + ut + half_a_t_squared;
-}
-
-Ogre::Vector3 Ball::getVelocity() const
-{
-	return BtOgre::Convert::toOgre(mPhysicsBody->getRigidBody()->getLinearVelocity());
-}
-
-void Ball::setVelocity(Ogre::Vector3 velocity) 
-{
-	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(velocity));
 }
 
 Ogre::Vector3 Ball::getHeading() const 
