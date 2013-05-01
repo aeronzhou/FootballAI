@@ -103,6 +103,7 @@ public:
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
 		RandomTestNum = mParamTables["RandomTestNum"].toFloat();
 
+		GASwitch = mParamTables["GASwitch"].toInt();
 		GAGeneration = mParamTables["GAGeneration"].toInt();
 		GACrossCostPerRgn = mParamTables["GACrossCostPerRgn"].toFloat();
 		GAPlayerKeepBallValue = mParamTables["GAPlayerKeepBallValue"].toInt();
@@ -113,7 +114,6 @@ public:
 		GAIntercrossRate = mParamTables["GAIntercrossRate"].toFloat();
 		GAAgamogenesisRate = mParamTables["GAAgamogenesisRate"].toFloat();
 		GAMutantRate = mParamTables["GAMutantRate"].toFloat();
-
 	}
 
 private:
@@ -212,6 +212,7 @@ public:
 	float RandomTestNum;
 
 	//GA
+	int GASwitch;
 	int GAGeneration;
 	float GACrossCostPerRgn;
 	int GAPlayerKeepBallValue;

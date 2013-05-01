@@ -47,7 +47,10 @@ void Team::onInitialize()
 	// Add support spot calculator
 	mSupportSpotCalculator = (SupportSpotCalculator*)addChildNode(new SupportSpotCalculator("BestSupportSpotCalc", this)).get();
 	// Add GA
-	mGAEnvironment = (Environment*)addChildNode(new Environment("GAEnvironment",this, mPitch)).get();
+	if(Prm.GASwitch)
+	{
+		mGAEnvironment = (Environment*)addChildNode(new Environment("GAEnvironment",this, mPitch)).get();
+	}
 }
 
 void Team::onDeinitialize()
