@@ -33,6 +33,8 @@ protected:
 
 	int getAttackValue(const int player_idx, const std::vector<Genetype>& opp_geneme);
 
+	int getDistanceValue(const int player_idx, const std::vector<Genetype>& candidate);
+
 	bool isInMyGround(unsigned int regin_idx);
 
 
@@ -40,6 +42,7 @@ protected:
 	Population mPopulatin;
 	std::shared_ptr<CoolingTimeComponent> mCoolingTime;  //!< We should not calculate every single frame, so...
 	std::vector<Genetype> mOppGeneme; 
+	bool mIfInit;
 
 	Team* mTeam;
 	Pitch* mPitch;

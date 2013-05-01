@@ -15,6 +15,7 @@
 #include "GeometryHelper.h"
 #include "Utils.h"
 #include "Constant.h"
+#include "GAEnvironment.h"
 
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
@@ -45,6 +46,11 @@ void Team::onInitialize()
 
 	// Add support spot calculator
 	mSupportSpotCalculator = (SupportSpotCalculator*)addChildNode(new SupportSpotCalculator("BestSupportSpotCalc", this)).get();
+	// Add GA
+	if(Prm.GASwitch)
+	{
+		mGAEnvironment = (Environment*)addChildNode(new Environment("GAEnvironment",this, mPitch)).get();
+	}
 }
 
 void Team::onDeinitialize()

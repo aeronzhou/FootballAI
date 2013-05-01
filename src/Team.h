@@ -14,6 +14,7 @@ class Pitch;
 class Player;
 class Goal;
 class SupportSpotCalculator;
+class Environment;
 
 class Team : public dt::Node
 {
@@ -209,7 +210,7 @@ private:
 	SupportSpotCalculator* mSupportSpotCalculator;    //!< Calculator of best support spot
 	std::vector<int> mAssignedRegionIDs;			  //!< calculate the regionids of player in runtime
 	std::vector<Ogre::Vector3> mPassSafePolygon;      //!< Polygon to indicate if pass safe
-
+	Environment* mGAEnvironment;
 	std::shared_ptr<CoolingTimeComponent> mPassOrShootDelayTime;  //!< If the controlling player wait to long, he should chase the ball	
 	bool mPassedOrShootedFlag;                                    //!< If the controlling player wait to long
 };

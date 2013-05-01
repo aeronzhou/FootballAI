@@ -76,6 +76,7 @@
 	<ShowDebugText>1</ShowDebugText>
 	<RandomTestNum>7</RandomTestNum>
 	
+	<GASwitch>0</GASwitch>
 	<GAGeneration>2</GAGeneration>
 	<GACrossCostPerRgn>2</GACrossCostPerRgn>
 	<GAPlayerKeepBallValue>50</GAPlayerKeepBallValue>
