@@ -103,14 +103,17 @@ public:
 		ShowDebugText = mParamTables["ShowDebugText"].toInt();
 		RandomTestNum = mParamTables["RandomTestNum"].toFloat();
 
+		GASwitch = mParamTables["GASwitch"].toInt();
 		GAGeneration = mParamTables["GAGeneration"].toInt();
-		GACrossCostPerRgn = mParamTables["GACrossCostPerRgn"].toInt();
+		GACrossCostPerRgn = mParamTables["GACrossCostPerRgn"].toFloat();
 		GAPlayerKeepBallValue = mParamTables["GAPlayerKeepBallValue"].toInt();
 		GAPlayerChaseBallValue = mParamTables["GAPlayerChaseBallValue"].toInt();
 		GAPlayerDefendValue = mParamTables["GAPlayerDefendValue"].toInt();
 		GAPlayerAttackValue = mParamTables["GAPlayerAttackValue"].toInt();
 		GAColonySize = mParamTables["GAColonySize"].toInt();
-
+		GAIntercrossRate = mParamTables["GAIntercrossRate"].toFloat();
+		GAAgamogenesisRate = mParamTables["GAAgamogenesisRate"].toFloat();
+		GAMutantRate = mParamTables["GAMutantRate"].toFloat();
 	}
 
 private:
@@ -209,13 +212,17 @@ public:
 	float RandomTestNum;
 
 	//GA
+	int GASwitch;
 	int GAGeneration;
-	int GACrossCostPerRgn;
+	float GACrossCostPerRgn;
 	int GAPlayerKeepBallValue;
 	int GAPlayerChaseBallValue;
 	int GAPlayerDefendValue;
 	int GAPlayerAttackValue;
 	int GAColonySize;
+	float GAIntercrossRate;
+	float GAAgamogenesisRate;
+	float GAMutantRate;
 
 };
 

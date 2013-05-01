@@ -1,6 +1,11 @@
 #include "GAChromosome.h"
 
-Chromosome::Chromosome() 
+Chromosome::Chromosome() : mScore(0)
+{
+	mGeneme.resize(GENEMESIZE);
+}
+
+Chromosome::Chromosome(const std::vector<Genetype>& geneme) : mScore(0), mGeneme(geneme)
 {
 }
 
@@ -9,9 +14,19 @@ const std::vector<Genetype>& Chromosome::getGeneme() const
 	return mGeneme;
 }
 
+void Chromosome::setGeneme(const std::vector<Genetype>& geneme)
+{
+	mGeneme = geneme;
+}
+
 void Chromosome::setScore(int score)
 {
 	mScore = score;
+}
+
+int Chromosome::getScore() const
+{
+	return mScore;
 }
 
 void getIntercross(const Chromosome& parent1, const Chromosome& parent2,
@@ -19,6 +34,7 @@ void getIntercross(const Chromosome& parent1, const Chromosome& parent2,
 {
 	unsigned int geneme_len = parent1.mGeneme.size();
 	unsigned int intercross_point = rand() % geneme_len;
+	
 	unsigned i = 0;
 	for(;i < intercross_point; ++i)
 	{
@@ -47,6 +63,7 @@ void getMutant(const Chromosome& parent, Chromosome& child)
 }
 
 
+/*
 bool Chromosome::operator>(const Chromosome& ch2) const
 {
 	return mScore > ch2.mScore;
@@ -55,5 +72,17 @@ bool Chromosome::operator>(const Chromosome& ch2) const
 bool Chromosome::operator<(const Chromosome& ch2) const
 {
 	return mScore < ch2.mScore;
+}*/
+
+/*
+bool operator>(Chromosome* ch1, Chromosome* ch2)
+{
+	return ch1->getScore() > ch2->getScore();
 }
+
+bool operator<(Chromosome* ch1, Chromosome* ch2)
+{
+	return ch1->getScore() < ch2->getScore();
+}*/
+
 
