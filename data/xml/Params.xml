@@ -2,7 +2,7 @@
 	<BallMaxSpeed>2.0</BallMaxSpeed>
 	<BallMass>0.9</BallMass>
 	<BallFriction>0</BallFriction>
-	<BallDeceleration>0.015</BallDeceleration>
+	<BallDeceleration>0.018</BallDeceleration>
 	<BallResistance>0.1</BallResistance>
 	<BallResistanceInterval>0.04</BallResistanceInterval>
 	<BallRealTimeSpentFactor>1.2</BallRealTimeSpentFactor>
@@ -45,8 +45,8 @@
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>7</PlayerShootingTryNum>
 	<PlayerReceivingRange>2</PlayerReceivingRange>
-	<PlayerPassSafeRangeLength>12</PlayerPassSafeRangeLength>
-	<PlayerPassSafeRangeWidth>3</PlayerPassSafeRangeWidth>
+	<PlayerPassSafeRangeLength>7</PlayerPassSafeRangeLength>
+	<PlayerPassSafeRangeWidth>2</PlayerPassSafeRangeWidth>
 	<RequestPassPosibility>0.3</RequestPassPosibility>
 	<ChanceOfUsingArriveToReceiveBall>0.6</ChanceOfUsingArriveToReceiveBall>
 	<PlayerAtTargetRange>0.5</PlayerAtTargetRange>

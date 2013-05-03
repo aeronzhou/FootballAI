@@ -16,11 +16,6 @@ void Ball::onInitialize()
 	MovingEntity::onInitialize();
 
 	addComponent(new dt::MeshComponent(mMeshHandle, mMaterialHandle, MESH_COMPONENT));
-	//mPhysicsBody = addComponent(new dt::PhysicsBodyComponent(MESH_COMPONENT, PHYSICS_BODY_COMPONENT, 
-	//	dt::PhysicsBodyComponent::CONVEX, mMass));
-	//mPhysicsBody->getRigidBody()->setFriction(Prm.BallFriction);
-
-	//mResistanceCoolTime = addComponent(new CoolingTimeComponent(Prm.BallResistanceInterval));
 }
 
 void Ball::onUpdate(double time_diff)
@@ -46,13 +41,11 @@ void Ball::kick(Ogre::Vector3 direction, float force)
 
 	// Give it a momentary force
 	setVelocity(direction / mMass);
-
-	//std::cout << "Kick force = " << direction.length() << std::endl;
 }
 
 float Ball::getProperForceToKick(float distance)
 {
-	static const float KICK_REAL_ADDER = 0.05f;
+	static const float KICK_REAL_ADDER = -0.15f;
 	static const float FORCE_TO_DIST_FATCTOR = 0.272;
 	// y = k * (x * x);
 	
@@ -72,16 +65,6 @@ Ogre::Vector3 Ball::getFuturePosition(float time)
 	return getPosition() + ut + half_a_t_squared;
 }
 
-//Ogre::Vector3 Ball::getVelocity() const
-//{
-//	return BtOgre::Convert::toOgre(mPhysicsBody->getRigidBody()->getLinearVelocity());
-//}
-//
-//void Ball::setVelocity(Ogre::Vector3 velocity) 
-//{
-//	mPhysicsBody->getRigidBody()->setLinearVelocity(BtOgre::Convert::toBullet(velocity));
-//}
-
 Ogre::Vector3 Ball::getHeading() const 
 {
 	return getVelocity().normalisedCopy();
@@ -90,7 +73,7 @@ Ogre::Vector3 Ball::getHeading() const
 float Ball::getTimeToCoverDistance(float length, float force)
 {
 	float u = force / mMass;
-	float decel = -2.5;
+	float decel = -Prm.BallDeceleration;
 
 	// v^2 - u^2 = 2 * a * s
 	float g = 2 * (decel) * length + u * u;

@@ -30,9 +30,10 @@ void Pitch::onUpdate(double time_diff)
 	if (test_ball)
 	{
 		test_ball = false;
-		std::cout << "Ball force = " << mBall->getProperForceToKick(22.03) << std::endl;
+		//std::cout << "Ball force = " << mBall->getProperForceToKick(22.03) << std::endl;
+		std::cout << "TimeToCoverDis" << mBall->getTimeToCoverDistance(10, 7) << std::endl;
 	}
-	mBall->testTimeSpentByInitialForce(1, Prm.RandomTestNum);
+	mBall->testTimeSpentByInitialForce(10, Prm.RandomTestNum);
 #endif
 
 	_updatePlayerThreatenedRangeDrawer();
@@ -78,10 +79,10 @@ void Pitch::onInitialize()
 	
 	// Array of pass safe range
 	Ogre::Vector3 pass_safe_array[4] = {
-		Ogre::Vector3(-1.0, 0, 0), 
+		Ogre::Vector3(-0.60, 0, 0), 
 		Ogre::Vector3(-Prm.PlayerPassSafeRangeWidth, 0, Prm.PlayerPassSafeRangeLength),
 		Ogre::Vector3(Prm.PlayerPassSafeRangeWidth, 0, Prm.PlayerPassSafeRangeLength), 
-		Ogre::Vector3(1.0, 0, 0)
+		Ogre::Vector3(0.60, 0, 0)
 	};
 	mPassSafePolygon = std::vector<Ogre::Vector3>(pass_safe_array, pass_safe_array + 4);
 	mPlayerPassSafeDrawer = std::shared_ptr<PolygonDrawer>(new PolygonDrawer("PassSafe", mPassSafePolygon, 0.08f, "PlayerTarget", mSceneNode));

@@ -17,6 +17,8 @@
 #include "Constant.h"
 #include "GAEnvironment.h"
 
+#define DEBUG_FOR_ONE_TEAM 0 
+
 Team::Team(Ball* ball, Pitch* pitch, TeamColor color, Goal* goal)
 	: mBall(ball), mPitch(pitch), mColor(color), mGoal(goal), 
 	  mOpponent(nullptr), mControllingPlayer(nullptr), mPlayerClosestToBall(nullptr), mPlayers(std::vector<Player*>()),
@@ -82,6 +84,8 @@ void Team::_createPlayers()
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
 				this, FieldPlayer::ATTACKER, vec_pos[i])).get());
 		}
+
+#if !DEBUG_FOR_ONE_TEAM	
 		for (int i = 3; i < 6; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Red_" + dt::Utils::toString(i), 
@@ -89,6 +93,7 @@ void Team::_createPlayers()
 		}
 		mPlayers.push_back((GoalKeeper*)addChildNode(PlayerManager::get().createGoalKeeper("Red_" + dt::Utils::toString(6), 
 			this, vec_pos[6])).get());
+#endif
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
@@ -97,6 +102,8 @@ void Team::_createPlayers()
 	}
 	else 
 	{
+
+#if !DEBUG_FOR_ONE_TEAM
 		for (int i = 7; i < 10; ++i)
 		{
 			mPlayers.push_back((FieldPlayer*)addChildNode(PlayerManager::get().createFieldPlayer("Blue_" + dt::Utils::toString(i - 7), 
@@ -109,6 +116,7 @@ void Team::_createPlayers()
 		}
 		mPlayers.push_back((GoalKeeper*)addChildNode(PlayerManager::get().createGoalKeeper("Blue_" + dt::Utils::toString(6), 
 			this, vec_pos[13])).get());
+#endif
 
 		for (int i = 0; i < mPlayers.size(); ++i)
 		{
@@ -363,11 +371,21 @@ bool Team::isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre:
 		}
 	}
 
-	// No one in this region, pass is safe
-	if (!num_in_polygon)
+	// 有人在这个区域内
+	if (num_in_polygon > 0)
 	{
-		return true;
+		return false;
 	}
+
+	for (auto it = opponents.begin(); it != opponents.end(); ++it)
+	{
+		if (!isSafeGoingThroughOpponent(from, target, force, *it))
+		{
+			return false;
+		}
+	}
+
+	return true;
 
 	//return false;
 
