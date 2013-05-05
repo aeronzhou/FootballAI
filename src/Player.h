@@ -157,6 +157,13 @@ public:
 	  */
 	void slowDown();
 
+	/** 
+	  * Is more close to opponent's goal than some place
+	  */
+	bool isAheadOfPosition(const Ogre::Vector3 position) const;
+
+	bool isPositionInfrontOfPlayer(const Ogre::Vector3 position) const;
+
 
 protected:
 

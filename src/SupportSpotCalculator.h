@@ -54,6 +54,7 @@ protected:
 	SupportSpot* mBestSupportSpot;                         //!< Best spot to support
 	Team* mTeam;                                           //!< Team belongs to
 	std::shared_ptr<CoolingTimeComponent> mCoolingTime;    //!< We should not calculate every single frame, so...
+	float mTotalScore;                                     //!< 计算接应点的所有得分
 };
 
 #endif

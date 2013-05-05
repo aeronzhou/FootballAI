@@ -91,7 +91,6 @@ public:
 		SpotPassSafeScore = mParamTables["SpotPassSafeScore"].toFloat();
 		SpotCanShootScore = mParamTables["SpotCanShootScore"].toFloat();
 		SpotDistFromCtrlPlayerScore = mParamTables["SpotDistFromCtrlPlayerScore"].toFloat();
-		SpotOptimalDistance = mParamTables["SpotOptimalDistance"].toFloat();
 		SpotClosenessToSupportingPlayerScore = mParamTables["SpotClosenessToSupportingPlayerScore"].toFloat();
 		SpotAheadOfAttackerScore = mParamTables["SpotAheadOfAttackerScore"].toFloat();
 		ShowSupportSpot = mParamTables["ShowSupportSpot"].toInt();
@@ -198,7 +197,6 @@ public:
 	float SpotPassSafeScore;
 	float SpotCanShootScore;
 	float SpotDistFromCtrlPlayerScore;
-	float SpotOptimalDistance;
 	float SpotClosenessToSupportingPlayerScore;
 	float SpotAheadOfAttackerScore;
 	int NumSupportSpotX;

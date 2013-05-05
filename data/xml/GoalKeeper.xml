@@ -1,5 +1,5 @@
 <GoalKeeper>
-	<BoundingRadius>0.2</BoundingRadius>
+	<BoundingRadius>0.65</BoundingRadius>
 	<MaxSpeed>12.0</MaxSpeed>
 	<MaxForce>20</MaxForce>
 	<Mass>60</Mass>

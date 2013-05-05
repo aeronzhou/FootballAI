@@ -349,33 +349,33 @@ std::vector<Player*>& Team::getPlayers()
 bool Team::isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre::Vector3& target, float force)
 {
 	std::vector<Player*>& opponents = getOpponent()->getPlayers();
-	const std::vector<Ogre::Vector3>& points = mPitch->getPassSafePolygon();
+	//const std::vector<Ogre::Vector3>& points = mPitch->getPassSafePolygon();
 
-	for (int i = 0; i < points.size(); ++i)
-	{
-		mPassSafePolygon[i] = GetRotationThroughHeading(target - from) * points[i] + from; 
-	}
+	//for (int i = 0; i < points.size(); ++i)
+	//{
+	//	mPassSafePolygon[i] = GetRotationThroughHeading(target - from) * points[i] + from; 
+	//}
 
-	int num_in_polygon = 0;
-	for (auto it = opponents.begin(); it != opponents.end(); ++it)
-	{
-		// If Distance(opponent, from) > Distance(from, target), pass
-		if (from.distance((*it)->getPosition()) > from.distance(target))
-		{
-			continue;
-		}
-		
-		if (GeometryHelper::get().isInPolygon((*it)->getPosition(), mPassSafePolygon))
-		{
-			++num_in_polygon;
-		}
-	}
+	//int num_in_polygon = 0;
+	//for (auto it = opponents.begin(); it != opponents.end(); ++it)
+	//{
+	//	// If Distance(opponent, from) > Distance(from, target), pass
+	//	if (from.distance((*it)->getPosition()) > from.distance(target))
+	//	{
+	//		continue;
+	//	}
+	//	
+	//	if (GeometryHelper::get().isInPolygon((*it)->getPosition(), mPassSafePolygon))
+	//	{
+	//		++num_in_polygon;
+	//	}
+	//}
 
-	// 有人在这个区域内
-	if (num_in_polygon > 0)
-	{
-		return false;
-	}
+	//// 有人在这个区域内
+	//if (num_in_polygon > 0)
+	//{
+	//	return false;
+	//}
 
 	for (auto it = opponents.begin(); it != opponents.end(); ++it)
 	{
@@ -390,7 +390,6 @@ bool Team::isSafeGoingThroughAllOpponents(const Ogre::Vector3& from, const Ogre:
 	//return false;
 
 	// Enforce to pass the ball
-	return WithPossibility(0.01 / (num_in_polygon * num_in_polygon));
 }
 
 bool Team::isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vector3& target, float force, Player* opponent)
@@ -433,7 +432,20 @@ bool Team::isSafeGoingThroughOpponent(const Ogre::Vector3& from, const Ogre::Vec
 float Team::_getScoreOfPosition(const Ogre::Vector3& position)
 {
 	// Closer to opponent's goal
-	float score = 10.f * fabs((position - mGoal->getCenter()).x);
+	float score = 9.f * fabs((position - mGoal->getCenter()).x) / (2 * Prm.HalfPitchWidth);
+
+	// 距离控球队员的距离
+	float best_dist = 8.f;
+	float dist_to_ctrl = fabs(position.distance(getControllingPlayer()->getPosition()));
+
+	if (dist_to_ctrl > best_dist)
+	{
+		score += 4.f * (best_dist / (1.1 * dist_to_ctrl));
+	}
+	else 
+	{
+		score += 4.f * (dist_to_ctrl / best_dist);
+	}
 
 	return score;
 }
@@ -444,9 +456,9 @@ float Team::_getBestSpotOfReceiving(Player* receiver, float passing_force, Ogre:
 	Ogre::Vector3 ball_pos = mBall->getPosition();
 	Ogre::Vector3 to_reciver = Vector3To2(receiver->getPosition() - ball_pos);
 	float dist_to_receiver = to_reciver.length();
-	float length = receiver->getMaxSpeed() * mBall->getTimeToCoverDistance(dist_to_receiver, passing_force) * 0.8;
+	float length = receiver->getMaxSpeed() * mBall->getTimeToCoverDistance(dist_to_receiver, passing_force) * 0.6;
 	float theta = asin(length / dist_to_receiver);
-	int try_pass_times = 4;
+	int try_pass_times = 2;
 
 	for (int i = 0; i <= try_pass_times; ++i)
 	{
@@ -473,12 +485,7 @@ void Team::requestPass(Player* player, double delay_time /* = 0 */)
 	// With a possibility to execute
 	if (WithPossibility(Prm.RequestPassPosibility))
 	{
-		float dot = mControllingPlayer->getHeading().dotProduct(
-			(player->getPosition() - mControllingPlayer->getPosition()).normalisedCopy());
-
-		// Not behind the controlling player
-		if (dot > -0.1 && 
-			isSafeGoingThroughAllOpponents(
+		if (isSafeGoingThroughAllOpponents(
 			getControllingPlayer()->getPosition(), 
 			player->getPosition(), 
 			Prm.PlayerMaxPassingForce) )

@@ -29,6 +29,8 @@ void KickingBall::execute(FieldPlayer* player)
 	float dot = player->getHeading().dotProduct(player->getBall()->getPosition() - player->getPosition());
 	Ogre::Vector3 target;
 
+	//std::cout << "KickBall>>> dist_to_ball = "<< player->getDistToBall() << std::endl;
+
 	// Cannot kick the ball
 	// This player is behind the ball
 	if (dot < 0 ||

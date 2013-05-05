@@ -28,7 +28,7 @@
 
 	<VelocityToForceCoefficient>1.0</VelocityToForceCoefficient>
 	<DecelerationTweaker>0.3</DecelerationTweaker>
-	<VisibleRange>4</VisibleRange>
+	<VisibleRange>2</VisibleRange>
 	<SeperationCoefficient>0.3</SeperationCoefficient>
 
 	<TotalGameTime>5</TotalGameTime>
@@ -38,16 +38,16 @@
 	<PlayerInitPositionY>0.5</PlayerInitPositionY>
 	<PlayerKickCoolingTime>0.2</PlayerKickCoolingTime>
 	<PlayerMaxPassingForce>8</PlayerMaxPassingForce>
-	<PlayerDribblingForce>2.4</PlayerDribblingForce>
-	<PlayerTurnAroundForce>1.5</PlayerTurnAroundForce>
+	<PlayerDribblingForce>2.0</PlayerDribblingForce>
+	<PlayerTurnAroundForce>1.2</PlayerTurnAroundForce>
 	<PlayerMaxShootingForce>12</PlayerMaxShootingForce>
 	<PlayerThreatenedRange>3</PlayerThreatenedRange>
 	<PlayerShootingRange>10</PlayerShootingRange>
 	<PlayerShootingTryNum>7</PlayerShootingTryNum>
-	<PlayerReceivingRange>2</PlayerReceivingRange>
-	<PlayerPassSafeRangeLength>7</PlayerPassSafeRangeLength>
+	<PlayerReceivingRange>2.5</PlayerReceivingRange>
+	<PlayerPassSafeRangeLength>9</PlayerPassSafeRangeLength>
 	<PlayerPassSafeRangeWidth>2</PlayerPassSafeRangeWidth>
-	<RequestPassPosibility>0.3</RequestPassPosibility>
+	<RequestPassPosibility>0.050</RequestPassPosibility>
 	<ChanceOfUsingArriveToReceiveBall>0.6</ChanceOfUsingArriveToReceiveBall>
 	<PlayerAtTargetRange>0.5</PlayerAtTargetRange>
 	<PassThreatRadius>3</PassThreatRadius>
@@ -60,16 +60,15 @@
 	<GoalKeeperInterceptRange>12</GoalKeeperInterceptRange>
 	<GoalKeeperControlRange>0.8</GoalKeeperControlRange>
 
-	<SpotPassSafeScore>2</SpotPassSafeScore>
-	<SpotCanShootScore>1</SpotCanShootScore>
-	<SpotDistFromCtrlPlayerScore>2</SpotDistFromCtrlPlayerScore>
-	<SpotOptimalDistance>8</SpotOptimalDistance>
-	<SpotClosenessToSupportingPlayerScore>0</SpotClosenessToSupportingPlayerScore>
-	<SpotAheadOfAttackerScore>0</SpotAheadOfAttackerScore>
+	<SpotPassSafeScore>3</SpotPassSafeScore>
+	<SpotCanShootScore>2</SpotCanShootScore>
+	<SpotDistFromCtrlPlayerScore>4</SpotDistFromCtrlPlayerScore>
+	<SpotClosenessToSupportingPlayerScore>6</SpotClosenessToSupportingPlayerScore>
+	<SpotAheadOfAttackerScore>2</SpotAheadOfAttackerScore>
 	<NumSupportSpotX>6</NumSupportSpotX>
 	<NumSupportSpotY>6</NumSupportSpotY>
 	<ShowSupportSpot>1</ShowSupportSpot>
-	<SupportSpotUpdateCoolTime>1.0</SupportSpotUpdateCoolTime>
+	<SupportSpotUpdateCoolTime>1.5</SupportSpotUpdateCoolTime>
 
 
 	<PhysicsShowDebug>0</PhysicsShowDebug>

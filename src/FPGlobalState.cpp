@@ -38,8 +38,17 @@ bool FieldPlayerGlobalState::onMessage(FieldPlayer* player, const Message& msg)
 
 			// Cannot pass the ball
 			if (player->getTeam()->getReceivingPlayer() != nullptr ||
-				!player->isBallWithinControlRange())
+				//!player->isBallWithinControlRange())
+				player->getDistToBall() - player->getControlRange() / 10 > player->getControlRange())
 			{
+				//if (player->getTeam()->getReceivingPlayer() != nullptr)
+				//{
+				//	std::cout << "player->getTeam()->getReceivingPlayer() != nullptr"<< std::endl;
+				//}
+				//if (!player->isBallWithinControlRange())
+				//{
+				//	std::cout << "!player->isBallWithinControlRange()" << std::endl;
+				//}
 				return true;
 			}
 

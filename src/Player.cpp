@@ -179,7 +179,7 @@ bool Player::isWithinReceivingRange() const
 
 float Player::getDistToBall() const 
 {
-	return getPosition().distance(getBall()->getPosition());
+	return Vector3To2(getPosition() - getBall()->getPosition()).length();
 }
 
 FLOAT Player::getControlRange() const 
@@ -223,7 +223,8 @@ bool Player::isThreatened() const
 
 	for (auto it = opponents.begin(); it != opponents.end(); ++it)
 	{
-		if (position.distance((*it)->getPosition()) < Prm.PlayerThreatenedRange)
+		if (isPositionInfrontOfPlayer((*it)->getPosition()) &&
+			position.distance((*it)->getPosition()) < Prm.PlayerThreatenedRange)
 		{
 			return true;
 		}
@@ -339,4 +340,17 @@ Ogre::Vector3 Player::getAskedTurnAroundTarget() const
 void Player::setAskedTurnAroundTarget(const Ogre::Vector3& target)
 {
 	mAskedToTurnAroundTarget = target;
+}
+
+bool Player::isAheadOfPosition(const Ogre::Vector3 position) const 
+{
+	return fabs(getPosition().x - mTeam->getGoal()->getCenter().x) > 
+		fabs(position.x - mTeam->getGoal()->getCenter().x);
+}
+
+bool Player::isPositionInfrontOfPlayer(const Ogre::Vector3 position) const 
+{
+	Ogre::Vector3 to_position = position - getPosition();
+	
+	return (getHeading().dotProduct(to_position) > 0);
 }

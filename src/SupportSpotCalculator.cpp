@@ -14,17 +14,17 @@ SupportSpotCalculator::SupportSpotCalculator(const QString& name, Team* team)
 
 void SupportSpotCalculator::onInitialize() 
 {
-	mCoolingTime = addComponent(new CoolingTimeComponent(0.8f, getName() + "CoolTime"));
+	mCoolingTime = addComponent(new CoolingTimeComponent(Prm.SupportSpotUpdateCoolTime, getName() + "CoolTime"));
 
 	mSpots.clear();
 
 	// Initialize support spots' positions
 	float pitch_width = mTeam->getPitch()->getPlayingArea()->getWidth();
 	float pitch_height = mTeam->getPitch()->getPlayingArea()->getHeight();
-	float scale = 0.8;
+	float scale = 0.7;
 	float px = pitch_width * 0.6 * (1 - scale) / 2;
 	float py = pitch_height * (1 - scale) / 2;
-	float dx = (pitch_width * 0.55 - px * 2) / (Prm.NumSupportSpotX - 1);
+	float dx = (pitch_width * 0.52 - px * 2) / (Prm.NumSupportSpotX - 1);
 	float dy = (pitch_height - py * 2) / (Prm.NumSupportSpotY - 1);
 
 	float left = mTeam->getPitch()->getPlayingArea()->getLeft();
@@ -52,14 +52,17 @@ void SupportSpotCalculator::onInitialize()
 			}
 		}
 	}
+
+	mTotalScore = Prm.SpotCanShootScore + Prm.SpotPassSafeScore + Prm.SpotClosenessToSupportingPlayerScore + 
+		Prm.SpotAheadOfAttackerScore + Prm.SpotDistFromCtrlPlayerScore;
 }
 
 void SupportSpotCalculator::onDeinitialize() 
 {
 }
 
-const float TOTAL_SCORE = 5.f;
-const float BIGGEST_RADIUS = 0.5f;
+const float TOTAL_SCORE = 25.f;
+const float BIGGEST_RADIUS = 0.75f;
 
 void SupportSpotCalculator::onUpdate(double time_diff)
 {
@@ -76,18 +79,18 @@ void SupportSpotCalculator::onUpdate(double time_diff)
 		{
 			for (auto it = mSpots.begin(); it != mSpots.end(); ++it)
 			{
-				it->drawer->draw(it->score / TOTAL_SCORE * BIGGEST_RADIUS);
+				it->drawer->draw(it->score / mTotalScore * BIGGEST_RADIUS);
 			}		
 			
 			if (mBestSupportSpot)
 			{
 				if (mTeam->getTeamColor() == Team::BLUE)
 				{
-					mBestSupportSpot->drawer->highlight(mBestSupportSpot->score * 1.2 / TOTAL_SCORE * BIGGEST_RADIUS, "PlayerFlagRed");
+					mBestSupportSpot->drawer->highlight(BIGGEST_RADIUS, "PlayerFlagRed");
 				}
 				else 
 				{
-					mBestSupportSpot->drawer->highlight(mBestSupportSpot->score * 1.2 / TOTAL_SCORE * BIGGEST_RADIUS, "PlayerFlagBlue");
+					mBestSupportSpot->drawer->highlight(BIGGEST_RADIUS, "PlayerFlagBlue");
 				}
 			}
 		}
@@ -127,10 +130,31 @@ void SupportSpotCalculator::determineBestSupportSpot()
 
 		// Dist from controlling player
 		float dist = mTeam->getControllingPlayer()->getPosition().distance(it->position);
-		if (dist < Prm.SpotOptimalDistance)
+		const float spot_opt_dist = 8.f;
+		if (dist < spot_opt_dist)
 		{
-			it->score += Prm.SpotDistFromCtrlPlayerScore * (dist / Prm.SpotOptimalDistance);
+			it->score += Prm.SpotDistFromCtrlPlayerScore * (dist / spot_opt_dist);
 		}
+
+		// 在控球球员的前面
+		if (!mTeam->getControllingPlayer()->isAheadOfPosition(it->position)) 
+		{
+			float dist_to_goal = fabs((mTeam->getControllingPlayer()->getPosition() - mTeam->getOpponent()->getGoal()->getCenter()).x);
+			float dist_ahead = fabs((mTeam->getControllingPlayer()->getPosition() - it->position).x);
+			it->score += Prm.SpotAheadOfAttackerScore * (dist_ahead / dist_to_goal);
+		}
+
+		// 是否靠近助攻球员
+		const static float CLOSE_DIST = 5.f;
+		if (mTeam->getSupportingPlayer() != nullptr)
+		{
+			dist = mTeam->getSupportingPlayer()->getPosition().distance(it->position);
+			if (dist < CLOSE_DIST)
+			{
+				it->score += Prm.SpotClosenessToSupportingPlayerScore * ((CLOSE_DIST - dist) / CLOSE_DIST);
+			}
+		}
+
 
 		if (it->score > best_score)
 		{

@@ -45,10 +45,11 @@ void Ball::kick(Ogre::Vector3 direction, float force)
 
 float Ball::getProperForceToKick(float distance)
 {
-	static const float KICK_REAL_ADDER = -0.15f;
-	static const float FORCE_TO_DIST_FATCTOR = 0.272;
-	// y = k * (x * x);
 	
+	static const float KICK_REAL_ADDER = -0.15f;
+	//static const float FORCE_TO_DIST_FATCTOR = 0.272;
+	static const float FORCE_TO_DIST_FATCTOR = 0.292;
+
 	float force = sqrt(double(distance / FORCE_TO_DIST_FATCTOR));
 
 	return std::min(Prm.PlayerMaxPassingForce, (float)force + KICK_REAL_ADDER);

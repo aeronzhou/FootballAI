@@ -50,6 +50,14 @@ void Waiting::execute(FieldPlayer* player)
 			!player->getPitch()->isGoalKeeperHasBall())
 		{
 			player->getStateMachine()->changeState(ChasingBall::get());
+			return;
+		}
+
+		// 如果这时候在防守，而且追球的人距离球太远
+		if (!player->getTeam()->isInControl() &&
+			player->isClosestTeamMemberToBall())
+		{
+			player->getStateMachine()->changeState(ChasingBall::get());
 		}
 	}
 
